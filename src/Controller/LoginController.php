@@ -11,6 +11,13 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 class LoginController extends AbstractController
 {
 	/**
+	 * @Route("/hola")
+	 */
+	public function hola() {
+		return new Response('hola');
+	}
+
+	/**
      * @Route("/login", name="controlador_login")
      */
     public function login(){    
@@ -34,7 +41,7 @@ class LoginController extends AbstractController
 		// Comprobamos si el usuario al menos se ha logueado
 		$this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 		
-		return $this->render('inicio.twig');
+		return $this->render('inicio.html.twig');
 	}
 	
 	/**

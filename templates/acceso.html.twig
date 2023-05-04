@@ -1,0 +1,24 @@
+{# templates/login.html.twig #}
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="style-login.css">
+		<title>Bienvenido</title>
+	</head>
+	<body>
+		<h2>Acceso</h2>
+		<hr>
+		<form action="{{ path('controlador_login') }}" method="post">
+			<br>
+			Usuario:
+			<input id="username" type="text" name="_username"/>
+			<br>
+			Clave
+			<input id="password" type="password" name="_password"/>
+			<br>
+			<button type="submit">login</button>
+			<a href="#">No tienes una cuenta?</a><br>
+		</form>
+	</body>
+</html>

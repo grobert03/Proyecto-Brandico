@@ -3,10 +3,11 @@
 namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 /**
  * @ORM\Entity @ORM\Table(name="usuario")
  */
-class Usuario implements UserInterface, \Serializable{
+class Usuario implements UserInterface, \Serializable {
     /**
      * @ORM\Id
      * @ORM\Column(type="string", name="correo")
@@ -94,6 +95,10 @@ class Usuario implements UserInterface, \Serializable{
         $this->rol = $rol;
     }
 
+    public function getUserIdentifier()
+    {
+        return $this->correo;
+    }
 
     //NECESARIOS PARA LA AUTENTICACIÓN
     public function serialize(){
@@ -104,7 +109,7 @@ class Usuario implements UserInterface, \Serializable{
             $this->nombre,
             $this->apellidos,
             $this->telefono,
-            $this->rol,
+            $this->rol
         ));
     }
 
