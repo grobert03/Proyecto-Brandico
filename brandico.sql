@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-05-2023 a las 16:41:30
+-- Tiempo de generación: 04-05-2023 a las 10:19:47
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -32,8 +32,11 @@ USE `brandico`;
 CREATE TABLE `empresa` (
   `correo` varchar(100) NOT NULL,
   `clave` varchar(20) NOT NULL,
+  `cif` varchar(9) NOT NULL,
   `nombre` varchar(100) NOT NULL,
-  `cif` varchar(9) NOT NULL
+  `telefono` varchar(9) NOT NULL,
+  `direccion` varchar(500) NOT NULL,
+  `provincia` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -56,8 +59,10 @@ CREATE TABLE `seguidos` (
 CREATE TABLE `usuario` (
   `correo` varchar(100) NOT NULL,
   `clave` varchar(20) NOT NULL,
+  `dni` varchar(9) NOT NULL,
   `nombre` varchar(100) NOT NULL,
   `apellidos` varchar(100) NOT NULL,
+  `telefono` varchar(9) NOT NULL,
   `rol` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -69,7 +74,8 @@ CREATE TABLE `usuario` (
 -- Indices de la tabla `empresa`
 --
 ALTER TABLE `empresa`
-  ADD PRIMARY KEY (`correo`);
+  ADD PRIMARY KEY (`correo`),
+  ADD UNIQUE KEY `cif` (`cif`);
 
 --
 -- Indices de la tabla `seguidos`
@@ -82,7 +88,8 @@ ALTER TABLE `seguidos`
 -- Indices de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`correo`);
+  ADD PRIMARY KEY (`correo`),
+  ADD UNIQUE KEY `dni` (`dni`);
 
 --
 -- Restricciones para tablas volcadas
