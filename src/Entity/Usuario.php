@@ -1,91 +1,142 @@
 <?php
-
+// src/Entity/Usuario.php
 namespace App\Entity;
-
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
-
 /**
- * @ORM\Entity
- * @ORM\Table(name="usuarios")
+ * @ORM\Entity @ORM\Table(name="usuario")
  */
-class Usuario implements UserInterface, \Serializable {
-    /** @ORM\Id @ORM\Column(type="integer") */
-    private $id;
-    /** @ORM\Column(type="string") */
-    private $nombre;
-    /** @ORM\Column(type="string") */
-    private $apellido;
-    /** @ORM\Column(type="string") */
+class Usuario implements UserInterface, \Serializable{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="string", name="correo")
+     */
     private $correo;
-    /** @ORM\Column(type="string") */
+
+    /**
+     * @ORM\Column(type="string", name = "clave")
+     */
     private $clave;
-    /** @ORM\Column(type="integer") */
+    
+    /**
+     * @ORM\Column(type="string", name = "dni")
+     */
+    private $dni;
+
+    /**
+     * @ORM\Column(type="string", name = "nombre")
+     */
+    private $nombre;
+
+    /**
+     * @ORM\Column(type="string", name = "apellidos")
+     */
+    private $apellidos;
+
+    /**
+     * @ORM\Column(type="string", name = "telefono")
+     */
+    private $telefono;
+
+    /**
+     * @ORM\Column(type="integer", name = "rol")
+     */
     private $rol;
-    /** @ORM\Column(type="string") */
-    private $fotoPerfil;
 
-
-    public function getUsuario() {
-        return $this->nombre;
-    }
-
-    public function getClave() {
-        return $this->clave;
-    }
-
-    public function setClave($password) {
-        $this->clave = $password;
-        return $this;
-    }
-
-    public function getCorreo() {
+    
+    //GETS Y SETS
+    public function getCorreo(){
         return $this->correo;
     }
-
-    // NECESARIOS PARA LA AUTENTICACIÓN
-
-    public function getRoles() {
-        return ['ROLE_USER', 'ROLE_MEDICO'];
+    public function setCorreo($correo){
+        $this->correo = $correo;
+    }
+    
+    public function getClave(){
+        return $this->clave;
+    }
+    public function setClave($clave){
+        $this->clave = $clave;
     }
 
-    public function getPassword() {
-        return $this->getClave();
+    public function getDni(){
+        return $this->dni;
+    }
+    public function setDni($dni){
+        $this->dni = $dni;
     }
 
-    public function getSalt() {
-        return ;
+    public function getNombre(){
+        return $this->nombre;
+    }
+    public function setNombre($nombre){
+        $this->nombre = $nombre;
     }
 
-    public function getUsername() {
-        return $this->getUsuario();
+    public function getApellidos(){
+        return $this->apellidos;
+    }
+    public function setApellidos($apellidos){
+        $this->apellidos = $apellidos;
     }
 
-    public function eraseCredentials() {
-        return;
+    public function getTelefono(){
+        return $this->telefono;
+    }
+    public function setTelefono($telefono){
+        $this->telefono = $telefono;
     }
 
+    public function getRol(){
+        return $this->rol;
+    }
+    public function setRol($rol){
+        $this->rol = $rol;
+    }
+
+
+    //NECESARIOS PARA LA AUTENTICACIÓN
     public function serialize(){
         return serialize(array(
-            $this->nombre,
-            $this->apellido,
             $this->correo,
             $this->clave,
+            $this->dni,
+            $this->nombre,
+            $this->apellidos,
+            $this->telefono,
             $this->rol,
-            $this->fotoPerfil
         ));
     }
-	
+
     public function unserialize($serialized){
         list (
-            $this->nombre,
-            $this->apellido,
             $this->correo,
             $this->clave,
+            $this->dni,
+            $this->nombre,
+            $this->apellidos,
+            $this->telefono,
             $this->rol,
-            $this->fotoPerfil
             ) = unserialize($serialized);
     }
 
+    public function getRoles(){
+        return array('ROLE_USER', 'ROLE_ADMINISTRADOR');          
+    }
 
+    public function getPassword(){
+        return $this->getClave();
+    }
+
+    public function getSalt(){
+        return;
+    }
+
+    public function getUsername(){
+        return $this->getCorreo();
+    }
+
+    public function eraseCredentials(){
+        return;
+    }
 }
