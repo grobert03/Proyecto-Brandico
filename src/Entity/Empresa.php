@@ -120,9 +120,9 @@ class Empresa implements UserInterface, \Serializable{
             ) = unserialize($serialized);
     }
 
-    /*public function getRoles(){
+    public function getRoles(){
         return array('ROLE_USER', 'ROLE_ADMINISTRADOR');          
-    }*/
+    }
 
     public function getPassword(){
         return $this->getClave();

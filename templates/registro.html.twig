@@ -1,0 +1,212 @@
+{# templates/login.html.twig #}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sign Up</title>
+    <!-- Importar Alpine.js -->
+    <script src="//unpkg.com/alpinejs" defer></script>
+</head>
+<body>
+    <h1>Registro</h1>
+    <hr>
+
+    <div x-data="{ showUserForm: true }">
+        <button @click="showUserForm = true" :class="{ 'bg-blue-500': showUserForm }">Registro de usuario</button>
+        <button @click="showUserForm = false" :class="{ 'bg-blue-500': !showUserForm }">Registro de empresa</button>
+
+        <!-- x-data controla las variables con Alpine.js, @submit escucha el evento generado por el form -->
+        <!-- .prevent previene que el navegador envie el formulario en modo por defecto -->
+        <!-- x-model vincula el html al objeto formData  -->
+        <form x-show="showUserForm" x-data="userForm()" @submit.prevent="submitUserForm">
+            <input type="hidden" name="type" value="user">
+            <br>
+            <label for="user-email">Email:</label>
+            <input id="user-email" type="text" name="_user-email" x-model="formData.email">
+            <br>
+            <label for="user-password">Clave:</label>
+            <input id="user-password" type="password" name="_user-password" x-model="formData.password">
+            <input id="user-showPassword" type="checkbox" @click="showPassword('user-password')">
+            <label for="user-showPassword">Mostrar Clave</label>
+            <br>
+            <label for="user-dni">DNI:</label>
+            <input id="user-dni" type="text" name="_user-dni" x-model="formData.dni">
+            <br>
+            <label for="user-name">Nombre:</label>
+            <input id="user-name" type="text" name="_user-name" x-model="formData.name">
+            <br>
+            <label for="user-surname">Apellidos:</label>
+            <input id="user-surname" type="text" name="_user-surname" x-model="formData.surname">
+            <br>
+            <label for="user-phone">Teléfono:</label>
+            <input id="user-phone" type="text" name="_user-phone" x-model="formData.phone">
+            <br>
+            <!-- x-text hace un bind del elemento al texto de la etiqueta -->
+            <button :disabled="formLoading" x-text="buttonRegistroText"></button>
+            <a href="{{ path('controlador_login') }}">Volver a Login</a>
+            <div x-text="formMessage"></div>
+        </form>
+
+        <form x-show="!showUserForm" x-data="companyForm()" @submit.prevent="submitCompanyForm">
+            <input type="hidden" name="type" value="company">
+            <br>
+            <label for="company-email">Email:</label>
+            <input id="company-email" type="text" name="_company-email" x-model="formData.email">
+            <br>
+            <label for="company-password">Clave:</label>
+            <input id="company-password" type="password" name="_company-password" x-model="formData.password">
+            <input id="company-showPassword" type="checkbox" @click="showPassword('company-password')">
+            <label for="company-showPassword">Mostrar Clave</label>
+            <br>
+            <label for="company-cif">CIF:</label>
+            <input id="company-cif" type="text" name="_company-cif" x-model="formData.cif">
+            <br>
+            <label for="company-name">Nombre:</label>
+            <input id="company-name" type="text" name="_company-name" x-model="formData.name">
+            <br>
+            <label for="company-phone">Teléfono:</label>
+            <input id="company-phone" type="text" name="_company-phone" x-model="formData.phone">
+            <br>
+            <label for="company-direction">Dirección:</label>
+            <input id="company-direction" type="text" name="_company-direction" x-model="formData.direction">
+            <br>
+            <label for="company-province">Provincia:</label>
+            <input id="company-province" type="text" name="_company-province" x-model="formData.province">
+            <br>
+            <button :disabled="formLoading" x-text="buttonRegistroText"></button>
+            <a href="{{ path('controlador_login') }}">Volver a Login</a>
+            <div x-text="formMessage"></div>
+        </form>
+    </div>
+
+    <script>
+        const FORM_URL = "{{ path('createuser') }}"
+
+        function userForm() {
+            //Función que permite mandar por AJAX los datos del formulario de usuario con Alpine.js
+            return {
+                formData: {
+                    email: "",
+                    password: "",
+                    dni: "",
+                    name: "",
+                    surname: "",
+                    phone: ""
+                },
+                formMessage: "",
+                formLoading: false,
+                buttonRegistroText: "Registrarse",
+                submitUserForm() {
+                    this.formMessage = ""
+                    //Para cuando se esté enviando el formulario se deshabilite el botón
+                    this.formLoading = true
+                    this.buttonRegistroText = "Enviando..."
+                    fetch(FORM_URL, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Accept: "application/json",
+                        },
+                        //JSON.stringtify para serealizar los datos en un string
+                        body: JSON.stringify({
+                            email: this.formData.email,
+                            password: this.formData.password,
+                            dni: this.formData.dni,
+                            name: this.formData.name,
+                            surname: this.formData.surname,
+                            phone: this.formData.phone,
+                            type: "user" //Se agrega el tipo de usuario aquí
+                        }),
+                    })
+                        //Cuando termine AJAX se deja los valores por defecto y mostrar un mensaje de éxito
+                        .then(() => {
+                            this.formData.email = ""
+                            this.formData.password = ""
+                            this.formData.dni = ""
+                            this.formData.name = ""
+                            this.formData.surname = ""
+                            this.formData.phone = ""
+                            this.formMessage = "Formulario enviado correctamente"
+                        })
+                        .catch(() => {
+                            this.formMessage = "Algo ha ido mal"
+                        })
+                        .finally(() => {
+                            this.formLoading = false
+                            this.buttonRegistroText = "Registrarse"
+                        })
+                }
+            }
+        }
+
+        function companyForm() {
+            //Función que permite mandar por AJAX los datos del formulario de empresa con Alpine.js
+            return {
+                formData: {
+                    email: "",
+                    password: "",
+                    cif: "",
+                    name: "",
+                    phone: "",
+                    direction: "",
+                    province: ""
+                },
+                formMessage: "",
+                formLoading: false,
+                buttonRegistroText: "Registrarse",
+                submitCompanyForm() {
+                    this.formMessage = ""
+                    this.formLoading = true
+                    this.buttonRegistroText = "Enviando..."
+                    fetch(FORM_URL, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Accept: "application/json",
+                        },
+                        body: JSON.stringify({
+                            email: this.formData.email,
+                            password: this.formData.password,
+                            cif: this.formData.cif,
+                            name: this.formData.name,
+                            phone: this.formData.phone,
+                            direction: this.formData.direction,
+                            province: this.formData.province,
+                            type: "company" //Se agrega el tipo de usuario aquí
+                        }),
+                    })
+                        .then(() => {
+                            this.formData.email = ""
+                            this.formData.password = ""
+                            this.formData.cif = ""
+                            this.formData.name = ""
+                            this.formData.phone = ""
+                            this.formData.direction = ""
+                            this.formData.province = ""
+                            this.formMessage = "Formulario enviado correctamente"
+                        })
+                        .catch(() => {
+                            this.formMessage = "Algo ha ido mal"
+                        })
+                        .finally(() => {
+                            this.formLoading = false
+                            this.buttonRegistroText = "Registrarse"
+                        })
+                }
+            }
+        }
+
+        function showPassword(inputId) {
+            //Función que muestra/oculta el texto del campo de clave
+            //A la función se le pasa el nombre del id del input password de cada formulario
+            var password = document.getElementById(inputId);
+            if (password.type === "password")
+                password.type = "text"
+            else
+                password.type = "password"
+        }
+    </script>
+</body>
+</html>

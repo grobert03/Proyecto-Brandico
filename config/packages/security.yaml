@@ -22,7 +22,9 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            lazy: true
+            # lazy: true
+            # Se pone anonymous para poder hacer POST anónimamente
+            anonymous: true
             # Indicamos un formulario de login como punto de autenticación.
             provider: proveedor_usuario
             form_login:
