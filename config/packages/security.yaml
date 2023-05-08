@@ -7,7 +7,13 @@ security:
             entity:
                 class: App\Entity\Usuario
                 property: correo
-
+        proveedor_empresa:
+            entity:
+                class: App\Entity\Empresa
+                property: correo
+        proveedor_entero: 
+            chain:
+                providers: [proveedor_usuario, proveedor_empresa]
   # El encoder indica cómo hay que cifrar la contraseña. En este caso, texto plano.
   # encoders:s
   #     App\Entity\Medico:
@@ -22,11 +28,9 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            # lazy: true
-            # Se pone anonymous para poder hacer POST anónimamente
-            anonymous: true
+            lazy: true
             # Indicamos un formulario de login como punto de autenticación.
-            provider: proveedor_usuario
+            provider: proveedor_entero
             form_login:
                 login_path: controlador_login
                 check_path: controlador_login
@@ -36,3 +40,4 @@ security:
                 target: controlador_login
     password_hashers:
         App\Entity\Usuario: 'auto'
+        App\Entity\Empresa: 'auto'
