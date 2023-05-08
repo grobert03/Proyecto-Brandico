@@ -1,0 +1,294 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    min-height: 100vh;
+    width: 100%;
+    background-image: linear-gradient(rgba(4, 9, 30, 0.1), rgba(4, 9, 30, 0.1)), url(../videos/gif.gif);
+    background-position: center;
+    background-size: cover;
+    position: relative;
+}
+
+nav {
+    display: flex;
+    padding: 2% 6%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav img {
+    height: 50px; 
+    width: 50px;
+}
+
+.header-elements {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    font-size: 25px;
+    gap: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-style: italic;
+}
+
+.text-box {
+    width: 90%;
+    color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    animation: fadeIn 4s;
+    font-size: 20px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.delta {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.delta img {
+    height: 50px;
+    width: auto;
+}
+
+.necesidades {
+    width: 100%;
+    margin: 0;
+    text-align: center;
+    padding-top: 50px;
+    background: #2e4757;
+    color: white;
+    font-family: 'Oswald', sans-serif;
+    
+}
+
+.necesidades h1 {
+    font-size: 46px;
+}
+
+
+.row {
+    margin-top: 5%;
+    display: flex;
+    justify-content: space-between;
+    height: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.course-col {
+    flex-basis: 30%;
+    background: #eceae4;
+    border-radius: 10px;
+    margin-bottom: 5%;
+    padding: 20px 12px;
+    box-sizing: border-box;
+    transition: 0.5s;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.course-col img {
+    width: 50px;
+    height: auto;
+}
+
+h3 {
+    text-align: center;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+
+.ofertas {
+    width: 100%;
+    text-align: center;
+    padding-top: 30px;
+    margin-bottom: 50px;
+}
+
+.ofertas h1 {
+    color:#2e4757;
+    font-size: 46px;
+    font-family: 'Oswald', sans-serif;
+    margin-bottom: 10px;
+}
+
+.contenido {
+    margin-top: 5%;
+    display: flex;
+    padding-left: 40px;
+    padding-right: 40px;
+    justify-content: space-between;
+}
+
+.flex-element {
+    background-color: #2e4757;
+    border-radius: 10px;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+}
+
+ .empresa .flex-element {
+    flex-basis: 45%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 200px;
+    align-items: center;
+    padding-bottom: 30px;
+    text-align: center;
+ }
+
+ .cliente .flex-element {
+    height: 150px;
+    width: 50%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+ }
+
+
+
+.flex-element img {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+}
+
+.flex-element h3 {
+    font-family: 'Oswald', sans-serif;
+}
+
+ul, li {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+ul {
+    margin-bottom: 10px;
+}
+
+.images {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    align-items: center;
+}
+
+.images img {
+    height: 50px;
+    width: 50px;
+    border-radius: 0%;
+}
+
+footer {
+    background-color: #2e4757;
+    text-align: center;
+    height: 35px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Montserrat', sans-serif;
+}
+
+footer p {
+    color: white;
+    font-weight: bold;
+}
+
+iframe {
+    border-radius: 1.5em;
+    margin-bottom: 25px;
+    
+}
+
+#frame {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 25px;
+}
+
+#frame h1 {
+    color: #2e4757;
+    font-size: 46px;
+    font-family: 'Oswald', sans-serif;
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+
+  .text-box > p {
+    font-size: 25px;
+    font-weight: bold;
+    max-width: auto;
+    overflow: hidden; /* Ensures the content is not revealed until the animation */
+    border-right: 0em solid #eceae4; /* The typwriter cursor */
+    white-space: nowrap; /* Keeps the content on a single line */
+    margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+    letter-spacing: .13em; /* Adjust as needed */
+    animation: 
+      typing 4s steps(70, end),
+      blink-caret .75s step-end infinite;
+    margin-bottom: 5px;
+  }
+  
+  /* The typing effect */
+  @keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+  }
+  
+  /* The typewriter cursor effect */
+  @keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: #888; }
+  }
+
+  .zoom {
+    padding: 50px;
+    transition: transform .2s; /* Animation */
+  
+    
+  }
+  
+  .zoom:hover {
+    transform: scale(1.1); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+  }
+
+  a {
+    color: white;
+    font-size: 25px;
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .ofertas a {
+    color:#2e4757;
+   
+
+  }

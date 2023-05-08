@@ -11,11 +11,12 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 class LoginController extends AbstractController
 {
 	/**
-	 * @Route("/hola")
+	 * @Route("/", name="promocion")
 	 */
-	public function hola() {
-		return new Response('hola');
+	public function promocion() {
+		return $this->render('promocion.html.twig');
 	}
+
 
 	/**
      * @Route("/login", name="controlador_login")
