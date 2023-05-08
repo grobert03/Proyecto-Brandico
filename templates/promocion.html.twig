@@ -1,114 +1,115 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv='cache-control' content='no-cache'> 
-    <meta http-equiv='expires' content='0'> 
-    <meta http-equiv='pragma' content='no-cache'>
-    <title>Brandico</title>
-    <link rel="stylesheet" href="{{ asset('css/promocion.css') }}">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Oswald&family=Poppins:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet">
-</head>
-<body>
-    <section class="header">
-        <nav>
-            <div class="header-elements">
-                <img src="{{ asset('img/logoHeader.png') }}">
-                <span>BRANDICO</span>
-            </div>
-            <div class="header-elements">
-                <a href="unirse.html">Únete a nuestro equipo</a>
-            </div>
-        </nav>
-    </section>
-    <div class="text-box">
-        <p>Dando visibilidad a las pequeñas y medianas empresas</p>
-        <div class="delta">
-            By
-            <img src="{{ asset('img/deltaWhite.png') }}">
-        </div>
-    </div>
+{% extends "base.html.twig" %}
+{% block head %}
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv='cache-control' content='no-cache'>
+		<meta http-equiv='expires' content='0'>
+		<meta http-equiv='pragma' content='no-cache'>
+		<title>Brandico</title>
+		<link rel="stylesheet" href="{{ asset('css/promocion.css') }}">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Oswald&family=Poppins:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet">
+	</head>
+{% endblock %}
 
-    <section class="necesidades">
-        <h1>NUESTROS OBJETIVOS</h1>
-        
-        <div class="row">
-            <div class="course-col zoom">
-                <img src="{{ asset('img/account-multiple-check.png') }}">
-                <p>Aumentar la clientela</p>
-                
-            </div>
-            <div class="course-col zoom">
-                <img src="{{ asset('img/employee-group-solid.png') }}">
-                <p>Destacar el buen servicio al cliente y la atención personalizada</p>              
-            </div>
-            <div class="course-col zoom">
-                <img src="{{ asset('img/waiter-icon.png') }}">
-                <p>Reducir el desempleo: Actualmente, la mayor pérdida de empleo (80%) se produce en las pequeñas y medianas empresas.</p>
-            </div>
-        </div>
-    </section>
+{% block content %}
+	<section class="header">
+		<nav>
+			<div class="header-elements">
+				<img src="{{ asset('img/logoHeader.png') }}">
+				<span>BRANDICO</span>
+			</div>
+			<div class="header-elements">
+				<a href="unirse.html">Únete a nuestro equipo</a>
+			</div>
+		</nav>
+	</section>
+	<div class="text-box">
+		<p>Dando visibilidad a las pequeñas y medianas empresas</p>
+		<div class="delta">
+			By
+			<img src="{{ asset('img/deltaWhite.png') }}">
+		</div>
+	</div>
 
-    <section class="ofertas empresa">
-        <h1>PARA EMPRESAS</h1>
-        <div class="contenido">
-            <div class="flex-element">
-                <h3>PLAN BÁSICO</h3>
-                <ul>
-                    <li>Promoción y anuncios</li>
-                    <li>Acceso a los clientes</li>
-                </ul>
-                <div class="images">
-                    <img src="{{ asset('img/ad.png') }}">
-                </div>
-            </div>
-           
-            <div class="flex-element">
-                <h3>PLAN PREMIUM</h3>
-                <ul>
-                    <li>Plan básico</li>
-                    <li>+</li>
-                    <li>Web propia creada por nuestros desarrolladores</li>
-                    <li>Gestión de redes sociales</li>
-                </ul>
-                <div class="images">
-                    <img src="{{ asset('img/ad.png') }}">
-                    <img src="{{ asset('img/web2.png') }}">
-                    <img src="{{ asset('img/socialmedia2.png') }}">
-                </div>
-            </div>
+	<section class="necesidades">
+		<h1>NUESTROS OBJETIVOS</h1>
 
-        </div>
-    </section>
+		<div class="row">
+			<div class="course-col zoom">
+				<img src="{{ asset('img/account-multiple-check.png') }}">
+				<p>Aumentar la clientela</p>
 
-    <section class="ofertas cliente">
-        <h1>PARA CLIENTES</h1>
-        <div class="contenido">
-            <div class="flex-element">
-                <ul>
-                    <li>Descuentos</li>
-                    <li>Recompensas por lealtad</li>
-                    <li>Sorteos de productos</li>
-                </ul>
-            </div>
+			</div>
+			<div class="course-col zoom">
+				<img src="{{ asset('img/employee-group-solid.png') }}">
+				<p>Destacar el buen servicio al cliente y la atención personalizada</p>
+			</div>
+			<div class="course-col zoom">
+				<img src="{{ asset('img/waiter-icon.png') }}">
+				<p>Reducir el desempleo: Actualmente, la mayor pérdida de empleo (80%) se produce en las pequeñas y medianas empresas.</p>
+			</div>
+		</div>
+	</section>
 
-        </div>
-    </section>
-    <section id="frame">
-        <h1>SABER MÁS</h1>
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/UdCGSLfdw8Y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </section>
+	<section class="ofertas empresa">
+		<h1>PARA EMPRESAS</h1>
+		<div class="contenido">
+			<div class="flex-element">
+				<h3>PLAN BÁSICO</h3>
+				<ul>
+					<li>Promoción y anuncios</li>
+					<li>Acceso a los clientes</li>
+				</ul>
+				<div class="images">
+					<img src="{{ asset('img/ad.png') }}">
+				</div>
+			</div>
 
-    <section class="ofertas">
-        <h1>¿Quieres trabajar con nosotros?</h1>
-        <a href="unirse.html">Únete a nuestro equipo!</a>
-    </section>
-    <footer>
-        <p>Made by DeltaDev</p>
-    </footer>
-</body>
-</html>
+			<div class="flex-element">
+				<h3>PLAN PREMIUM</h3>
+				<ul>
+					<li>Plan básico</li>
+					<li>+</li>
+					<li>Web propia creada por nuestros desarrolladores</li>
+					<li>Gestión de redes sociales</li>
+				</ul>
+				<div class="images">
+					<img src="{{ asset('img/ad.png') }}">
+					<img src="{{ asset('img/web2.png') }}">
+					<img src="{{ asset('img/socialmedia2.png') }}">
+				</div>
+			</div>
+
+		</div>
+	</section>
+
+	<section class="ofertas cliente">
+		<h1>PARA CLIENTES</h1>
+		<div class="contenido">
+			<div class="flex-element">
+				<ul>
+					<li>Descuentos</li>
+					<li>Recompensas por lealtad</li>
+					<li>Sorteos de productos</li>
+				</ul>
+			</div>
+
+		</div>
+	</section>
+	<section id="frame">
+		<h1>SABER MÁS</h1>
+		<iframe width="560" height="315" src="https://www.youtube.com/embed/UdCGSLfdw8Y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+	</section>
+
+	<section class="ofertas">
+		<h1>¿Quieres trabajar con nosotros?</h1>
+		<a href="unirse.html">Únete a nuestro equipo!</a>
+	</section>
+	<footer>
+		<p>Made by DeltaDev</p>
+	</footer>
+{% endblock %}
