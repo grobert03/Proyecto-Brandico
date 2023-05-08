@@ -1,24 +1,29 @@
-{# templates/login.html.twig #}
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8">
-		<link rel="stylesheet" href="style-login.css">
-		<title>Bienvenido</title>
-	</head>
-	<body>
-		<h2>Acceso</h2>
-		<hr>
-		<form action="{{ path('controlador_login') }}" method="post">
-			<br>
-			Usuario:
-			<input id="username" type="text" name="_username"/>
-			<br>
-			Clave
-			<input id="password" type="password" name="_password"/>
-			<br>
-			<button type="submit">login</button>
-			<a href="{{ path('signup') }}">No tienes una cuenta?</a><br>
-		</form>
-	</body>
-</html>
+{% extends 'base.html.twig' %}
+
+{% block head %}
+	<link rel="stylesheet" href="{{ asset('css/login.css') }}">
+	<title>Log In</title>
+{% endblock %}
+
+
+{% block content %}
+	<form action="{{ path('controlador_login') }}" method="post">
+		<div id='form-header'>
+			<span>BRANDICO</span>
+			<img src="{{ asset('img/logoHeader.png') }}">
+		</div>
+		<div class="form-element">
+			<label for="correo">Correo:</label>
+			<input id="correo" type="email" name="_username"/>
+		</div>
+		<div class="form-element">
+			<label for="pass">Contraseña:</label>
+			<input id="pass" type="password" name="_password"/>
+		</div>
+		<input type="submit" value="Entrar">
+		<div class="form-element">
+			<a href="{{ path('signup') }}">No tienes una cuenta?</a>
+			<a href="">Has olvidado tu contraseña?</a>
+		</div>
+	</form>
+{% endblock %}
