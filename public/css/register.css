@@ -78,8 +78,8 @@ input:focus {
 }
 
 .column.left h1.title.is-1 {
-    font-family: 'Oswald', 'SansSerif';
+    font-family: 'Poppins SemiBold', 'SansSerif';
     color: #2e4757;
     font-style: italic;
-    font-weight: 600;
+    font-weight: 500;
 }
