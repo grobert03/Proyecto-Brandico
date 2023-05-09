@@ -46,7 +46,7 @@ class Base extends AbstractController{
                 return $this->render("correo.html.twig");
             }else{
                 $entityManager = $this->getDoctrine()->getManager();
-                $correos = $this->getDoctrine()->getRepository(Usuario::class)->findBy(array('correo'  => $this->getUser()->getCorreo()));
+                $correos = $this->getDoctrine()->getRepository(Usuario::class)->findBy(array('correo'  => $_POST['correo']));
                 if(count($correos)==0){
                     $usuario = $this->getDoctrine()->getRepository(Usuario::class)->findOneBy(array('correo'  => $this->getUser()->getCorreo()));
                     $usuario->setCorreo($_POST['correo']);
@@ -59,7 +59,7 @@ class Base extends AbstractController{
                 return $this->render("correo.html.twig");
             }else{
                 $entityManager = $this->getDoctrine()->getManager();
-                $correos = $this->getDoctrine()->getRepository(Empresa::class)->findBy(array('correo'  => $this->getUser()->getCorreo()));
+                $correos = $this->getDoctrine()->getRepository(Empresa::class)->findBy(array('correo'  =>$_POST['correo']));
                 if(count($correos)==0){
                     $empresa = $this->getDoctrine()->getRepository(Empresa::class)->findOneBy(array('correo'  => $this->getUser()->getCorreo()));
                     $empresa->setCorreo($_POST['correo']);
