@@ -8,79 +8,185 @@
     <title>Sign Up</title>
     <!-- Importar Alpine.js -->
     <script src="//unpkg.com/alpinejs" defer></script>
+    <!-- Importar Bulma CSS-->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/15181efa86.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://unpkg.com/bulma@0.9.0/css/bulma.min.css" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/register.css') }}">
 </head>
 <body>
-    <h1>Registro</h1>
-    <hr>
+    <section class="container">
+        <div class="columns is-multiine">
+            <div class="column is-8 is-offset-2 register">
+                <div class="columns">
+                    <div class="column left">
+                        <div class="is-flex is-align-items-center is-justify-content-flex-start">
+                            <figure class="image is-64x64">
+                                <img src="{{ asset('img/logoHeader.png') }}" alt="icono BRANDICO">
+                            </figure>
+                            <h1 class="title is-1" style="color: #2e4757">BRANDICO</h1>
+                        </div>
 
-    <div x-data="{ showUserForm: true }">
-        <button @click="showUserForm = true" :class="{ 'bg-blue-500': showUserForm }">Registro de usuario</button>
-        <button @click="showUserForm = false" :class="{ 'bg-blue-500': !showUserForm }">Registro de empresa</button>
+                        <h2 class="subtitle colored is-4">Vuelva a confiar en el comercio local</h2>
+                        <p>Aquí empieza el crecimiento de su negocio</p>
+                    </div>
+                    <div class="column right">
+                        <h1 class="title is-4 has-text-centered">Resgistrate</h1>
+                        <p class="description"></p>
+                        <!-- Div que controla los formularios, muestra primero el userForm -->
+                        <div x-data="{ showUserForm: true }">
+                            <div class="tabs">
+                                <ul>
+                                    <li :class="{ 'is-active': showUserForm }">
+                                        <a @click="showUserForm = true">Como usuario</a>
+                                    </li>
+                                    <li :class="{ 'is-active': !showUserForm }">
+                                        <a @click="showUserForm = false">Como empresa</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- x-data controla las variables con Alpine.js, @submit escucha el evento generado por el form -->
+                            <!-- .prevent previene que el navegador envie el formulario en modo por defecto -->
+                            <!-- x-model vincula el html al objeto formData  -->
+                            <form x-show="showUserForm" x-data="userForm()" @submit.prevent="submitUserForm">
+                                <input type="hidden" name="type" value="user">
+                                <div class="field">
+                                    <div class="control">
+                                        <label for="user-email">Email:</label>
+                                        <input class="input is-2" id="user-email" type="email" name="_user-email" x-model="formData.email" @input="validateEmail">
+                                        <span x-show="formData.email && emailValid" class="icon is-small is-right has-text-success"><i class="fas fa-check"></i></span>
+                                        <p x-show="formData.email && !emailValid" class="has-text-danger">El email debe tener el formato de someone@example.com</p>
+                                        <span x-show="formData.email && !emailValid" class="icon is-small is-right has-text-danger"><i class="fas fa-times"></i></span>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="control">
+                                        <label for="user-password">Clave:</label>
+                                        <input class="input is-2"  id="user-password" type="password" name="_user-password" x-model="formData.password">
+                                        <input id="user-showPassword" type="checkbox" @click="showPassword('user-password')">
+                                        <label for="user-showPassword">Mostrar Clave</label>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="control">
+                                        <label for="user-dni">DNI:</label>
+                                        <input class="input is-2"  id="user-dni" type="text" name="_user-dni" x-model="formData.dni" @input="validateDNI">
+                                        <span x-show="formData.dni && dniValid" class="icon is-small is-right has-text-success"><i class="fas fa-check"></i></span>
+                                        <p x-show="formData.dni && !dniValid" class="has-text-danger">El dni debe tener 8 digitos y una letra Mayúscula</p>
+                                        <span x-show="formData.dni && !dniValid" class="icon is-small is-right has-text-danger"><i class="fas fa-times"></i></span>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="control">
+                                        <label for="user-name">Nombre:</label>
+                                        <input class="input is-2"  id="user-name" type="text" name="_user-name" x-model="formData.name" @input="validateNameSurName('name')">
+                                        <span x-show="formData.name && nameValid" class="icon is-small is-right has-text-success"><i class="fas fa-check"></i></span>
+                                        <p x-show="formData.name && !nameValid" class="has-text-danger">Rellene el campo de Nombre</p>
+                                        <span x-show="formData.name && !nameValid" class="icon is-small is-right has-text-danger"><i class="fas fa-times"></i></span>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="control">
+                                        <label for="user-surname">Apellidos:</label>
+                                        <input class="input is-2"  id="user-surname" type="text" name="_user-surname" x-model="formData.surname" @input="validateNameSurName('surname')">
+                                        <span x-show="formData.surname && surnameValid" class="icon is-small is-right has-text-success"><i class="fas fa-check"></i></span>
+                                        <p x-show="formData.surname && !surnameValid" class="has-text-danger">Rellene el campo de Apellidos</p>
+                                        <span x-show="formData.surname && !surnameValid" class="icon is-small is-right has-text-danger"><i class="fas fa-times"></i></span>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="control">
+                                        <label for="user-phone">Teléfono:</label>
+                                        <input class="input is-2"  id="user-phone" type="text" name="_user-phone" x-model="formData.phone" @input="validatePhone">
+                                        <span x-show="formData.phone && phoneValid" class="icon is-small is-right has-text-success"><i class="fas fa-check"></i></span>
+                                        <p x-show="formData.phone && !phoneValid" class="has-text-danger">El teléfono debe tener 9 dígitos</p>
+                                        <span x-show="formData.phone && !phoneValid" class="icon is-small is-right has-text-danger"><i class="fas fa-times"></i></span>
+                                    </div>
+                                </div>
+                                <!-- x-text hace un bind del elemento al texto de la etiqueta -->
+                                <div class="has-text-centered">
+                                    <button class="button is-link is-block is-primary is-fullwidth is-medium is-info" style="background-color: #2e4757" :disabled="formLoading" x-text="buttonRegistroText"></button>
+                                    <a href="{{ path('controlador_login') }}">Volver a Login</a>
+                                    <div x-text="formMessage"></div>
+                                </div>
+                            </form>
 
-        <!-- x-data controla las variables con Alpine.js, @submit escucha el evento generado por el form -->
-        <!-- .prevent previene que el navegador envie el formulario en modo por defecto -->
-        <!-- x-model vincula el html al objeto formData  -->
-        <form x-show="showUserForm" x-data="userForm()" @submit.prevent="submitUserForm">
-            <input type="hidden" name="type" value="user">
-            <br>
-            <label for="user-email">Email:</label>
-            <input id="user-email" type="email" name="_user-email" x-model="formData.email">
-            <br>
-            <label for="user-password">Clave:</label>
-            <input id="user-password" type="password" name="_user-password" x-model="formData.password">
-            <input id="user-showPassword" type="checkbox" @click="showPassword('user-password')">
-            <label for="user-showPassword">Mostrar Clave</label>
-            <br>
-            <label for="user-dni">DNI:</label>
-            <input id="user-dni" type="text" name="_user-dni" x-model="formData.dni">
-            <br>
-            <label for="user-name">Nombre:</label>
-            <input id="user-name" type="text" name="_user-name" x-model="formData.name">
-            <br>
-            <label for="user-surname">Apellidos:</label>
-            <input id="user-surname" type="text" name="_user-surname" x-model="formData.surname">
-            <br>
-            <label for="user-phone">Teléfono:</label>
-            <input id="user-phone" type="text" name="_user-phone" x-model="formData.phone">
-            <br>
-            <!-- x-text hace un bind del elemento al texto de la etiqueta -->
-            <button :disabled="formLoading" x-text="buttonRegistroText"></button>
-            <a href="{{ path('controlador_login') }}">Volver a Login</a>
-            <div x-text="formMessage"></div>
-        </form>
-
-        <form x-show="!showUserForm" x-data="companyForm()" @submit.prevent="submitCompanyForm">
-            <input type="hidden" name="type" value="company">
-            <br>
-            <label for="company-email">Email:</label>
-            <input id="company-email" type="email" name="_company-email" x-model="formData.email">
-            <br>
-            <label for="company-password">Clave:</label>
-            <input id="company-password" type="password" name="_company-password" x-model="formData.password">
-            <input id="company-showPassword" type="checkbox" @click="showPassword('company-password')">
-            <label for="company-showPassword">Mostrar Clave</label>
-            <br>
-            <label for="company-cif">CIF:</label>
-            <input id="company-cif" type="text" name="_company-cif" x-model="formData.cif">
-            <br>
-            <label for="company-name">Nombre:</label>
-            <input id="company-name" type="text" name="_company-name" x-model="formData.name">
-            <br>
-            <label for="company-phone">Teléfono:</label>
-            <input id="company-phone" type="text" name="_company-phone" x-model="formData.phone">
-            <br>
-            <label for="company-direction">Dirección:</label>
-            <input id="company-direction" type="text" name="_company-direction" x-model="formData.direction">
-            <br>
-            <label for="company-province">Provincia:</label>
-            <input id="company-province" type="text" name="_company-province" x-model="formData.province">
-            <br>
-            <button :disabled="formLoading" x-text="buttonRegistroText"></button>
-            <a href="{{ path('controlador_login') }}">Volver a Login</a>
-            <div x-text="formMessage"></div>
-        </form>
-    </div>
-
+                            <form x-show="!showUserForm" x-data="companyForm()" @submit.prevent="submitCompanyForm">
+                                <input type="hidden" name="type" value="company">
+                                <div class="field">
+                                    <div class="control">
+                                        <label for="company-email">Email:</label>
+                                        <input class="input is-2" id="company-email" type="email" name="_company-email" x-model="formData.email" @input="validateEmail">
+                                        <span x-show="formData.email && emailValid" class="icon is-small is-right has-text-success"><i class="fas fa-check"></i></span>
+                                        <p x-show="formData.email && !emailValid" class="has-text-danger">El email debe tener el formato de someone@example.com</p>
+                                        <span x-show="formData.email && !emailValid" class="icon is-small is-right has-text-danger"><i class="fas fa-times"></i></span>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="control">
+                                        <label for="company-password">Clave:</label>
+                                        <input class="input is-2" id="company-password" type="password" name="_company-password" x-model="formData.password">
+                                        <input id="company-showPassword" type="checkbox" @click="showPassword('company-password')">
+                                        <label for="company-showPassword">Mostrar Clave</label>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="control">
+                                        <label for="company-cif">CIF:</label>
+                                        <input class="input is-2" id="company-cif" type="text" name="_company-cif" x-model="formData.cif" @input="validateCIF">
+                                        <span x-show="formData.cif && cifValid" class="icon is-small is-right has-text-success"><i class="fas fa-check"></i></span>
+                                        <p x-show="formData.cif && !cifValid" class="has-text-danger">El cif debe tener el formato de AXXXXXXXX o AXXXXXXXA</p>
+                                        <span x-show="formData.cif && !cifValid" class="icon is-small is-right has-text-danger"><i class="fas fa-times"></i></span>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="control">
+                                        <label for="company-name">Nombre:</label>
+                                        <input class="input is-2" id="company-name" type="text" name="_company-name" x-model="formData.name" @input="validateNameDirProvince('name')">
+                                        <span x-show="formData.name && nameValid" class="icon is-small is-right has-text-success"><i class="fas fa-check"></i></span>
+                                        <p x-show="formData.name && !nameValid" class="has-text-danger">Rellene el campo de Nombre</p>
+                                        <span x-show="formData.name && !nameValid" class="icon is-small is-right has-text-danger"><i class="fas fa-times"></i></span>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="control">
+                                        <label for="company-phone">Teléfono:</label>
+                                        <input class="input is-2" id="company-phone" type="text" name="_company-phone" x-model="formData.phone" @input="validatePhone">
+                                        <span x-show="formData.phone && phoneValid" class="icon is-small is-right has-text-success"><i class="fas fa-check"></i></span>
+                                        <p x-show="formData.phone && !phoneValid" class="has-text-danger">El teléfono debe tener 9 dígitos</p>
+                                        <span x-show="formData.phone && !phoneValid" class="icon is-small is-right has-text-danger"><i class="fas fa-times"></i></span>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="control">
+                                        <label for="company-direction">Dirección:</label>
+                                        <input class="input is-2" id="company-direction" type="text" name="_company-direction" x-model="formData.direction" @input="validateNameDirProvince('direction')">
+                                        <span x-show="formData.direction && directionValid" class="icon is-small is-right has-text-success"><i class="fas fa-check"></i></span>
+                                        <p x-show="formData.direction && !directionValid" class="has-text-danger">Rellene el campo de Dirección</p>
+                                        <span x-show="formData.direction && !directionValid" class="icon is-small is-right has-text-danger"><i class="fas fa-times"></i></span>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="control">
+                                        <label for="company-province">Provincia:</label>
+                                        <input class="input is-2" id="company-province" type="text" name="_company-province" x-model="formData.province" @input="validateNameDirProvince('province')">
+                                        <span x-show="formData.province && provinceValid" class="icon is-small is-right has-text-success"><i class="fas fa-check"></i></span>
+                                        <p x-show="formData.province && !provinceValid" class="has-text-danger">Rellene el campo de Provincia</p>
+                                        <span x-show="formData.province && !provinceValid" class="icon is-small is-right has-text-danger"><i class="fas fa-times"></i></span>
+                                    </div>
+                                </div>
+                                <div class="has-text-centered">
+                                    <button class="button is-link is-block is-primary is-fullwidth is-medium is-info" style="background-color: #2e4757" :disabled="formLoading" x-text="buttonRegistroText"></button>
+                                    <a href="{{ path('controlador_login') }}">Volver a Login</a>
+                                    <div x-text="formMessage"></div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     <script>
         const FORM_URL = "{{ path('createuser') }}"
 
@@ -98,7 +204,65 @@
                 formMessage: "",
                 formLoading: false,
                 buttonRegistroText: "Registrarse",
+
+                //Variables para controlar la validez de los campos del Email, DNI, nombre, apellido, teléfono
+                emailValid: false,
+                dniValid: false,
+                nameValid: false,
+                surnameValid: false,
+                phoneValid: false,
+
+                //Validar Email
+                validateEmail() {
+                    const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+                    if (!emailRegex.test(this.formData.email))
+                        this.emailValid = false
+                    else
+                        this.emailValid = true
+                },
+
+                //Validar DNI
+                validateDNI() {
+                    const dniRegex = /^\d{8}[A-Z]$/
+                    if(!dniRegex.test(this.formData.dni))
+                        this.dniValid = false
+                    else
+                        this.dniValid = true
+                },
+
+                //Validar nombre y apellido
+                validateNameSurName(campo) {
+                    if (!this.formData[campo].length)
+                        this[campo + 'Valid'] = false
+                    else
+                        this[campo + 'Valid'] = true
+                },
+
+                //Validar Teléfono
+                validatePhone() {
+                    const phoneRegex = /^\d{9}$/
+                    if (!phoneRegex.test(this.formData.phone))
+                        this.phoneValid = false
+                    else
+                        this.phoneValid = true
+                },
+
                 submitUserForm() {
+                    //Asegurarse que todos los campos tienen datos antes de mandarse
+                    if (!this.formData.email.length || !this.formData.password.length || !this.formData.dni.length ||
+                        !this.formData.name.length || !this.formData.surname.length || !this.formData.phone.length) {
+                        alert("Debe rellenar todos los campos requeridos")
+                        return
+                    }
+
+                    // Comprobar si todos los campos son válidos
+                    if (!this.dniValid || !this.emailValid ||
+                        !this.nameValid || !this.surnameValid || !this.phoneValid) {
+                        alert("Debe corregir los errores en el formulario antes de enviarlo")
+                        return
+                    }
+
+                    //Enviar el formulario
                     this.formMessage = ""
                     //Para cuando se esté enviando el formulario se deshabilite el botón
                     this.formLoading = true
@@ -109,7 +273,7 @@
                             "Content-Type": "application/json",
                             Accept: "application/json",
                         },
-                        //JSON.stringtify para serealizar los datos en un string
+                        //JSON.stringtify para serializar los datos en un string
                         body: JSON.stringify({
                             email: this.formData.email,
                             password: this.formData.password,
@@ -121,16 +285,20 @@
                         }),
                     })
                         //Cuando termine AJAX se deja los valores por defecto y mostrar un mensaje de éxito
-                        .then(() => {
-                            this.formData.email = ""
-                            this.formData.password = ""
-                            this.formData.dni = ""
-                            this.formData.name = ""
-                            this.formData.surname = ""
-                            this.formData.phone = ""
-                            this.formMessage = "Formulario enviado correctamente"
+                        .then((response) => {
+                            if (response.status === 201) {
+                                this.formData.email = ""
+                                this.formData.password = ""
+                                this.formData.dni = ""
+                                this.formData.name = ""
+                                this.formData.surname = ""
+                                this.formData.phone = ""
+                                this.formMessage = "Se ha registrado correctamente"
+                            } else {
+                                this.formMessage = "Su registro ha fallado"
+                            }
                         })
-                        .catch(() => {
+                        .catch((error) => {
                             this.formMessage = "Algo ha ido mal"
                         })
                         .finally(() => {
@@ -156,7 +324,66 @@
                 formMessage: "",
                 formLoading: false,
                 buttonRegistroText: "Registrarse",
+
+                //Variables para controlar la validez de los campos del Email, CIF, nombre, teléfono, Dirección y Provincia
+                emailValid: false,
+                cifValid: false,
+                nameValid: false,
+                phoneValid: false,
+                directionValid: false,
+                provinceValid: false,
+
+                //Validar Email
+                validateEmail() {
+                    const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+                    if (!emailRegex.test(this.formData.email))
+                        this.emailValid = false
+                    else
+                        this.emailValid = true
+                },
+
+                //Validar CIF
+                validateCIF() {
+                    const cifRegex = /^[A-Z]\d{8}|[A-Z]\d{7}[A-Z]$/
+                    if(!cifRegex.test(this.formData.cif))
+                        this.cifValid = false
+                    else
+                        this.cifValid = true
+                },
+
+                //Validar nombre, dirección y provincia
+                validateNameDirProvince(campo) {
+                    if (!this.formData[campo].length)
+                        this[campo + 'Valid'] = false
+                    else
+                        this[campo + 'Valid'] = true
+                },
+
+                //Validar Teléfono
+                validatePhone() {
+                    const phoneRegex = /^\d{9}$/
+                    if (!phoneRegex.test(this.formData.phone))
+                        this.phoneValid = false
+                    else
+                        this.phoneValid = true
+                },
+
                 submitCompanyForm() {
+                    //Asegurarse que todos los campos tienen datos antes de mandarse
+                    if (!this.formData.email.length || !this.formData.password.length || !this.formData.cif.length ||
+                        !this.formData.name.length || !this.formData.phone.length || !this.formData.direction.length ||
+                        !this.formData.province.length){
+                        alert("Debe rellenar todos los campos requeridos")
+                        return
+                    }
+
+                    // Comprobar si todos los campos son válidos
+                    if (!this.emailValid || !this.cifValid ||
+                        !this.nameValid || !this.phoneValid || !this.directionValid || !this.provinceValid) {
+                        alert("Debe corregir los errores en el formulario antes de enviarlo")
+                        return
+                    }
+
                     this.formMessage = ""
                     this.formLoading = true
                     this.buttonRegistroText = "Enviando..."
@@ -177,17 +404,21 @@
                             type: "company" //Se agrega el tipo de usuario aquí
                         }),
                     })
-                        .then(() => {
-                            this.formData.email = ""
-                            this.formData.password = ""
-                            this.formData.cif = ""
-                            this.formData.name = ""
-                            this.formData.phone = ""
-                            this.formData.direction = ""
-                            this.formData.province = ""
-                            this.formMessage = "Formulario enviado correctamente"
+                        .then((response) => {
+                            if (response.status === 201) {
+                                this.formData.email = ""
+                                this.formData.password = ""
+                                this.formData.cif = ""
+                                this.formData.name = ""
+                                this.formData.phone = ""
+                                this.formData.direction = ""
+                                this.formData.province = ""
+                                this.formMessage = "Se ha registrado correctamente"
+                            } else {
+                                this.formMessage = "Su registro ha fallado"
+                            }
                         })
-                        .catch(() => {
+                        .catch((error) => {
                             this.formMessage = "Algo ha ido mal"
                         })
                         .finally(() => {
@@ -200,7 +431,7 @@
 
         function showPassword(inputId) {
             //Función que muestra/oculta el texto del campo de clave
-            //A la función se le pasa el nombre del id del input password de cada formulario
+            //A la función se le pasa el nombre del ID del input password de cada formulario
             var password = document.getElementById(inputId);
             if (password.type === "password")
                 password.type = "text"
