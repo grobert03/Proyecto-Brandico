@@ -125,9 +125,17 @@ class Usuario implements UserInterface, \Serializable {
             ) = unserialize($serialized);
     }
 
-    public function getRoles(){
+    /*public function getRoles(){
         return array('ROLE_USER', 'ROLE_ADMINISTRADOR');          
-    }
+    }*/
+
+    public function getRoles()
+    {
+        if($this->rol==1)
+			return array('ROLE_USER', 'ROLE_USUARIO' ,'ROLE_ADMIN');
+        else
+            return array('ROLE_USER', 'ROLE_USUARIO');            
+        }
 
     public function getPassword(){
         return $this->getClave();

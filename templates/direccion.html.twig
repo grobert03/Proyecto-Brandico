@@ -1,0 +1,14 @@
+{# templates/direccion.html.twig #}
+{% extends 'base.html.twig' %}
+{% block head %}
+	{#<link rel="stylesheet" href="{{ asset('css/login.css') }}">#}
+	<title>Actualizar dirección</title>
+{% endblock %}
+{% block content %}
+    <center><h3>CAMBIO DE DIRECCIÓN</h3></center>
+    <form action="{{path('actualizardireccion')}}" method="post">
+        Introduzca la nueva dirección: <input type="text" name="direccion">
+        <button type="submit"> Actualizar </button>
+    </form>
+    <a href="{{path('miperfil')}}" style='color:grey; font-size:13px'> Atrás</a>
+{% endblock %}

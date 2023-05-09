@@ -1,0 +1,14 @@
+{# templates/correo.html.twig #}
+{% extends 'base.html.twig' %}
+{% block head %}
+	{#<link rel="stylesheet" href="{{ asset('css/login.css') }}">#}
+	<title>Actualizar correo</title>
+{% endblock %}
+{% block content %}
+    <center><h3>CAMBIO DE CORREO</h3></center>
+    <form action="{{path('actualizarcorreo')}}" method="post">
+        Introduzca el nuevo correo: <input type="email" name="correo">
+        <button type="submit"> Actualizar </button>
+    </form>
+    <a href="{{path('miperfil')}}" style='color:grey; font-size:13px'> Atrás</a>
+{% endblock %}

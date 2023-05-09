@@ -1,0 +1,14 @@
+{# templates/provinica.html.twig #}
+{% extends 'base.html.twig' %}
+{% block head %}
+	{#<link rel="stylesheet" href="{{ asset('css/login.css') }}">#}
+	<title>Actualizar provincia</title>
+{% endblock %}
+{% block content %}
+    <center><h3>CAMBIO DE PROVINCIA</h3></center>
+    <form action="{{path('actualizarprovincia')}}" method="post">
+        Introduzca la nueva provincia: <input type="text" name="provincia">
+        <button type="submit"> Actualizar </button>
+    </form>
+    <a href="{{path('miperfil')}}" style='color:grey; font-size:13px'> Atrás</a>
+{% endblock %}

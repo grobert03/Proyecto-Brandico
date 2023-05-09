@@ -1,0 +1,37 @@
+{# templates/miperfil.html.twig #}
+{% extends 'base.html.twig' %}
+{% block head %}
+	{#<link rel="stylesheet" href="{{ asset('css/login.css') }}">#}
+	<title>Mi perfil</title>
+{% endblock %}
+{% block content %}
+{% if is_granted('ROLE_USUARIO') %}
+    <center><h3>PERFIL DE USUARIO</h3></center>
+    Nombre: {{usuario.nombre}} <br>
+    Apellidos: {{usuario.apellidos}} <br> 
+    DNI: {{usuario.dni}} <br>  
+    <br>
+    DATOS DE CONTACTO <br>
+    Correo: {{usuario.correo}} 
+    <a href="{{path('actualizarcorreo')}}">Actualizar</a> <br>
+    Teléfono: {{usuario.telefono}} 
+    <a href="{{path('actualizartelefono')}}">Actualizar</a>
+{% elseif is_granted('ROLE_EMPRESA') %}
+    <center><h3>PERFIL DE EMPRESA</h3></center>
+    Nombre: {{empresa.nombre}} <br>
+    CIF: {{empresa.cif}} <br> 
+    <br>
+    DATOS DE CONTACTO <br>
+    Correo: {{empresa.correo}}
+    <a href="{{path('actualizarcorreo')}}">Actualizar</a><br>
+    Teléfono: {{empresa.telefono}} 
+    <a href="{{path('actualizartelefono')}}">Actualizar</a>
+    <br><br>
+    UBICACIÓN <br>
+    Dirección: {{empresa.direccion}} 
+    <a href="{{path('actualizardireccion')}}">Actualizar</a><br>
+    Provincia: {{empresa.provincia}} 
+    <a href="{{path('actualizarprovincia')}}">Actualizar</a>
+    <br>
+{% endif %}
+{% endblock %}
