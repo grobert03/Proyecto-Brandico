@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <form action="{{ path('cambiar_pass') }}" method="POST">
+        Nueva contraseña: <input type="password" name="pass">
+        Confirmar contraseña: <input type="password" name="confirmar_pass">
+        <input type='hidden' name='correo' value='{{ correo }}'>
+        <input type="submit" value="Cambiar">
+    </form>
+{% endblock %}

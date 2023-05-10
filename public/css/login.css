@@ -111,7 +111,7 @@ textarea {
     width: 95%;
 }
 
-input[type=submit] {
+button {
     padding: 15px;  
     border: none;
     cursor: pointer;

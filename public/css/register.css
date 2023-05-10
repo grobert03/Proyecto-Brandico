@@ -83,3 +83,9 @@ input:focus {
     font-style: italic;
     font-weight: 500;
 }
+
+h1 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    font-style: italic;
+}

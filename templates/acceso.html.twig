@@ -2,12 +2,16 @@
 
 {% block head %}
 	<link rel="stylesheet" href="{{ asset('css/login.css') }}">
+	<script>
+		let ruta_enviar_correo = "{{ path('enviar_correo') }}";
+	</script>
+	<script src="{{ asset('js/login.js') }}" defer></script>
 	<title>Log In</title>
 {% endblock %}
 
 
 {% block content %}
-	<form action="{{ path('controlador_login') }}" method="post">
+	<form id='form-login' x-data="{show: true, texto:'Password'}" action="{{ path('controlador_login') }}" method="post">
 		<div id='form-header'>
 			<span>BRANDICO</span>
 			<img src="{{ asset('img/logoHeader.png') }}">
@@ -16,14 +20,14 @@
 			<label for="correo">Correo:</label>
 			<input id="correo" type="email" name="_username"/>
 		</div>
-		<div class="form-element">
+		<div x-show="show" class="form-element" x-transition>
 			<label for="pass">Contraseña:</label>
 			<input id="pass" type="password" name="_password"/>
 		</div>
-		<input type="submit" value="Entrar">
+		<button type="button" @click="!show ? enviarCorreo() : enviarFormulario()" x-text="show ? 'Entrar' : 'Enviar correo'"></button>
 		<div class="form-element">
 			<a href="{{ path('signup') }}">No tienes una cuenta?</a>
-			<a href="">Has olvidado tu contraseña?</a>
+			<a id='link-pass'  x-on:click="show = !show" x-text="show ? '¿Has olvidado tu contraseña?' : 'Volver al login'" href="#"></a>
 		</div>
 	</form>
 {% endblock %}
