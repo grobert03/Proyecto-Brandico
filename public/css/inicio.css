@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins');
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
 
 :root {
     --brandColor: #2e4757;
@@ -12,13 +13,16 @@
 }
 
 body {
-    background-color: #f7f7f7;
+    background-color: #f8f8f8;
     color: var(--textDark);
+    font-family: 'Montserrat';
 }
 
 /* Header */
 .hero.is-primary {
     background-color: var(--brandColor);
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+    color: white;
 }
 
 /* Logout */
@@ -44,6 +48,19 @@ body {
     font-weight: 500;
 }
 
+.buttons.publish {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 10px;
+}
+
+/*
+.hero.is-primary .title {
+    color: var(--brandColor);
+}
+*/
+
 /* Para cambiar el hover de los links de menú de navegación */
 .navbar-item:hover, .focus {
     background-color: var(--navbar-item-hover-bg) !important;
@@ -57,6 +74,10 @@ body {
 
 .button.is-link.is-info {
     background-color: var(--navbar-item-hover-color);
+}
+
+.section.feed {
+    padding-top: 0;
 }
 
 /* Propiedades del boton de scroll to top */
@@ -97,14 +118,29 @@ body {
     }
 }
 
+/* Cuando el ancho sea menor que 1561px no sólo se muestre los iconos el menú de navegación lateral */
+@media (max-width: 1561px) {
+    .navbar-item-text {
+        font-size: 0.8rem;
+        max-width: 80%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
 /* Para el menú de navegación siempre este hacia la izquierda sticky */
 @media screen and (min-width: 769px) {
     /* Ajustar posición del menú */
     .navbar {
-        height: 97vh;
+        height: 73vh;
         padding: 30px 20px 0px 20px;
+    }
+
+    .columns.is-gapless .column.is-2 .card {
+        margin-top: 50px;
         position: sticky;
-        top: 0;
+        top: 1vh;
     }
 
     .navbar-item {

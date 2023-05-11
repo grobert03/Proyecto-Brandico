@@ -34,40 +34,45 @@
     <div class="columns is-gapless">
         <!-- Navigation -->
         <div class="column is-2">
-            <nav class="navbar is-flex is-flex-direction-column" role="navigation" aria-label="main navigation">
-                <a class="navbar-item focus" href="{{ path('controlador_portal_inicio') }}">
-                    <div class="navbar-item-content">
-                                <span class="icon">
-                                    <i class="fas fa-home"></i>
-                                </span>
-                        <span class="navbar-item-text">Inicio</span>
-                    </div>
-                </a>
-                <a class="navbar-item" href="#">
-                    <div class="navbar-item-content">
-                                <span class="icon">
-                                    <i class="fas fa-search"></i>
-                                </span>
-                        <span class="navbar-item-text">Explorar</span>
-                    </div>
-                </a>
-                <a class="navbar-item" href="{{ path('miperfil') }}">
-                    <div class="navbar-item-content">
-                                <span class="icon">
-                                    <i class="fas fa-user"></i>
-                                </span>
-                        <span class="navbar-item-text">Perfil</span>
-                    </div>
-                </a>
-                <a class="navbar-item" href="#">
-                    <div class="navbar-item-content">
-                                <span class="icon">
-                                    <i class="fas fa-cog"></i>
-                                </span>
-                        <span class="navbar-item-text">Zona Admin</span>
-                    </div>
-                </a>
-            </nav>
+            <div class="card">
+                <div class="card-content">
+                    <nav class="navbar is-flex is-flex-direction-column" role="navigation" aria-label="main navigation">
+                        <a class="navbar-item focus" href="{{ path('controlador_portal_inicio') }}">
+                            <div class="navbar-item-content">
+                                            <span class="icon">
+                                                <i class="fas fa-home"></i>
+                                            </span>
+                                <span class="navbar-item-text">Inicio</span>
+                            </div>
+                        </a>
+                        <a class="navbar-item" href="#">
+                            <div class="navbar-item-content">
+                                            <span class="icon">
+                                                <i class="fas fa-search"></i>
+                                            </span>
+                                <span class="navbar-item-text">Explorar</span>
+                            </div>
+                        </a>
+                        <a class="navbar-item" href="{{ path('miperfil') }}">
+                            <div class="navbar-item-content">
+                                            <span class="icon">
+                                                <i class="fas fa-user"></i>
+                                            </span>
+                                <span class="navbar-item-text">Perfil</span>
+                            </div>
+                        </a>
+                        <a class="navbar-item" href="#">
+                            <div class="navbar-item-content">
+                                            <span class="icon">
+                                                <i class="fas fa-cog"></i>
+                                            </span>
+                                <span class="navbar-item-text">Zona Admin</span>
+                            </div>
+                        </a>
+                    </nav>
+                </div>
+            </div>
+
         </div>
         <!-- Secciones Publicar y post -->
         <div class="column">
@@ -81,24 +86,26 @@
                                     <div class="field">
                                         <label class="label">Publicar un mensaje:</label>
                                         <div class="control">
-                                                <textarea class="textarea" maxlength="280"
-                                                          placeholder="Escribe aquí tu mensaje (máximo 280 caracteres)"></textarea>
+                                                    <textarea class="textarea" maxlength="280"
+                                                              placeholder="Escribe aquí tu mensaje (máximo 280 caracteres)"></textarea>
                                         </div>
                                         <label class="label">Adjuntar imagen o video:</label>
                                         <div class="file">
                                             <label class="file-label">
                                                 <input class="file-input" type="file" name="resume">
                                                 <span class="file-cta">
-                                                            <span class="file-icon">
-                                                                <i class="fas fa-upload"></i>
+                                                                <span class="file-icon">
+                                                                    <i class="fas fa-upload"></i>
+                                                                </span>
+                                                                <span class="file-label">
+                                                                    Seleccionar archivo
+                                                                </span>
                                                             </span>
-                                                            <span class="file-label">
-                                                                Seleccionar archivo
-                                                            </span>
-                                                        </span>
                                             </label>
                                         </div>
-                                        <button class="button is-link is-info">Publicar</button>
+                                        <div class="buttons publish">
+                                            <button class="button is-link is-info">Publicar</button>
+                                        </div>
                                     </div>
                                 </form>
                             </div>
@@ -108,7 +115,7 @@
             </section>
 
             <!-- Post Feed -->
-            <section class="section">
+            <section class="section feed">
                 <div class="container">
                     <div class="card">
                         <div class="container">
@@ -137,16 +144,16 @@
                                         <small>11:09 PM - 9 May 2023</small>
                                         <br>
                                         <div class="buttons">
-                                            <button class="button is-primary">
-                                                        <span class="icon">
-                                                            <i class="fas fa-heart"></i>
-                                                        </span>
+                                            <button class="button is-danger">
+                                                            <span class="icon">
+                                                                <i class="fas fa-heart"></i>
+                                                            </span>
                                                 <span>12</span>
                                             </button>
-                                            <button class="button is-primary">
-                                                        <span class="icon">
-                                                            <i class="fas fa-comment"></i>
-                                                        </span>
+                                            <button class="button is-light">
+                                                            <span class="icon">
+                                                                <i class="fas fa-comment"></i>
+                                                            </span>
                                                 <span>4</span>
                                             </button>
                                         </div>
@@ -160,32 +167,32 @@
         </div>
         <div class="column is-2"></div>
         <button class="scroll-to-top" title="Volver arriba">
-            <span class="icon">
-                <i class="fas fa-arrow-up"></i>
-            </span>
+                <span class="icon">
+                    <i class="fas fa-arrow-up"></i>
+                </span>
         </button>
     </div>
-<script>
-    //Para el botón para subir arriba
-    document.addEventListener('DOMContentLoaded', function () {
-        var scrollBtn = document.querySelector('.scroll-to-top');
+    <script>
+        //Para el botón para subir arriba
+        document.addEventListener('DOMContentLoaded', function () {
+            var scrollBtn = document.querySelector('.scroll-to-top');
 
-        window.addEventListener('scroll', function () {
-            if (window.pageYOffset > 300) {
-                scrollBtn.classList.add('show');
-            } else {
-                scrollBtn.classList.remove('show');
-            }
-        });
+            window.addEventListener('scroll', function () {
+                if (window.pageYOffset > 300) {
+                    scrollBtn.classList.add('show');
+                } else {
+                    scrollBtn.classList.remove('show');
+                }
+            });
 
-        scrollBtn.addEventListener('click', function (e) {
-            e.preventDefault();
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
+            scrollBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
             });
         });
-    });
-</script>
+    </script>
 </body>
 </html>
