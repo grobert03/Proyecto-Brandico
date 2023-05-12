@@ -40,6 +40,12 @@ body {
     top: 0;
     right: 0;
     margin: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.logout-label {
+    margin-right: 5px;
 }
 
 .hero-body h1 {
@@ -54,12 +60,6 @@ body {
     align-items: center;
     margin-top: 10px;
 }
-
-/*
-.hero.is-primary .title {
-    color: var(--brandColor);
-}
-*/
 
 /* Para cambiar el hover de los links de menú de navegación */
 .navbar-item:hover, .focus {
@@ -96,6 +96,7 @@ body {
     text-align: center;
     cursor: pointer;
     transition: opacity 0.2s ease-in-out;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.3);
 }
 
 .scroll-to-top:hover {
@@ -106,45 +107,143 @@ body {
     transform: translateY(-2px);
 }
 
-.navbar {
+.navbar-item {
     font-size: large;
+    font-weight: 600;
 }
 
-/* Para pantallas pequeñas */
+.navbar ion-icon {
+    font-size: 22px !important;
+}
+
+/* Sección de subida de archivo */
+.file-label {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+}
+
+.file-label > * {
+    vertical-align: middle;
+}
+
+.file-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+}
+
+.file-name {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+    margin-left: 5px;
+    vertical-align: middle;
+}
+
+/* Para pantallas pequeñas el menú de navegación aparece encima de las secciones*/
 @media screen and (max-width: 768px) {
-    .navbar {
-        flex-direction: row;
-        text-align: center;
+    /* Para que los iconos del menú esten centrados con los enlaces */
+    .navbar-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
     }
-}
 
-/* Cuando el ancho sea menor que 1561px no sólo se muestre los iconos el menú de navegación lateral */
-@media (max-width: 1561px) {
+    .navbar-item-content {
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+    }
+
     .navbar-item-text {
-        font-size: 0.8rem;
-        max-width: 80%;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+        align-self: center;
+    }
+
+    /* Cmabiar el tamaño de los iconos */
+    .navbar-item-content ion-icon {
+        font-size: 16px !important;
+        padding-right: 5px;
     }
 }
 
-/* Para el menú de navegación siempre este hacia la izquierda sticky */
-@media screen and (min-width: 769px) {
+/* Cuando el ancho este entre 769px y 1023px solo se muestren los iconos del menú de navegación lateral */
+@media (min-width: 769px) and (max-width: 1023px) {
+    .navbar {
+        height: 73vh;
+        padding: 30px 20px 0px 20px;
+        position: sticky;
+        top: 0;
+    }
+
+    /* El div del menú de navegación se queda flotando a la izquierda */
+    .is-fixed-width {
+        margin-top: 50px;
+        top: 1vh;
+        width: 130px;
+    }
+
+    /* El card del menú es sticky cuando se hace scroll */
+    .is-fixed-width .card {
+        top: 1vh;
+        position: sticky;
+    }
+
+    .navbar-item-text {
+        display: none;
+    }
+
+    .espacioblanco {
+        display: none;
+    }
+}
+
+/* El menú de navegación es más grande siempre estar hacia la izquierda sticky */
+@media screen and (min-width: 1024px) {
     /* Ajustar posición del menú */
     .navbar {
         height: 73vh;
         padding: 30px 20px 0px 20px;
+        top: 0;
     }
 
-    .columns.is-gapless .column.is-2 .card {
+    /* El div del menú se queda flotando a la izquierda y además tiene un ancho fijo */
+    .is-fixed-width {
         margin-top: 50px;
-        position: sticky;
         top: 1vh;
+        width: 270px;
+    }
+
+    /* El card del menú es sticky cuando se hace scroll */
+    .is-fixed-width .card {
+        top: 1vh;
+        position: sticky;
+    }
+
+    .nav-card {
+        width: 300px !important;
+    }
+
+    .navbar-menu {
+        padding-top: 30px;
     }
 
     .navbar-item {
         margin: 5px;
+        font-size: large;
+        font-weight: 600;
+    }
+
+    .navbar-item ion-icon {
+        font-size: 22px !important;
+    }
+
+    .navbar-item-text {
+        display: inline;
     }
 
     .navbar-item-content {
@@ -152,14 +251,15 @@ body {
         align-items: center;
     }
 
-    .navbar-item-content .icon {
+    .navbar-item-content ion-icon {
         padding-right: 10px;
     }
 
     /* Ajustar posición de las secciones */
     .columns {
         display: flex;
-        flex-wrap: nowrap;
+        flex-wrap: wrap;
+        margin-left: 200px;
     }
 
     .column {
@@ -169,5 +269,9 @@ body {
 
     .column.is-2 {
         flex: 0 0 auto;
+    }
+
+    .sections {
+        margin-top: 80px;
     }
 }
