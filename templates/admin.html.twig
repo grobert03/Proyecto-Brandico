@@ -1,0 +1,105 @@
+{% extends 'base.html.twig' %}
+{% block title %}Administración
+{% endblock %}
+{% block head %}
+	<link rel="stylesheet" href="https://unpkg.com/bulma@0.9.0/css/bulma.min.css"/>
+	<link rel="stylesheet" href="{{asset('css/admin.css')}}"/>
+	<script>
+		let ruta_devolver_usuarios = "{{ path('devolver_usuarios') }}";
+		let usuarios = true;
+		let empresas = true;
+		let rol = false;
+		let nombre = '';
+        let array_usu = [];
+	</script>
+
+	<script src="{{ asset('js/admin.js') }}" defer></script>
+
+
+{% endblock %}
+{%  block content %}
+	<header class="hero is-primary is-small">
+		<div class="hero-body">
+			<div class="container">
+				<div class="is-flex is-align-items-center is-justify-content-flex-start">
+					<figure class="image is-64x64">
+						<img src="{{ asset('img/BrandicoLogo2White.png') }}" alt="icono BRANDICO">
+					</figure>
+					<div style="white-space: nowrap; align-self: center">
+						<h1 class="title">BRANDICO</h1>
+					</div>
+				</div>
+				<div class="is-flex is-align-items-center is-justify-content-flex-start">
+					<a href="{{ path('controlador_portal_inicio') }}" class="inicio">
+						<span class="inicio-label">Inicio</span>
+						<ion-icon name="log-out-outline"></ion-icon>
+					</a>
+				</div>
+			</div>
+		</div>
+	</header>
+	<main class="columns">
+		<div class="column is-one-third">
+			<h3>Filtrar:
+			</h3>
+			<div class="field">
+				<label class="label">Nombre</label>
+				<div class="control">
+					<input class="input" id='input_nombre' type="text" placeholder="">
+				</div>
+			</div>
+			<div class="field">
+				<label class="label">Rol</label>
+				<div class="control">
+					<label class="checkbox">
+						<input id='check_admin' type="checkbox">
+						Solo Administradores</a>
+				</label>
+
+			</div>
+		</div>
+		<div class="field">
+			<label class="label">Tipo</label>
+			<div class="control">
+				<label class="checkbox">
+					<input id='check_usu' type="checkbox"  checked>
+					Usuarios</a>
+			</label>
+			<label class="checkbox">
+				<input id='check_empresa' type="checkbox" checked>
+				Empresas</a>
+		</label>
+	</div>
+</div></div><table class="table is-fullwidth column">
+<thead>
+	<tr>
+		<th>
+			<abbr>Correo</abbr>
+		</th>
+		<th>
+			<abbr>Nombre</abbr>
+		</th>
+		<th>
+			<abbr>Apellidos</abbr>
+		</th>
+		<th>
+			<abbr>Rol</abbr>
+		</th>
+		<th>
+			<abbr>DNI/CIF</abbr>
+		</th>
+		<th>
+			<abbr>Teléfono</abbr>
+		</th>
+		<th>
+			<abbr>Dirección</abbr>
+		</th>
+		<th>
+			<abbr>Provincia</abbr>
+		</th>
+	</tr>
+</thead>
+<tbody>
+
+</tbody>
+</table></main>{% endblock %}

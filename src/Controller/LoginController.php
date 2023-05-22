@@ -59,7 +59,7 @@ class LoginController extends AbstractController
 	public function portalAdmin()
 	{
 		$this->denyAccessUnlessGranted('ROLE_ADMIN');
-		return new Response("<h1>Hola, administrador (con código PHP)</h1>");
+		return $this->render('admin.html.twig');
 	}
 
 	/**
