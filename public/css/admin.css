@@ -13,8 +13,12 @@
     
 }
 
-table {
+table, main {
     background-color: var(--background) !important;
+}
+
+div > button {
+    text-align: right;
 }
 
 body {
@@ -58,4 +62,29 @@ body {
 main {
     padding: 15px;
     height: max-content;
+}
+
+table button {
+    width: 35px;
+}
+
+#crear-usu {
+    background-color: #2e4757;
+    
+}
+
+h2 {
+    font-weight: bold;
+    text-align: center;
+    font-size: 35px;
+}
+
+#crear-usuario div {
+    max-width: 70%;
+}
+
+#btn-crear-usu {
+    background-color: #2e4757;
+    font-weight: bold;
+    color: white;
 }
