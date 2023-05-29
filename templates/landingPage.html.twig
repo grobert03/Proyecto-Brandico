@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>BRANDICO - Marketing y Digitalización</title>
+    <!-- Importar Bulma CSS-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css"/>
+    <!-- Importar los iconos -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <!-- Importar Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="icon" href="{{ asset('img/logoHeader.png') }}">
+    <link rel="stylesheet" href="{{ asset('css/landingPage.css') }}">
+</head>
+<!-- Se debe poner x-data aquí para que pueda cambiar el valor de subject cuando se pulsa un botón de solicitar asesoramiento -->
+<body x-data="contactForm()">
+<!-- Header -->
+<header class="header is-primary is-small is-shadowless">
+    <div class="header-body">
+        <div class="contenido container">
+            <div class="is-flex is-align-items-center is-justify-content-space-between">
+                <div class="is-flex is-align-items-center">
+                    <figure class="image is-64x64">
+                        <img src="{{ asset('img/BrandicoLogo2White.png') }}" alt="icono BRANDICO"/>
+                    </figure>
+                    <div style="white-space: nowrap; align-self: center">
+                        <h1 class="logo">BRANDICO</h1>
+                    </div>
+                </div>
+                <div class="is-flex is-align-items-center">
+                    <a class="navMenuItem" @click="redirectToContact">
+                        <span class="navMenuItem-label">Contacto</span>
+                    </a>
+                    <a href="{{ path('controlador_login') }}" class="navMenuItem">
+                        <span class="navMenuItem-label">Login</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Slider Start -->
+<section class="banner is-flex is-align-items-center">
+    <div class="container">
+        <div class="columns">
+            <div class="column is-8-widescreen is-10-desktop">
+                <div class="block">
+                    <span class="is-uppercase text-sm letter-spacing">La clave del éxito en la era digital</span>
+                    <h1 class="my-4">El camino al crecimiento empieza aquí</h1>
+                    <p class="mb-6">
+                        Con nuestra experiencia en digitalización y marketing,
+                        impulsamos tu negocio hacia nuevas oportunidades. Descubre cómo
+                        podemos ayudarte a destacar en el competitivo mundo online y
+                        llegar a más clientes. ¡Haz que tu marca brille en el panorama
+                        digital con BRANDICO!
+                    </p>
+                    <a href="{{ path('controlador_login') }}" class="button is-link">Prueba PROMOBRAND
+                        <ion-icon name="chevron-forward-outline"></ion-icon>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Secciones -->
+<section class="sections">
+    <div class="section" style="background-color: white">
+        <div class="titleOfSection">
+            <h2 class="whole-section-title">Nuestra Metodología</h2>
+        </div>
+        <div class="columns">
+            <div class="column">
+                <h2 class="section-title" style="text-align: center">
+                    <ion-icon name="person-add"></ion-icon>
+                    Conectar
+                </h2>
+                <p class="section-content">
+                    <strong>Conectar</strong> entre los comercios locales y su audiencia, permitiendo su alcance
+                    digital.
+                </p>
+            </div>
+            <div class="column">
+                <h2 class="section-title" style="text-align: center">
+                    <ion-icon name="rocket"></ion-icon>
+                    Impulsar
+                </h2>
+                <p class="section-content">
+                    <strong>Impulsar</strong> el crecimiento y la visisbilidad de los negocios a través de estrategias
+                    digitales
+                    actuales, generando oportunidades de éxito.
+                </p>
+            </div>
+            <div class="column">
+                <h2 class="section-title" style="text-align: center">
+                    <ion-icon name="flash"></ion-icon>
+                    Potenciar
+                </h2>
+                <p class="section-content">
+                    <strong>Potenciar</strong> la presencia online de su negocio, optimizando su visisbilidad y
+                    aumentando su
+                    competividad.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sección de planes -->
+    <div class="section">
+        <div class="titleOfSection">
+            <h2 class="whole-section-title">Elija plan y potencie su negocio</h2>
+        </div>
+        <div class="columns is-multiline">
+            <div class="column">
+                <div class="card" style="height: 100%;">
+                    <div class="card-content">
+                        <p class="title is-4">Básico</p>
+                        <dl class="is-size-5 has-text-left">
+                            <dt>
+                                <ion-icon name="checkmark"></ion-icon>
+                                Promoción y anuncios
+                            </dt>
+                            <dt>
+                                <ion-icon name="checkmark"></ion-icon>
+                                Acceso a PROMOBRAND
+                            </dt>
+                            <dt>
+                                <ion-icon name="checkmark"></ion-icon>
+                                Acceso a los clientes de la plataforma
+                            </dt>
+                            <dt>
+                                <ion-icon name="checkmark"></ion-icon>
+                                1 mes de prueba gratis
+                            </dt>
+                        </dl>
+                        <hr>
+                        <p>
+                            Ideal para aquellas pequeñas empresas y comercios que deseen promocionar sus productos y
+                            servicios en
+                            línea de manera efectiva.
+                        </p>
+                    </div>
+                    <footer class="card-footer">
+                        <button class="button is-link" @click="setSubject('Básico')" id="basic-button" style="width: 100%;">Solicita Asesoramiento</button>
+                    </footer>
+                </div>
+            </div>
+            <div class="column">
+                <div class="card" style="height: 100%;">
+                    <div class="card-content">
+                        <p class="title is-4">Premium</p>
+                        <dl class="is-size-5 has-text-left">
+                            <dt>
+                                <ion-icon name="checkmark"></ion-icon>
+                                Plan Básico incluido
+                            </dt>
+                            <dt>
+                                <ion-icon name="checkmark"></ion-icon>
+                                Acceso a PROMOBRAND
+                            </dt>
+                            <dt>
+                                <ion-icon name="checkmark"></ion-icon>
+                                Asesoramiento personalizado
+                            </dt>
+                            <dt>
+                                <ion-icon name="checkmark"></ion-icon>
+                                Desarrollo de una web a medida para satisfacer las
+                                necesidades de su negocio
+                            </dt>
+                        </dl>
+                        <hr>
+                        <p>
+                            Para negocios en crecimiento que buscan destacarse en el mercado digital. Muy adecuado para
+                            aquellos que
+                            quieran ofrecer una experiencia única y adaptada a sus necesidades específicas.
+                        </p>
+                    </div>
+                    <footer class="card-footer">
+                        <button class="button is-link" @click="setSubject('Premium')" id="premium-button" style="width: 100%;">Solicita Asesoramiento</button>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sección Clientes -->
+    <div class="section" style="background-color: white">
+        <div class="titleOfSection">
+            <h2 class="whole-section-title">Ofertas y desuentos exclusivos con PROMOBRAND</h2>
+        </div>
+        <p class="section-content">
+            Únete a nuestra plataforma <strong>GRATUITA</strong> y accede a una amplia gama de promociones de empresas
+            locales. Benefíciate de:
+        </p>
+        <dl class="section-content" style="margin: 2rem;">
+            <dt>Ahorro con las ofertas y descuentos en un solo lugar</dt>
+            <dt>Contribuye al crecimeinto del negocio local</dt>
+            <dt>Variedad de promociones y servicios</dt>
+            <dt>Sorteos y recompensas</dt>
+        </dl>
+        <a href="{{ path('controlador_login') }}" class="button is-link">Prueba PROMOBRAND
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+        </a>
+        <img class="screenshot mt-5" src="{{ asset('img/capturaPromobrand.png') }}" alt="captura de pantalla PROMOBRAND">
+    </div>
+
+    <!-- Formulario de contacto -->
+    <div class="section" id="contacto">
+        <div class="titleOfSection">
+            <h2 class="whole-section-title">Formulario de Contacto</h2>
+        </div>
+        <div class="columns">
+            <div class="column">
+                <form class="contact-form" @submit.prevent="submitContactForm">
+                    <div class="field">
+                        <label class="label" for="name">Nombre</label>
+                        <div class="control has-icons-right">
+                            <input class="input" id="name" type="text" name="name" placeholder="Nombre" x-model="formData.name" @input="validateNoEmpty('name')" :class="nameValid ? 'is-success' : ''">
+                            <span x-show="formData.name && nameValid" class="icon is-right has-text-success"><ion-icon name="checkmark"></ion-icon></span>
+                            <p x-show="formData.name && !nameValid" class="has-text-left has-text-danger">Rellene el campo de Nombre</p>
+                            <span x-show="formData.name && !nameValid" class="icon is-right has-text-danger"><ion-icon name="close"></ion-icon></span>
+                        </div>
+                    </div>
+                    <div class="field" >
+                        <label class="label" for="email">Email</label>
+                        <div class="control has-icons-right">
+                            <input class="input" id="email" type="email" name="email" placeholder="Email" x-model="formData.email" @input="validateEmail" :class="emailValid ? 'is-success' : ''">
+                            <span x-show="formData.email && emailValid" class="icon is-right has-text-success"><ion-icon name="checkmark"></ion-icon></span>
+                            <p x-show="formData.email && !emailValid" class="has-text-left has-text-danger">El email debe tener el formato de someone@example.com</p>
+                            <span x-show="formData.email && !emailValid" class="icon is-right has-text-danger"><ion-icon name="close"></ion-icon></span>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label" for="subject">Asunto</label>
+                        <div class="control has-icons-right">
+                            <input class="input" id="subject" type="text" name="subject" placeholder="Asunto" x-model="formData.subject" @input="validateNoEmpty('subject')" :class="subjectValid ? 'is-success' : ''">
+                            <span x-show="formData.subject && subjectValid" class="icon is-right has-text-success"><ion-icon name="checkmark"></ion-icon></span>
+                            <p x-show="formData.subject && !subjectValid" class="has-text-left  has-text-danger">Rellene el campo de Asusnto</p>
+                            <span x-show="formData.subject && !subjectValid" class="icon is-right has-text-danger"><ion-icon name="close"></ion-icon></span>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label" for="message">Mensaje</label>
+                        <div class="control has-icons-right">
+                            <textarea class="textarea" id="message" placeholder="Escriba aquí el mensaje" name="message" x-model="formData.message" @input="validateNoEmpty('message')" :class="messageValid ? 'is-success' : ''"></textarea>
+                            <span x-show="formData.message && messageValid" class="icon is-right has-text-success"><ion-icon name="checkmark-outline"></ion-icon></span>
+                            <p x-show="formData.message && !messageValid" class="has-text-left has-text-danger">Rellene el campo de Mensaje</p>
+                            <span x-show="formData.message && !messageValid" class="icon is-right has-text-danger"><ion-icon name="close-outline"></ion-icon></span>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="control">
+                            <button class="enviar button is-link" :disabled="formLoading" x-text="buttonEnviarText"></button>
+                        </div>
+                    </div>
+                    <div x-text="formMessage"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<footer class="footer">
+    <p>© 2023 BRANDICO - Marketing y Digitalización</p>
+</footer>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var header = document.querySelector(".header")
+
+        function handleScroll() {
+            var scrollPosition = window.scrollY
+            if (scrollPosition > 0) {
+                header.classList.remove("is-shadowless")
+                header.style.background = "var(--brandColor)"
+            } else {
+                header.classList.add("is-shadowless")
+                header.style.background = "var(--headerBg)"
+            }
+        }
+
+        window.addEventListener("scroll", handleScroll)
+    })
+
+    const FORM_URL = "{{ path('contact') }}"
+
+    function contactForm() {
+        return {
+            formData: {
+                name: "",
+                email: "",
+                subject: "",
+                message: "",
+            },
+            formMessage: "",
+            formLoading: false,
+            buttonEnviarText: "Enviar",
+
+            //Variables para controlar la validez de los campos del Email, nombre, asunto y mensaje
+            emailValid: false,
+            nameValid: false,
+            subjectValid: false,
+            messageValid: false,
+
+            redirectToContact(){
+                document.getElementById('contacto').scrollIntoView({ behavior: 'smooth' })
+            },
+
+            //Cuando se pulse solicita asesoramiento se cambia el valor de subject según el plan y se redije al formulario con js
+            setSubject(planType) {
+                this.formData.subject = `Asesoramiento - Plan ${planType}`
+                this.subjectValid = true
+                this.redirectToContact()
+            },
+
+            //Validar Email
+            validateEmail() {
+                const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+                if (!emailRegex.test(this.formData.email)) {
+                    this.emailValid = false
+                } else {
+                    this.emailValid = true
+                }
+            },
+
+            //Validar no empty
+            validateNoEmpty(campo) {
+                if (!this.formData[campo].length)
+                    this[campo + 'Valid'] = false
+                else
+                    this[campo + 'Valid'] = true
+            },
+
+            submitContactForm() {
+                //Asegurarse que todos los campos tienen datos antes de mandarse
+                if (!this.formData.name.length || !this.formData.email.length || !this.formData.subject.length ||
+                    !this.formData.message.length) {
+                    alert("Debe rellenar todos los campos requeridos")
+                    return
+                }
+
+                // Comprobar si todos los campos son válidos
+                if (!this.nameValid || !this.emailValid ||
+                    !this.subjectValid || !this.messageValid) {
+                    alert("Debe corregir los errores en el formulario antes de enviarlo")
+                    return
+                }
+
+                //Se envia el formulario
+                this.formMessage = ""
+                this.formLoading = true
+                this.buttonEnviarText = "Enviando..."
+
+                fetch(FORM_URL, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Accept: "application/json",
+                    },
+                    body: JSON.stringify({
+                        name: this.formData.name,
+                        email: this.formData.email,
+                        subject: this.formData.subject,
+                        message: this.formData.message
+                    }),
+                })
+
+                    .then((response) => {
+                        if (response.status === 201) {
+                            this.formData.name = ""
+                            this.formData.email = ""
+                            this.formData.subject = ""
+                            this.formData.message = ""
+                            this.formMessage = "Se ha enviado correctamente"
+                        } else {
+                            this.formMessage = "Su envío ha fallado"
+                        }
+                    })
+
+                    .catch((error) => {
+                        this.formMessage = "Algo ha ido mal"
+                    })
+
+                    .finally(() => {
+                        this.formLoading = false
+                        this.buttonEnviarText = "Enviar"
+                    })
+            }
+        }
+    }
+</script>
+</body>
+</html>

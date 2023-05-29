@@ -21,7 +21,7 @@ class LoginController extends AbstractController
 	 */
 	public function promocion()
 	{
-		return $this->render('promocion.html.twig');
+		return $this->render('landingPage.html.twig');
 	}
 
 
