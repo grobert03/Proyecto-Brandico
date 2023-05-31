@@ -1,19 +1,12 @@
 security:
   # Creamos un proveedor, es decir, un elemento para indicar de dónde sacar los usuarios.
     providers:
-        proveedor_usuario:
+        proveedor:
         # Los sacamos de la base de datos, a través de una entidad Doctrine.
         # Indicamos la ruta y el atributo de la clase que representa el nombre de usuario.
             entity:
                 class: App\Entity\Usuario
                 property: correo
-        proveedor_empresa:
-            entity:
-                class: App\Entity\Empresa
-                property: correo
-        proveedor_entero: 
-            chain:
-                providers: [proveedor_usuario, proveedor_empresa]
   # El encoder indica cómo hay que cifrar la contraseña. En este caso, texto plano.
   # encoders:s
   #     App\Entity\Medico:
@@ -30,7 +23,7 @@ security:
         main:
             anonymous: true
             # Indicamos un formulario de login como punto de autenticación.
-            provider: proveedor_entero
+            provider: proveedor
             form_login:
                 login_path: controlador_login
                 check_path: controlador_login
@@ -40,4 +33,3 @@ security:
                 target: controlador_login
     password_hashers:
         App\Entity\Usuario: 'auto'
-        App\Entity\Empresa: 'auto'

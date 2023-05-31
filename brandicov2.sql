@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 31-05-2023 a las 12:04:56
+-- Tiempo de generación: 31-05-2023 a las 12:33:48
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -33,6 +33,7 @@ CREATE TABLE `comentarios` (
   `id` int(11) NOT NULL,
   `id_post` int(11) NOT NULL,
   `autor` int(11) NOT NULL,
+  `fecha` date NOT NULL DEFAULT current_timestamp(),
   `contenido` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -87,12 +88,19 @@ CREATE TABLE `usuarios` (
   `clave` varchar(255) NOT NULL,
   `nombre` varchar(255) NOT NULL,
   `foto` varchar(100) NOT NULL DEFAULT 'default.png',
-  `es_empresa` tinyint(1) NOT NULL,
+  `es_empresa` tinyint(1) NOT NULL DEFAULT 0,
   `rol` tinyint(1) NOT NULL DEFAULT 0,
   `telefono` varchar(20) DEFAULT NULL,
   `direccion` varchar(255) DEFAULT NULL,
   `provincia` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `usuarios`
+--
+
+INSERT INTO `usuarios` (`id`, `correo`, `clave`, `nombre`, `foto`, `es_empresa`, `rol`, `telefono`, `direccion`, `provincia`) VALUES
+(1, 'prueba@mail.com', '$2y$10$eSr38ltkBk1E0rOP9kTm1urfpPOk1utJkC.lfLx/zuF6R2e3BSysq', 'Prueba', 'default.png', 0, 1, NULL, NULL, NULL);
 
 --
 -- Índices para tablas volcadas
@@ -170,7 +178,7 @@ ALTER TABLE `seguidores`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Restricciones para tablas volcadas
