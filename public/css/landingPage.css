@@ -78,7 +78,7 @@ body {
     overflow: hidden;
     background: #fff;
     background: no-repeat 80% 50%;
-    background-image: linear-gradient(rgba(4, 9, 30, 0.1), rgba(4, 9, 30, 0.1)), url(../videos/gifv2.gif);;
+    background-image: linear-gradient(rgba(3, 6, 17, 0.5), rgba(4, 9, 30, 0.1)), url(../videos/gifv2.gif);;
     background-size: cover;
     padding-bottom: 10rem;
     padding-top: 10rem;
