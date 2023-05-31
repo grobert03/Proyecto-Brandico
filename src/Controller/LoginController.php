@@ -28,9 +28,19 @@ class LoginController extends AbstractController
 	/**
 	 * @Route("/login", name="controlador_login")
 	 */
-	public function login()
+	public function login(AuthenticationUtils $authenticationUtils, SessionInterface $session)
 	{
-		return $this->render('login.html.twig');
+		if (!$this->getUser()) {
+            $mensaje = $session->getFlashBag()->get('mensaje');
+            if ($authenticationUtils->getLastAuthenticationError()) {
+                $mensaje = "Usuario y/o contraseña incorrectos";
+            } else {
+				$mensaje = '';
+			}
+            return $this->render('login.html.twig', ['mensaje' => $mensaje]);
+        } else {
+            return $this->render('inicio.html.twig');
+        }
 	}
 
 	/**
@@ -65,35 +75,62 @@ class LoginController extends AbstractController
 	/**
 	 * @Route("/enviarCorreo", name="enviar_correo")
 	 */
-	public function enviarVerificacionRegistro(MailerInterface $mailer, Request $request)
+	public function enviarVerificacionRegistro(MailerInterface $mailer, Request $request, SessionInterface $session)
 	{
-		$session = $request->getSession();
 		$para = $request->request->get('mail');
-		$session->set('codigo', rand(1, 100000));
-		$session->set('correo', $para);
-		$codigo = $session->get('codigo');
-		$fichero = str_replace("/index.php/", "/", $_SERVER['PHP_SELF']);
-		$ruta = "http:localhost" . $fichero . "/completar_registro/" . $codigo;
+		$recuperacion = 'rec'.rand(739378219, 123890138210);
+		$em = $this->getDoctrine()->getManager();
+		$usu = $em->getRepository(Usuario::class)->findOneBy(['correo' => $para]);
+		if (!$usu) {
+			return new JsonResponse(['enviado' => false]);
+		}
+		$ruta = $this->url_origin($_SERVER);
+		$ruta = $ruta."/proyecto-Brandico/public/recuperarClave/$recuperacion";
+		
 		$email = (new Email())
 			->from('brandico@mail.com')
 			->to($para)
 			->subject('Verifica el registro')
-			->html('Pulse en el enlace para seguir con el registro: <a href="' . $ruta . '">Completar</a>');
+			->html('Pulse en el enlace para seguir con el registro: <a href="' . $ruta . '">Cambiar contraseña</a>');
 		$mailer->send($email);
-
+		$expiracion = new \DateTime(date('Y-m-d H:i:s'));
+		$expiracion->add(new \DateInterval('P1D'));
+		$usu->setRecuperacion($recuperacion);
+		$usu->setExpiracion_rec($expiracion);
+		$em->flush();
 		// ...
 		return new JsonResponse(['enviado' => true]);
 	}
 
+	private function url_origin($s, $use_forwarded_host = false)
+    {
+
+        $ssl = (!empty($s['HTTPS']) && $s['HTTPS'] == 'on') ? true : false;
+        $sp = strtolower($s['SERVER_PROTOCOL']);
+        $protocol = substr($sp, 0, strpos($sp, '/')) . (($ssl) ? 's' : '');
+
+        $port = $s['SERVER_PORT'];
+        $port = ((!$ssl && $port == '80') || ($ssl && $port == '443')) ? '' : ':' . $port;
+
+        $host = ($use_forwarded_host && isset($s['HTTP_X_FORWARDED_HOST'])) ? $s['HTTP_X_FORWARDED_HOST'] : (isset($s['HTTP_HOST']) ? $s['HTTP_HOST'] : null);
+        $host = isset($host) ? $host : $s['SERVER_NAME'] . $port;
+
+        return $protocol . '://' . $host;
+    }
+
+
 	/**
-	 * @Route("/completar_registro/{codigo}", name="completar_registro")
+	 * @Route("/recuperarClave/{codigo}", name="recuperar_clave")
 	 */
-	public function completarRegistro($codigo, Request $request) {
-		if ($codigo == $request->getSession()->get('codigo')) {
-			$request->getSession()->set('codigo', null);
-			
-			return $this->render('cambiar.html.twig', ['correo' => $request->getSession()->get('correo')]);
+	public function recuperarClave($codigo, Request $request) {
+		$em = $this->getDoctrine()->getManager();
+		$usu = $em->getRepository(Usuario::class)->findOneBy(['recuperacion' => $codigo]);
+		if (!$usu) {
+			return $this->render('login.html.twig');
+		} else {
+			return $this->render('cambiar.html.twig', ['id' => $usu->getId()]);
 		}
+		
 	}
 
 	/**
@@ -101,19 +138,20 @@ class LoginController extends AbstractController
 	 */
 	public function cambiarPass() {
 		$pass = $_POST['pass'];
-		$correo = $_POST['correo'];
+		$id = $_POST['id'];
 
 		$entityManager = $this->getDoctrine()->getManager();
 
-		$usuario = $entityManager->getRepository(Usuario::class)->findOneBy(['correo' => $correo]);
+		$usuario = $entityManager->getRepository(Usuario::class)->findOneBy(['id' => $id]);
 
 		if (!$usuario) {
-			$usuario = $entityManager->getRepository(Empresa::class)->findOneBy(['correo' => $correo]);
+			$usuario = $entityManager->getRepository(Empresa::class)->findOneBy(['id' => $id]);
 			$usuario->setClave(password_hash($pass, PASSWORD_DEFAULT));
 		} else {
 			$usuario->setClave(password_hash($pass, PASSWORD_DEFAULT));
 		}
-
+		$usuario->setRecuperacion(null);
+		$usuario->setExpiracion_rec(null);
 
 		$entityManager->persist($usuario);
 		$entityManager->flush();

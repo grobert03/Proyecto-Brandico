@@ -16,6 +16,12 @@
 			<span>BRANDICO</span>
 			<img src="{{ asset('img/logoHeader.png') }}">
 		</div>
+		{% if mensaje is defined %}
+			<div class="form-element">
+				<p id="mensaje-error" style='color: #dc2626; font-weight: bold;'>{{mensaje}}</p>
+			</div>
+		{% endif %}
+		
 		<div class="form-element">
 			<label for="correo">Correo:</label>
 			<input id="correo" type="email" name="_username"/>
@@ -26,8 +32,8 @@
 		</div>
 		<button type="button" @click="!show ? enviarCorreo() : enviarFormulario()" x-text="show ? 'Entrar' : 'Enviar correo'"></button>
 		<div class="form-element">
-			<a href="{{ path('signup') }}">No tienes una cuenta?</a>
-			<a id='link-pass'  x-on:click="show = !show" x-text="show ? '¿Has olvidado tu contraseña?' : 'Volver al login'" href="#"></a>
+			<a href="{{ path('signup') }}">¿No tienes una cuenta?</a>
+			<a id='link-pass' x-on:click="show = !show" x-text="show ? '¿Has olvidado tu contraseña?' : 'Volver al login'" href="#"></a>
 		</div>
 	</form>
 {% endblock %}

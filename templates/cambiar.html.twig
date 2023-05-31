@@ -1,10 +1,26 @@
 {% extends 'base.html.twig' %}
 
+{% block head %}
+	<link rel="stylesheet" href="{{ asset('css/cambiar.css') }}">
+
+{% endblock %}
+
 {% block content %}
-    <form action="{{ path('cambiar_pass') }}" method="POST">
-        Nueva contraseña: <input type="password" name="pass">
-        Confirmar contraseña: <input type="password" name="confirmar_pass">
-        <input type='hidden' name='correo' value='{{ correo }}'>
-        <input type="submit" value="Cambiar">
-    </form>
+	<form id='form-login' action="{{ path('cambiar_pass') }}" method="POST">
+		<div id='form-header'>
+			<span>BRANDICO</span>
+			<img src="{{ asset('img/logoHeader.png') }}">
+		</div>
+        <div class="form-element">
+            <label for="pass">Nueva contraseña:</label>
+    		<input id='pass' type="password" name="pass">
+        </div>
+        <div class='form-element'>
+            <label for="confirmar">Confirmar contraseña:</label>
+		    <input id='confirmar' type="password" name="confirmar_pass">
+        </div>
+		<input type='hidden' name='id' value='{{ id }}'>
+		<input type="submit" value="Cambiar">
+	</form>
+
 {% endblock %}

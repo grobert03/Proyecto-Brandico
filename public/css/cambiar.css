@@ -12,8 +12,6 @@ body {
     background-color: var(--brandColor);
 }
 
-
-
 form {
     height: 350px;
     max-width: 30%;
@@ -78,21 +76,6 @@ label, p {
     color: var(--brandColor);
 }
 
-
-input[type=text] {
-    height: 20px;
-    width: 90%;
-    padding: 5px;
-    border-radius: 1em;
-    border: none;
-}
-
-textarea {
-    border: none;
-    border-radius: 1em;
-    resize: none;
-}
-
 .form-element {
     display: flex;
     flex-direction: column;
@@ -101,7 +84,7 @@ textarea {
     width: 100%;
 }
 
-button {
+input[type='submit'] {
     padding: 15px;  
     border: none;
     cursor: pointer;
@@ -112,7 +95,7 @@ button {
     background-color: var(--brandColor);
 }
 
-#correo, #pass {
+#correo, #pass, #confirmar {
     height: 30px;
     padding: 5px;
     border: none;
@@ -124,11 +107,6 @@ button {
     border: 2px solid #2e4757 
 }
 
-a {
-    color: var(--brandColor);
-    font-weight: lighter;
-    text-align: center;
-}
 
 #respuesta {
     text-align: center;

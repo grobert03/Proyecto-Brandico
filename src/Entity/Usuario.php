@@ -60,6 +60,15 @@ class Usuario implements UserInterface, \Serializable {
      * @ORM\Column(type="string", name = "provincia")
      */
     private $provincia;
+
+    /**
+     * @ORM\Column(type="string", name = "recuperacion")
+     */
+    private $recuperacion;
+    /**
+     * @ORM\Column(type="datetimetz", name = "expiracion_rec")
+     */
+    private $expiracion_rec;
     
     //GETS Y SETS
     public function getCorreo(){
@@ -182,6 +191,46 @@ class Usuario implements UserInterface, \Serializable {
         return $this->id;
     }
 
+    /**
+     * Get the value of recuperacion
+     */ 
+    public function getRecuperacion()
+    {
+        return $this->recuperacion;
+    }
+
+    /**
+     * Set the value of recuperacion
+     *
+     * @return  self
+     */ 
+    public function setRecuperacion($recuperacion)
+    {
+        $this->recuperacion = $recuperacion;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of expiracion_rec
+     */ 
+    public function getExpiracion_rec()
+    {
+        return $this->expiracion_rec;
+    }
+
+    /**
+     * Set the value of expiracion_rec
+     *
+     * @return  self
+     */ 
+    public function setExpiracion_rec($expiracion_rec)
+    {
+        $this->expiracion_rec = $expiracion_rec;
+
+        return $this;
+    }
+
     //NECESARIOS PARA LA AUTENTICACIÓN
     public function serialize(){
         return serialize(array(
@@ -194,7 +243,9 @@ class Usuario implements UserInterface, \Serializable {
             $this->rol,
             $this->telefono,
             $this->direccion,
-            $this->provincia
+            $this->provincia,
+            $this->recuperacion,
+            $this->expiracion_rec
         ));
     }
 
@@ -209,7 +260,9 @@ class Usuario implements UserInterface, \Serializable {
             $this->rol,
             $this->telefono,
             $this->direccion,
-            $this->provincia
+            $this->provincia,
+            $this->recuperacion,
+            $this->expiracion_rec
             ) = unserialize($serialized);
     }
 
@@ -242,4 +295,24 @@ class Usuario implements UserInterface, \Serializable {
     }
 
     
+
+    /**
+     * Get the value of id
+     */ 
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set the value of id
+     *
+     * @return  self
+     */ 
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 31-05-2023 a las 12:33:48
+-- Tiempo de generación: 31-05-2023 a las 17:17:40
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -92,15 +92,17 @@ CREATE TABLE `usuarios` (
   `rol` tinyint(1) NOT NULL DEFAULT 0,
   `telefono` varchar(20) DEFAULT NULL,
   `direccion` varchar(255) DEFAULT NULL,
-  `provincia` varchar(255) DEFAULT NULL
+  `provincia` varchar(255) DEFAULT NULL,
+  `recuperacion` varchar(50) DEFAULT NULL,
+  `expiracion_rec` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `correo`, `clave`, `nombre`, `foto`, `es_empresa`, `rol`, `telefono`, `direccion`, `provincia`) VALUES
-(1, 'prueba@mail.com', '$2y$10$eSr38ltkBk1E0rOP9kTm1urfpPOk1utJkC.lfLx/zuF6R2e3BSysq', 'Prueba', 'default.png', 0, 1, NULL, NULL, NULL);
+INSERT INTO `usuarios` (`id`, `correo`, `clave`, `nombre`, `foto`, `es_empresa`, `rol`, `telefono`, `direccion`, `provincia`, `recuperacion`, `expiracion_rec`) VALUES
+(1, 'prueba@mail.com', '$2y$10$eIjgir3QFXV0KOJ/yd5GdeNaYuBSISDDg5iCrV7.aDhfq2CD5358u', 'Prueba', 'default.png', 0, 1, NULL, NULL, NULL, NULL, NULL);
 
 --
 -- Índices para tablas volcadas
