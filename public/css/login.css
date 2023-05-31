@@ -1,3 +1,7 @@
+:root {
+    --brandColor: #2e4757;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -5,13 +9,15 @@
 }
 
 body {
-    background-color: #2e4757;
+    background-color: var(--brandColor);
 }
+
+
 
 form {
     height: 350px;
-    width: 450px;
-    margin: 50px auto;
+    max-width: 30%;
+    margin: 50px auto 0px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -20,60 +26,45 @@ form {
     background-color: #eceae4;
     border: 2px solid white;
     border-radius: 1.25em;
-    padding: 100px;
+    padding: 65px;
+    opacity: 0;
+    animation: fade-in 1.5s ease-in-out forwards;
+}
+
+@keyframes fade-in  {
+    0% {
+        opacity: 0;
+        transform: translateY(0px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(50px);
+    }
 }
 
 #form-header {
-    width: 80%;
+    width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 10px;
     align-items: center;
 }
 
 #form-header span {
-    font-size: 45px;
+    font-size: 1.5rem;
     font-style: italic;
-    font-weight: bold;
-    color: #2e4757;
+    font-weight: 500;
+    color: var(--brandColor);
 }
 
 img {
     height: auto;
-    width: 30%;
+    max-width: 15%;
 }
 
-
-.header {
-    min-height: 15vh;
-    width: 100%;
-    position: relative;
-}
-
-.header-elements {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #2e4757;
-    font-weight: bold;
-    font-size: 25px;
-    gap: 10px;
-    font-family: 'Poppins', sans-serif;
-    font-style: italic;
-}
-
-nav {
-    display: flex;
-    padding: 2% 6%;
-    align-items: center;
-}
-
-nav img {
-    height: 50px; 
-    width: 50px;
-}
 
 h1 {
-    color: #2e4757;
+    color: var(--brandColor);
     font-size: 46px;
     font-weight: bold;
     font-family: 'Montserrat', sans-serif;
@@ -81,11 +72,10 @@ h1 {
 }
 
 
-
 label, p {
     font-family: 'Montserrat', sans-serif;
-    font-size: 20px;
-    color: #2e4757;
+    font-size: 1rem;
+    color: var(--brandColor);
 }
 
 
@@ -108,7 +98,7 @@ textarea {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 95%;
+    width: 100%;
 }
 
 button {
@@ -119,7 +109,7 @@ button {
     font-family: 'Montserrat', sans-serif;
     font-weight: bold;
     color: white;
-    background-color: #2e4757;
+    background-color: var(--brandColor);
 }
 
 #correo, #pass {
@@ -135,5 +125,18 @@ button {
 }
 
 a {
-    color:#2e4757;
+    color: var(--brandColor);
+    width: 100%;
+    font-weight: lighter;
+    text-align: center;
+}
+
+@media screen and (max-width: 600px) {
+    form {
+        max-width: 50%;
+    }
+
+    img {
+        max-width: 35%;
+    }
 }
