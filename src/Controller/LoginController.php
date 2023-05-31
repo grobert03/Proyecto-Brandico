@@ -30,7 +30,7 @@ class LoginController extends AbstractController
 	 */
 	public function login()
 	{
-		return $this->render('acceso.html.twig');
+		return $this->render('login.html.twig');
 	}
 
 	/**
@@ -118,6 +118,6 @@ class LoginController extends AbstractController
 		$entityManager->persist($usuario);
 		$entityManager->flush();
 
-		return $this->render('acceso.html.twig');
+		return $this->render('login.html.twig');
 	}
 }

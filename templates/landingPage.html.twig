@@ -49,16 +49,16 @@
         <div class="columns">
             <div class="column is-8-widescreen is-10-desktop">
                 <div class="block">
-                    <span class="is-uppercase text-sm letter-spacing">La clave del éxito en la era digital</span>
-                    <h1 class="my-4">El camino al crecimiento empieza aquí</h1>
-                    <p class="mb-6">
+                    <span class="is-uppercase text-sm letter-spacing fade-in">La clave del éxito en la era digital</span>
+                    <h1 class="my-4 fade-in">El camino al crecimiento empieza aquí</h1>
+                    <p class="mb-6 fade-in">
                         Con nuestra experiencia en digitalización y marketing,
                         impulsamos tu negocio hacia nuevas oportunidades. Descubre cómo
                         podemos ayudarte a destacar en el competitivo mundo online y
                         llegar a más clientes. ¡Haz que tu marca brille en el panorama
                         digital con BRANDICO!
                     </p>
-                    <a href="{{ path('controlador_login') }}" class="button is-link">Prueba PROMOBRAND
+                    <a href="{{ path('controlador_login') }}" class="button is-link fade-in">Prueba PROMOBRAND
                         <ion-icon name="chevron-forward-outline"></ion-icon>
                     </a>
                 </div>
@@ -70,10 +70,10 @@
 <!-- Secciones -->
 <section class="sections">
     <div class="section" style="background-color: white">
-        <div class="titleOfSection">
+        <div class="titleOfSection fade-in">
             <h2 class="whole-section-title">Nuestra Metodología</h2>
         </div>
-        <div class="columns">
+        <div class="columns fade-in">
             <div class="column">
                 <h2 class="section-title" style="text-align: center">
                     <ion-icon name="person-add"></ion-icon>
@@ -110,7 +110,7 @@
     </div>
 
     <!-- Sección de planes -->
-    <div class="section">
+    <div class="section fade-in">
         <div class="titleOfSection">
             <h2 class="whole-section-title">Elija plan y potencie su negocio</h2>
         </div>
@@ -188,7 +188,7 @@
     </div>
 
     <!-- Sección Clientes -->
-    <div class="section" style="background-color: white">
+    <div class="section fade-in" style="background-color: white">
         <div class="titleOfSection">
             <h2 class="whole-section-title">Ofertas y desuentos exclusivos con PROMOBRAND</h2>
         </div>
@@ -209,7 +209,7 @@
     </div>
 
     <!-- Formulario de contacto -->
-    <div class="section" id="contacto">
+    <div class="section fade-in" id="contacto">
         <div class="titleOfSection">
             <h2 class="whole-section-title">Formulario de Contacto</h2>
         </div>
@@ -283,6 +283,25 @@
         }
 
         window.addEventListener("scroll", handleScroll)
+
+        function fadeInElementsOnScroll() {
+            const fadeElements = document.querySelectorAll('.fade-in');
+
+        function checkFadeElements() {
+            for (let i = 0; i < fadeElements.length; i++) {
+            const element = fadeElements[i];
+            const elementTop = element.getBoundingClientRect().top;
+
+            if (elementTop < window.innerHeight) {
+                element.classList.add('active');
+            }
+            }
+        }
+        checkFadeElements();
+        window.addEventListener('scroll', checkFadeElements);
+        }
+
+        fadeInElementsOnScroll();
     })
 
     const FORM_URL = "{{ path('contact') }}"
