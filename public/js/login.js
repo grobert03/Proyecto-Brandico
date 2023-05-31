@@ -2,7 +2,11 @@ $("#link-pass").click((e) => {
     e.preventDefault();
 })
 
-
+$("#pass").keypress((e) => {
+    if (e.key === "Enter") {
+        $("button").click();
+    }
+})
 
 const enviarCorreo = () => {
     $('#respuesta').remove();
@@ -36,6 +40,7 @@ const enviarCorreo = () => {
 const enviarFormulario = () => {
     $("#form-login").submit();
 }
+
 
 
 const esconder = () => {
