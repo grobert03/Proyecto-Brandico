@@ -5,11 +5,17 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 /**
- * @ORM\Entity @ORM\Table(name="usuario")
+ * @ORM\Entity @ORM\Table(name="usuarios")
  */
 class Usuario implements UserInterface, \Serializable {
     /**
      * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer", name="id")
+     */
+    private $id;
+
+    /**
      * @ORM\Column(type="string", name="correo")
      */
     private $correo;
@@ -20,30 +26,40 @@ class Usuario implements UserInterface, \Serializable {
     private $clave;
     
     /**
-     * @ORM\Column(type="string", name = "dni")
-     */
-    private $dni;
-
-    /**
      * @ORM\Column(type="string", name = "nombre")
      */
     private $nombre;
 
     /**
-     * @ORM\Column(type="string", name = "apellidos")
+     * @ORM\Column(type="string", name="foto")
      */
-    private $apellidos;
+    private $foto;
+
+    /**
+     * @ORM\Column(type="boolean", name="es_empresa")
+     */
+    private $es_empresa;
+
+    /**
+     * @ORM\Column(type="boolean", name="rol")
+     */
+    private $rol;
 
     /**
      * @ORM\Column(type="string", name = "telefono")
      */
     private $telefono;
 
-    /**
-     * @ORM\Column(type="integer", name = "rol")
-     */
-    private $rol;
 
+    /**
+     * @ORM\Column(type="string", name = "direccion")
+     */
+    private $direccion;
+
+    /**
+     * @ORM\Column(type="string", name = "provincia")
+     */
+    private $provincia;
     
     //GETS Y SETS
     public function getCorreo(){
@@ -60,13 +76,6 @@ class Usuario implements UserInterface, \Serializable {
         $this->clave = $clave;
     }
 
-    public function getDni(){
-        return $this->dni;
-    }
-    public function setDni($dni){
-        $this->dni = $dni;
-    }
-
     public function getNombre(){
         return $this->nombre;
     }
@@ -74,18 +83,91 @@ class Usuario implements UserInterface, \Serializable {
         $this->nombre = $nombre;
     }
 
-    public function getApellidos(){
-        return $this->apellidos;
-    }
-    public function setApellidos($apellidos){
-        $this->apellidos = $apellidos;
-    }
-
     public function getTelefono(){
         return $this->telefono;
     }
     public function setTelefono($telefono){
         $this->telefono = $telefono;
+    }
+
+    /**
+     * Get the value of es_empresa
+     */ 
+    public function getEs_empresa()
+    {
+        return $this->es_empresa;
+    }
+
+    /**
+     * Set the value of es_empresa
+     *
+     * @return  self
+     */ 
+    public function setEs_empresa($es_empresa)
+    {
+        $this->es_empresa = $es_empresa;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of provincia
+     */ 
+    public function getProvincia()
+    {
+        return $this->provincia;
+    }
+
+    /**
+     * Set the value of provincia
+     *
+     * @return  self
+     */ 
+    public function setProvincia($provincia)
+    {
+        $this->provincia = $provincia;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of direccion
+     */ 
+    public function getDireccion()
+    {
+        return $this->direccion;
+    }
+
+    /**
+     * Set the value of direccion
+     *
+     * @return  self
+     */ 
+    public function setDireccion($direccion)
+    {
+        $this->direccion = $direccion;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of foto
+     */ 
+    public function getFoto()
+    {
+        return $this->foto;
+    }
+
+    /**
+     * Set the value of foto
+     *
+     * @return  self
+     */ 
+    public function setFoto($foto)
+    {
+        $this->foto = $foto;
+
+        return $this;
     }
 
     public function getRol(){
@@ -97,31 +179,37 @@ class Usuario implements UserInterface, \Serializable {
 
     public function getUserIdentifier()
     {
-        return $this->correo;
+        return $this->id;
     }
 
     //NECESARIOS PARA LA AUTENTICACIÓN
     public function serialize(){
         return serialize(array(
+            $this->id,
             $this->correo,
             $this->clave,
-            $this->dni,
             $this->nombre,
-            $this->apellidos,
+            $this->foto,
+            $this->es_empresa,
+            $this->rol,
             $this->telefono,
-            $this->rol
+            $this->direccion,
+            $this->provincia
         ));
     }
 
     public function unserialize($serialized){
         list (
+            $this->id,
             $this->correo,
             $this->clave,
-            $this->dni,
             $this->nombre,
-            $this->apellidos,
-            $this->telefono,
+            $this->foto,
+            $this->es_empresa,
             $this->rol,
+            $this->telefono,
+            $this->direccion,
+            $this->provincia
             ) = unserialize($serialized);
     }
 
@@ -132,7 +220,7 @@ class Usuario implements UserInterface, \Serializable {
     public function getRoles()
     {
         if($this->rol==1)
-			return array('ROLE_USER', 'ROLE_USUARIO' ,'ROLE_ADMIN');
+			return array('ROLE_USER', 'ROLE_ADMIN');
         else
             return array('ROLE_USER', 'ROLE_USUARIO');            
         }
@@ -152,4 +240,6 @@ class Usuario implements UserInterface, \Serializable {
     public function eraseCredentials(){
         return;
     }
+
+    
 }
