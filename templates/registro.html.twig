@@ -143,10 +143,10 @@
                                     <label for="company-phone">Teléfono:</label>
                                     <div class="control has-icons-right">
                                         <input class="input is-2" id="company-phone" type="text" name="_company-phone" x-model="formData.phone" @input="validatePhone" @blur="checkPhoneAvailability" :class="phoneValid && phoneAvailable ? 'is-success' : ''">
-                                        <span x-show="formData.phone && phoneValid" class="icon is-right has-text-success"><ion-icon name="checkmark"></ion-icon></span>
+                                        <span x-show="formData.phone && phoneValid && phoneAvailable" class="icon is-right has-text-success"><ion-icon name="checkmark"></ion-icon></span>
                                         <p x-show="formData.phone && !phoneValid" class="has-text-danger">El teléfono debe tener 9 dígitos</p>
                                         <p x-show="formData.phone && !phoneAvailable" class="has-text-danger">El teléfono ya está en uso</p>
-                                        <span x-show="formData.phone && !phoneValid" class="icon is-right has-text-danger"><ion-icon name="close"></ion-icon></span>
+                                        <span x-show="formData.phone && (!phoneValid || !phoneAvailable)" class="icon is-right has-text-danger"><ion-icon name="close"></ion-icon></span>
                                     </div>
                                 </div>
                                 <div class="field">
