@@ -2,6 +2,7 @@
 // src/Controller/InicioController.php
 namespace App\Controller;
 
+use App\Entity\Like;
 use App\Entity\Usuario;
 use App\Entity\Publicacion;
 use App\Entity\Seguidor;
@@ -58,12 +59,21 @@ class InicioController extends AbstractController
 
         $json = [];
         foreach ($publicaciones as $p) {
+            $likes = $em->getRepository(Like::class)->findBy(['id_post' => $p->getId()]);
+            $le_gusta = $em->getRepository(Like::class)->findOneBy(['id_post' => $p->getId(), 'id_usuario' => $this->getUser()->getId()]);
+            if ($le_gusta) {
+                $le_gusta = true;
+            } else {
+                $le_gusta = false;
+            }
             $json[] = [
                 'id' => $p->getId(),
                 'autor' => $p->getAutor()->getNombre(),
                 'perfil' => 'img/perfiles/'.$p->getAutor()->getFoto(),
                 'correo' => $p->getAutor()->getCorreo(),
                 'fecha' => $p->getFecha(),
+                'le_gusta' => $le_gusta,
+                'likes' => sizeof($likes),
                 'texto' => $p->getTexto(),
                 'imagen' => 'img/publicaciones/'.$p->getImagen()
             ];
@@ -88,4 +98,35 @@ class InicioController extends AbstractController
 
     }
 
+    /**
+     * @Route("/darLike", name="dar_like")
+     */
+    public function darLike(Request $request) {
+        $id = $request->request->get('id');
+        $em = $this->getDoctrine()->getManager();
+        $post = $em->getRepository(Publicacion::class)->findOneBy(['id' => $id]);
+
+        $like = new Like();
+        $like->setId_post($post);
+        $like->setId_comentario(null);
+        $like->setId_usuario($this->getUser());
+        $em->persist($like);
+        $em->flush();
+
+        return new JsonResponse(['exito' => true]);
+    } 
+
+    /**
+     * @Route("/quitarLike", name="quitar_like")
+     */
+    public function quitarLike(Request $request) {
+        $id = $request->request->get('id');
+        $em = $this->getDoctrine()->getManager();
+    
+        $like = $em->getRepository(Like::class)->findOneBy(['id_post' => $id, 'id_usuario' => $this->getUser()->getId()]);
+        $em->remove($like);
+        $em->flush();
+
+        return new JsonResponse(['exito' => true]);
+    } 
 }

@@ -12,9 +12,7 @@ $(document).ready(() => {
             processData: false,
             dataType: "json",
             success: function (data) {
-                $(".publicacion").remove();
-                pagina = 1;
-                loadPublicaciones();
+                console.log(data);
             },
             error: function (err) {
                 console.log(err);
@@ -22,6 +20,37 @@ $(document).ready(() => {
         });
     });
 
+    const darLike = (id) => {
+        console.log('xd')
+        $.ajax({
+            url: ruta_dar_like,
+            data: { "id": id },
+            type: "POST",
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    }
+
+    const quitarLike = (id) => {
+        $.ajax({
+            url: ruta_quitar_like,
+            data: { "id": id },
+            type: "POST",
+            dataType: "json",
+            success: function (data) {
+
+
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    }
 
     const loadPublicaciones = () => {
         $.ajax({
@@ -33,7 +62,7 @@ $(document).ready(() => {
             success: function (data) {
                 console.log(data)
                 data.forEach(d => {
-                    $("#principal").append($(`<section class="publicacion section feed" x-data='{text: "hola"}'>
+                    $("#principal").append($(`<section class="publicacion section feed">
 					<div class="container">
 						<div class="card">
 							<div class="container">
@@ -64,13 +93,13 @@ $(document).ready(() => {
 											
 											<br>
 											<div class="buttons">
-												<button class="button is-light">
+												<button data-twt='${d.id}' class='btn-like button ${d.le_gusta ? "is-danger" : "is-light"}'>
 													<span class="icon">
 														<ion-icon name="heart"></ion-icon>
 													</span>
-													<span>0</span>
+													<span id='likes-${d.id}'}>${d.likes}</span>
 												</button>
-												<button class="button is-info">
+												<button  class="button is-info">
 													<span class="icon">
 														<ion-icon name="chatbubble"></ion-icon>
 													</span>
@@ -85,7 +114,20 @@ $(document).ready(() => {
 					</div>
 				</section>`))
                 });
-
+                
+                $(".btn-like").unbind().click(function() {
+                    let id = $(this).data("twt");
+                    if ($(this).hasClass("is-danger")) {
+                        $(`#likes-${id}`).text(Number($(`#likes-${id}`).text()) - 1);
+                        quitarLike(id);
+                    } else {
+                        $(`#likes-${id}`).text(Number($(`#likes-${id}`).text()) + 1);
+                        darLike(id);
+                    }
+                    $(this).toggleClass("is-danger");
+                    $(this).toggleClass("is-light");
+                });
+        
                 pagina++;
             },
             error: function (err) {
