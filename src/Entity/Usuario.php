@@ -46,6 +46,11 @@ class Usuario implements UserInterface, \Serializable {
     private $rol;
 
     /**
+     * @ORM\Column(type="string", name = "cif")
+     */
+    private $cif;
+
+    /**
      * @ORM\Column(type="string", name = "telefono")
      */
     private $telefono;
@@ -90,6 +95,13 @@ class Usuario implements UserInterface, \Serializable {
     }
     public function setNombre($nombre){
         $this->nombre = $nombre;
+    }
+
+    public function getCif(){
+        return $this->cif;
+    }
+    public function setCif($cif){
+        $this->cif = $cif;
     }
 
     public function getTelefono(){

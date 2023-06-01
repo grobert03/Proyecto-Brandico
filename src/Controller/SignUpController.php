@@ -16,6 +16,56 @@ class SignUpController extends AbstractController {
        return $this->render('registro.html.twig');
     }
 
+    #[Route('/emailavailable', name: 'emailavailable')]
+    public function emailavailable(Request $request) {
+        $entityManager = $this->getDoctrine()->getManager();
+        $usuarioRepository = $entityManager->getRepository(Usuario::class);
+
+        $jsonData = $request->getContent();
+        $formData = json_decode($jsonData, true);
+
+        $email = $formData['email'];
+
+        $usuarios = $usuarioRepository->findAll();
+
+        $isAvailable = true;
+
+        //Verificar si el email ya está utilizado
+        foreach ($usuarios as $usuario) {
+            if ($usuario->getCorreo() === $email) {
+                $isAvailable = false;
+                break;
+            }
+        }
+
+        return new JsonResponse(['available' => $isAvailable]);
+    }
+
+    #[Route('/phonelavailable', name: 'phoneavailable')]
+    public function phoneavailable(Request $request) {
+        $entityManager = $this->getDoctrine()->getManager();
+        $usuarioRepository = $entityManager->getRepository(Usuario::class);
+
+        $jsonData = $request->getContent();
+        $formData = json_decode($jsonData, true);
+
+        $phone = $formData['phone'];
+
+        $usuarios = $usuarioRepository->findAll();
+
+        $isAvailable = true;
+
+        //Verificar si el email ya está utilizado
+        foreach ($usuarios as $usuario) {
+            if ($usuario->getTelefono() === $phone) {
+                $isAvailable = false;
+                break;
+            }
+        }
+
+        return new JsonResponse(['available' => $isAvailable]);
+    }
+
     #[Route('/createuser', name: 'createuser')]
     public function createuser(Request $request) {
         $entityManager = $this->getDoctrine()->getManager();
@@ -33,10 +83,12 @@ class SignUpController extends AbstractController {
             $user = new Usuario();
             $user->setCorreo($formData['email']);
             $user->setClave($password);
-            $user->setDni($formData['dni']);
             $user->setNombre($formData['name']);
-            $user->setApellidos($formData['surname']);
             $user->setTelefono($formData['phone']);
+
+            //Valores por defecto
+            $user->setFoto('default.png');
+            $user->setEs_empresa(0);
             $user->setRol(0);
 
             $entityManager->persist($user);
@@ -45,14 +97,19 @@ class SignUpController extends AbstractController {
             //Hasheo del password
             $password = password_hash($formData['password'], PASSWORD_DEFAULT);
 
-            $company = new Empresa();
+            $company = new Usuario();
             $company->setCorreo($formData['email']);
             $company->setClave($password);
             $company->setCif($formData['cif']);
             $company->setNombre($formData['name']);
+            $company->setEs_empresa(1);
             $company->setTelefono($formData['phone']);
             $company->setDireccion($formData['direction']);
             $company->setProvincia($formData['province']);
+
+            //Valores por defecto
+            $company->setFoto('default.png');
+            $company->setRol(0);
 
             $entityManager->persist($company);
         } else {

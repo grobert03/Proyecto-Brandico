@@ -6,35 +6,38 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Sign Up</title>
-    <!-- Importar Alpine.js -->
-    <script src="//unpkg.com/alpinejs" defer></script>
     <!-- Importar Bulma CSS-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css"/>
+    <!-- Importar los iconos -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <!-- Importar Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Importar fuentes -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Oswald&family=Poppins:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Oswald&family=Poppins:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/15181efa86.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://unpkg.com/bulma@0.9.0/css/bulma.min.css" />
     <link rel="stylesheet" type="text/css" href="{{ asset('css/register.css') }}">
 </head>
 <body>
     <section class="container">
-        <div class="columns is-multiine">
+        <div class="header-body columns is-multiine">
             <div class="column is-10 is-offset-1 register">
                 <div class="columns">
                     <div class="column left" style="padding-top: 5rem">
-                        <div class="is-flex is-align-items-center is-justify-content-flex-start">
-                            <figure class="image is-64x64" style="padding-right: 5px">
+                        <div class="logo is-flex is-align-items-center is-justify-content-flex-start">
+                            <figure class="image is-64x64">
                                 <img src="{{ asset('img/logoHeader.png') }}" alt="icono BRANDICO">
                             </figure>
                             <div style="white-space: nowrap; align-self: center">
-                                <h1 class="title is-1" style="color: #2e4757">BRANDICO</h1>
+                                <h1 class="logo-body">BRANDICO</h1>
                             </div>
-
                         </div>
                         <h2 class="subtitle colored is-4">Vuelva a confiar en el comercio local</h2>
                         <p>Aquí empieza el crecimiento de su negocio</p>
                     </div>
                     <div class="column is-half right">
-                        <h1 class="title is-4 has-text-centered">Registrate</h1>
+                        <h1 class="title is-4 has-text-centered">Registro</h1>
                         <p class="description"></p>
                         <!-- Div que controla los formularios, muestra primero el userForm -->
                         <div x-data="{ showUserForm: true }">
@@ -54,56 +57,40 @@
                             <form x-show="showUserForm" x-data="userForm()" @submit.prevent="submitUserForm">
                                 <input type="hidden" name="type" value="user">
                                 <div class="field">
-                                    <div class="control">
-                                        <label for="user-email">Email:</label>
-                                        <input class="input is-2" id="user-email" type="email" name="_user-email" x-model="formData.email" @input="validateEmail">
-                                        <span x-show="formData.email && emailValid" class="icon is-small is-right has-text-success"><i class="fas fa-check"></i></span>
-                                        <p x-show="formData.email && !emailValid" class="has-text-danger">El email debe tener el formato de someone@example.com</p>
-                                        <span x-show="formData.email && !emailValid" class="icon is-small is-right has-text-danger"><i class="fas fa-times"></i></span>
+                                    <label for="user-email">Email:</label>
+                                    <div class="control has-icons-right">
+                                        <input class="input is-2" id="user-email" type="email" name="_user-email" x-model="formData.email" @input="validateEmail" @blur="checkEmailAvailability" :class="emailAvailable && emailValid ? 'is-success' : ''">
+                                        <span x-show="formData.email && emailValid && emailAvailable" class="icon is-right has-text-success"><ion-icon name="checkmark"></ion-icon></span>
+                                        <p x-show="formData.email && !emailValid && emailAvailable" class="has-text-danger">El email debe tener el formato de someone@example.com</p>
+                                        <p x-show="formData.email && !emailAvailable" class="has-text-danger">El email ya está en uso</p>
+                                        <span x-show="formData.email && (!emailValid || !emailAvailable)" class="icon is-right has-text-danger"><ion-icon name="close"></ion-icon></span>
                                     </div>
                                 </div>
                                 <div class="field">
+                                    <label for="user-password">Clave:</label>
                                     <div class="control">
-                                        <label for="user-password">Clave:</label>
                                         <input class="input is-2"  id="user-password" type="password" name="_user-password" x-model="formData.password">
                                         <input id="user-showPassword" type="checkbox" @click="showPassword('user-password')">
                                         <label for="user-showPassword">Mostrar Clave</label>
                                     </div>
                                 </div>
                                 <div class="field">
-                                    <div class="control">
-                                        <label for="user-dni">DNI:</label>
-                                        <input class="input is-2"  id="user-dni" type="text" name="_user-dni" x-model="formData.dni" @input="validateDNI">
-                                        <span x-show="formData.dni && dniValid" class="icon is-small is-right has-text-success"><i class="fas fa-check"></i></span>
-                                        <p x-show="formData.dni && !dniValid" class="has-text-danger">El dni debe tener 8 digitos y una letra Mayúscula</p>
-                                        <span x-show="formData.dni && !dniValid" class="icon is-small is-right has-text-danger"><i class="fas fa-times"></i></span>
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <div class="control">
-                                        <label for="user-name">Nombre:</label>
-                                        <input class="input is-2"  id="user-name" type="text" name="_user-name" x-model="formData.name" @input="validateNameSurName('name')">
-                                        <span x-show="formData.name && nameValid" class="icon is-small is-right has-text-success"><i class="fas fa-check"></i></span>
+                                    <label for="user-name">Nombre:</label>
+                                    <div class="control has-icons-right">
+                                        <input class="input is-2"  id="user-name" type="text" name="_user-name" x-model="formData.name" @input="validateNameSurName('name')" :class="nameValid ? 'is-success' : ''">
+                                        <span x-show="formData.name && nameValid" class="icon is-right has-text-success"><ion-icon name="checkmark"></ion-icon></span>
                                         <p x-show="formData.name && !nameValid" class="has-text-danger">Rellene el campo de Nombre</p>
-                                        <span x-show="formData.name && !nameValid" class="icon is-small is-right has-text-danger"><i class="fas fa-times"></i></span>
+                                        <span x-show="formData.name && !nameValid" class="icon is-right has-text-danger"><ion-icon name="close"></ion-icon></span>
                                     </div>
                                 </div>
                                 <div class="field">
-                                    <div class="control">
-                                        <label for="user-surname">Apellidos:</label>
-                                        <input class="input is-2"  id="user-surname" type="text" name="_user-surname" x-model="formData.surname" @input="validateNameSurName('surname')">
-                                        <span x-show="formData.surname && surnameValid" class="icon is-small is-right has-text-success"><i class="fas fa-check"></i></span>
-                                        <p x-show="formData.surname && !surnameValid" class="has-text-danger">Rellene el campo de Apellidos</p>
-                                        <span x-show="formData.surname && !surnameValid" class="icon is-small is-right has-text-danger"><i class="fas fa-times"></i></span>
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <div class="control">
-                                        <label for="user-phone">Teléfono:</label>
-                                        <input class="input is-2"  id="user-phone" type="text" name="_user-phone" x-model="formData.phone" @input="validatePhone">
-                                        <span x-show="formData.phone && phoneValid" class="icon is-small is-right has-text-success"><i class="fas fa-check"></i></span>
+                                    <label for="user-phone">Teléfono:</label>
+                                    <div class="control has-icons-right">
+                                        <input class="input is-2"  id="user-phone" type="text" name="_user-phone" x-model="formData.phone" @input="validatePhone" @blur="checkPhoneAvailability" :class="phoneValid && phoneAvailable ? 'is-success' : ''">
+                                        <span x-show="formData.phone && phoneValid" class="icon is-right has-text-success"><ion-icon name="checkmark"></ion-icon></span>
                                         <p x-show="formData.phone && !phoneValid" class="has-text-danger">El teléfono debe tener 9 dígitos</p>
-                                        <span x-show="formData.phone && !phoneValid" class="icon is-small is-right has-text-danger"><i class="fas fa-times"></i></span>
+                                        <p x-show="formData.phone && !phoneAvailable" class="has-text-danger">El teléfono ya está en uso</p>
+                                        <span x-show="formData.phone && !phoneValid" class="icon is-right has-text-danger"><ion-icon name="close"></ion-icon></span>
                                     </div>
                                 </div>
                                 <!-- x-text hace un bind del elemento al texto de la etiqueta -->
@@ -117,65 +104,67 @@
                             <form x-show="!showUserForm" x-data="companyForm()" @submit.prevent="submitCompanyForm">
                                 <input type="hidden" name="type" value="company">
                                 <div class="field">
-                                    <div class="control">
-                                        <label for="company-email">Email:</label>
-                                        <input class="input is-2" id="company-email" type="email" name="_company-email" x-model="formData.email" @input="validateEmail">
-                                        <span x-show="formData.email && emailValid" class="icon is-small is-right has-text-success"><i class="fas fa-check"></i></span>
-                                        <p x-show="formData.email && !emailValid" class="has-text-danger">El email debe tener el formato de someone@example.com</p>
-                                        <span x-show="formData.email && !emailValid" class="icon is-small is-right has-text-danger"><i class="fas fa-times"></i></span>
+                                    <label for="company-email">Email:</label>
+                                    <div class="control has-icons-right">
+                                        <input class="input is-2" id="company-email" type="email" name="_company-email" x-model="formData.email" @input="validateEmail" @blur="checkEmailAvailability" :class="emailAvailable && emailValid ? 'is-success' : ''">
+                                        <span x-show="formData.email && emailValid && emailAvailable" class="icon is-right has-text-success"><ion-icon name="checkmark"></ion-icon></span>
+                                        <p x-show="formData.email && !emailValid && emailAvailable" class="has-text-danger">El email debe tener el formato de someone@example.com</p>
+                                        <p x-show="formData.email && !emailAvailable" class="has-text-danger">El email ya está en uso</p>
+                                        <span x-show="formData.email && (!emailValid || !emailAvailable)" class="icon is-right has-text-danger"><ion-icon name="close"></ion-icon></span>
                                     </div>
                                 </div>
                                 <div class="field">
+                                    <label for="company-password">Clave:</label>
                                     <div class="control">
-                                        <label for="company-password">Clave:</label>
                                         <input class="input is-2" id="company-password" type="password" name="_company-password" x-model="formData.password">
                                         <input id="company-showPassword" type="checkbox" @click="showPassword('company-password')">
                                         <label for="company-showPassword">Mostrar Clave</label>
                                     </div>
                                 </div>
                                 <div class="field">
-                                    <div class="control">
-                                        <label for="company-cif">CIF:</label>
-                                        <input class="input is-2" id="company-cif" type="text" name="_company-cif" x-model="formData.cif" @input="validateCIF">
-                                        <span x-show="formData.cif && cifValid" class="icon is-small is-right has-text-success"><i class="fas fa-check"></i></span>
+                                    <label for="company-cif">CIF:</label>
+                                    <div class="control has-icons-right">
+                                        <input class="input is-2" id="company-cif" type="text" name="_company-cif" x-model="formData.cif" @input="validateCIF" :class="cifValid ? 'is-success' : ''">
+                                        <span x-show="formData.cif && cifValid" class="icon is-right has-text-success"><ion-icon name="checkmark"></ion-icon></span>
                                         <p x-show="formData.cif && !cifValid" class="has-text-danger">El cif debe tener el formato de AXXXXXXXX o AXXXXXXXA</p>
-                                        <span x-show="formData.cif && !cifValid" class="icon is-small is-right has-text-danger"><i class="fas fa-times"></i></span>
+                                        <span x-show="formData.cif && !cifValid" class="icon is-right has-text-danger"><ion-icon name="close"></ion-icon></span>
                                     </div>
                                 </div>
                                 <div class="field">
-                                    <div class="control">
-                                        <label for="company-name">Nombre:</label>
-                                        <input class="input is-2" id="company-name" type="text" name="_company-name" x-model="formData.name" @input="validateNameDirProvince('name')">
-                                        <span x-show="formData.name && nameValid" class="icon is-small is-right has-text-success"><i class="fas fa-check"></i></span>
+                                    <label for="company-name">Nombre:</label>
+                                    <div class="control has-icons-right">
+                                        <input class="input is-2" id="company-name" type="text" name="_company-name" x-model="formData.name" @input="validateNameDirProvince('name')" :class="nameValid ? 'is-success' : ''">
+                                        <span x-show="formData.name && nameValid" class="icon is-right has-text-success"><ion-icon name="checkmark"></ion-icon></span>
                                         <p x-show="formData.name && !nameValid" class="has-text-danger">Rellene el campo de Nombre</p>
-                                        <span x-show="formData.name && !nameValid" class="icon is-small is-right has-text-danger"><i class="fas fa-times"></i></span>
+                                        <span x-show="formData.name && !nameValid" class="icon is-right has-text-danger"><ion-icon name="close"></ion-icon></span>
                                     </div>
                                 </div>
                                 <div class="field">
-                                    <div class="control">
-                                        <label for="company-phone">Teléfono:</label>
-                                        <input class="input is-2" id="company-phone" type="text" name="_company-phone" x-model="formData.phone" @input="validatePhone">
-                                        <span x-show="formData.phone && phoneValid" class="icon is-small is-right has-text-success"><i class="fas fa-check"></i></span>
+                                    <label for="company-phone">Teléfono:</label>
+                                    <div class="control has-icons-right">
+                                        <input class="input is-2" id="company-phone" type="text" name="_company-phone" x-model="formData.phone" @input="validatePhone" @blur="checkPhoneAvailability" :class="phoneValid && phoneAvailable ? 'is-success' : ''">
+                                        <span x-show="formData.phone && phoneValid" class="icon is-right has-text-success"><ion-icon name="checkmark"></ion-icon></span>
                                         <p x-show="formData.phone && !phoneValid" class="has-text-danger">El teléfono debe tener 9 dígitos</p>
-                                        <span x-show="formData.phone && !phoneValid" class="icon is-small is-right has-text-danger"><i class="fas fa-times"></i></span>
+                                        <p x-show="formData.phone && !phoneAvailable" class="has-text-danger">El teléfono ya está en uso</p>
+                                        <span x-show="formData.phone && !phoneValid" class="icon is-right has-text-danger"><ion-icon name="close"></ion-icon></span>
                                     </div>
                                 </div>
                                 <div class="field">
-                                    <div class="control">
-                                        <label for="company-direction">Dirección:</label>
-                                        <input class="input is-2" id="company-direction" type="text" name="_company-direction" x-model="formData.direction" @input="validateNameDirProvince('direction')">
-                                        <span x-show="formData.direction && directionValid" class="icon is-small is-right has-text-success"><i class="fas fa-check"></i></span>
+                                    <label for="company-direction">Dirección:</label>
+                                    <div class="control has-icons-right">
+                                        <input class="input is-2" id="company-direction" type="text" name="_company-direction" x-model="formData.direction" @input="validateNameDirProvince('direction')" :class="directionValid ? 'is-success' : ''">
+                                        <span x-show="formData.direction && directionValid" class="icon is-right has-text-success"><ion-icon name="checkmark"></ion-icon></span>
                                         <p x-show="formData.direction && !directionValid" class="has-text-danger">Rellene el campo de Dirección</p>
-                                        <span x-show="formData.direction && !directionValid" class="icon is-small is-right has-text-danger"><i class="fas fa-times"></i></span>
+                                        <span x-show="formData.direction && !directionValid" class="icon is-right has-text-danger"><ion-icon name="close"></ion-icon></span>
                                     </div>
                                 </div>
                                 <div class="field">
-                                    <div class="control">
-                                        <label for="company-province">Provincia:</label>
-                                        <input class="input is-2" id="company-province" type="text" name="_company-province" x-model="formData.province" @input="validateNameDirProvince('province')">
-                                        <span x-show="formData.province && provinceValid" class="icon is-small is-right has-text-success"><i class="fas fa-check"></i></span>
+                                    <label for="company-province">Provincia:</label>
+                                    <div class="control has-icons-right">
+                                        <input class="input is-2" id="company-province" type="text" name="_company-province" x-model="formData.province" @input="validateNameDirProvince('province')" :class="provinceValid ? 'is-success' : ''">
+                                        <span x-show="formData.province && provinceValid" class="icon is-right has-text-success"><ion-icon name="checkmark"></ion-icon></span>
                                         <p x-show="formData.province && !provinceValid" class="has-text-danger">Rellene el campo de Provincia</p>
-                                        <span x-show="formData.province && !provinceValid" class="icon is-small is-right has-text-danger"><i class="fas fa-times"></i></span>
+                                        <span x-show="formData.province && !provinceValid" class="icon  is-right has-text-danger"><ion-icon name="close"></ion-icon></span>
                                     </div>
                                 </div>
                                 <div class="has-text-centered">
@@ -192,6 +181,8 @@
     </section>
     <script>
         const FORM_URL = "{{ path('createuser') }}"
+        const EMAIL_AVAILABILITY_URL = "{{ path('emailavailable') }}"
+        const PHONE_AVAILABILITY_URL = "{{ path('phoneavailable') }}"
 
         function userForm() {
             //Función que permite mandar por AJAX los datos del formulario de usuario con Alpine.js
@@ -199,21 +190,20 @@
                 formData: {
                     email: "",
                     password: "",
-                    dni: "",
                     name: "",
-                    surname: "",
                     phone: ""
                 },
                 formMessage: "",
                 formLoading: false,
                 buttonRegistroText: "Registrarse",
 
-                //Variables para controlar la validez de los campos del Email, DNI, nombre, apellido, teléfono
+                //Variables para controlar la validez de los campos del Email, nombre, teléfono
                 emailValid: false,
-                dniValid: false,
                 nameValid: false,
-                surnameValid: false,
                 phoneValid: false,
+                //Variables para verificar que no estan usados
+                emailAvailable: false,
+                phoneAvailable: false,
 
                 //Validar Email
                 validateEmail() {
@@ -224,13 +214,35 @@
                         this.emailValid = true
                 },
 
-                //Validar DNI
-                validateDNI() {
-                    const dniRegex = /^\d{8}[A-Z]$/
-                    if(!dniRegex.test(this.formData.dni))
-                        this.dniValid = false
-                    else
-                        this.dniValid = true
+                //Verificar que el email no está usado con AJAX
+                checkEmailAvailability() {
+                    if (!this.emailValid || this.formData.email === "")
+                        return false
+
+                    // Verificar si el email ha cambiado desde la última verificación
+                    if (this.formData.email === this.lastCheckedEmail) {
+                        return false
+                    }
+
+                    //Realizar la solicitud AJAX para verificar la disponibilidad del email
+                    fetch(EMAIL_AVAILABILITY_URL, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Accept: "application/json",
+                        },
+                        body: JSON.stringify({
+                            email: this.formData.email,
+                        }),
+                    })
+                        .then((response) => response.json())
+                        .then((data) => {
+                            this.emailAvailable = data.available
+                            this.lastCheckedEmail = this.formData.email
+                        })
+                        .catch((error) => {
+                            console.error("Error al verificar la disponibilidad del email", error)
+                        })
                 },
 
                 //Validar nombre y apellido
@@ -250,17 +262,49 @@
                         this.phoneValid = true
                 },
 
+                //Verificar que el teléfono no está usado con AJAX
+                checkPhoneAvailability() {
+                    if (!this.phoneValid || this.formData.phone === "") {
+                        return false
+                    }
+
+                    // Verificar si el teléfono ha cambiado desde la última verificación
+                    if (this.formData.email === this.lastCheckedPhone) {
+                        return false
+                    }
+
+                    //Realizar la solicitud AJAX para verificar la disponibilidad del teléfono
+                    fetch(PHONE_AVAILABILITY_URL, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Accept: "application/json",
+                        },
+                        body: JSON.stringify({
+                            phone: this.formData.phone
+                        }),
+                    })
+                        .then((response) => response.json())
+                        .then((data) => {
+                            this.phoneAvailable = data.available
+                            this.lastCheckedPhone = this.formData.email
+                        })
+                        .catch((error) => {
+                            console.error("Error al verificar la disponibilidad del teléfono", error)
+                        })
+                },
+
                 submitUserForm() {
                     //Asegurarse que todos los campos tienen datos antes de mandarse
-                    if (!this.formData.email.length || !this.formData.password.length || !this.formData.dni.length ||
-                        !this.formData.name.length || !this.formData.surname.length || !this.formData.phone.length) {
+                    if (!this.formData.email.length || !this.formData.password.length ||
+                        !this.formData.name.length || !this.formData.phone.length) {
                         alert("Debe rellenar todos los campos requeridos")
                         return
                     }
 
                     // Comprobar si todos los campos son válidos
-                    if (!this.dniValid || !this.emailValid ||
-                        !this.nameValid || !this.surnameValid || !this.phoneValid) {
+                    if (!this.emailValid || !this.emailAvailable ||
+                        !this.nameValid || !this.phoneValid) {
                         alert("Debe corregir los errores en el formulario antes de enviarlo")
                         return
                     }
@@ -280,9 +324,7 @@
                         body: JSON.stringify({
                             email: this.formData.email,
                             password: this.formData.password,
-                            dni: this.formData.dni,
                             name: this.formData.name,
-                            surname: this.formData.surname,
                             phone: this.formData.phone,
                             type: "user" //Se agrega el tipo de usuario aquí
                         }),
@@ -292,9 +334,7 @@
                             if (response.status === 201) {
                                 this.formData.email = ""
                                 this.formData.password = ""
-                                this.formData.dni = ""
                                 this.formData.name = ""
-                                this.formData.surname = ""
                                 this.formData.phone = ""
                                 this.formMessage = "Se ha registrado correctamente"
                             } else {
@@ -335,6 +375,7 @@
                 phoneValid: false,
                 directionValid: false,
                 provinceValid: false,
+                emailAvailable: false,
 
                 //Validar Email
                 validateEmail() {
@@ -343,6 +384,37 @@
                         this.emailValid = false
                     else
                         this.emailValid = true
+                },
+
+                //Verificar que el email no está usado con AJAX
+                checkEmailAvailability() {
+                    if (!this.emailValid || this.formData === "")
+                        return false
+
+                    // Verificar si el email ha cambiado desde la última verificación
+                    if (this.formData.email === this.lastCheckedEmail) {
+                        return false
+                    }
+
+                    //Realizar la solicitud AJAX para verificar la disponibilidad del email
+                    fetch(EMAIL_AVAILABILITY_URL, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Accept: "application/json",
+                        },
+                        body: JSON.stringify({
+                            email: this.formData.email,
+                        }),
+                    })
+                        .then((response) => response.json())
+                        .then((data) => {
+                            this.emailAvailable = data.available
+                            this.lastCheckedEmail = this.formData.email
+                        })
+                        .catch((error) => {
+                            console.error("Error al verificar la disponibilidad del email", error)
+                        })
                 },
 
                 //Validar CIF

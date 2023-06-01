@@ -117,6 +117,7 @@ CREATE TABLE `usuarios` (
   `es_empresa` tinyint(1) NOT NULL DEFAULT 0,
   `rol` tinyint(1) NOT NULL DEFAULT 0,
   `telefono` varchar(20) DEFAULT NULL,
+  `cif` varchar(9) DEFAULT NULL,
   `direccion` varchar(255) DEFAULT NULL,
   `provincia` varchar(255) DEFAULT NULL,
   `recuperacion` varchar(50) DEFAULT NULL,
