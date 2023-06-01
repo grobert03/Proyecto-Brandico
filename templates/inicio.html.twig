@@ -1,17 +1,11 @@
+{% extends "base.html.twig" %}
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
+{% block head %}
     <title>Brandico Inicio</title>
-    <!-- Importar Bulma CSS-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.2/css/bulma.min.css">
-    <!-- Importar los iconos -->
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <!-- Importar Alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link rel="stylesheet" href="{{ asset('css/inicio.css') }}">
-</head>
+{% endblock %}
 <body>
 <!-- Header -->
 <header class="hero is-primary is-small">
@@ -77,18 +71,18 @@
                 <div class="card">
                     <div class="card-content">
                         <div class="content">
-                            <form>
+                            <form id='formulario-publicar' method='POST'>
                                 <div class="field">
                                     <label class="label">Publicar un mensaje:</label>
                                     <div class="control">
-                                                <textarea class="textarea" maxlength="280"
+                                                <textarea class="textarea" maxlength="280" name='contenido-formulario'
                                                           placeholder="Escribe aquí tu mensaje (máximo 280 caracteres)"></textarea>
                                     </div>
                                     <label class="label">Adjuntar imagen o video:</label>
                                     <!-- Alpine.js maneja la subida del archivo -->
                                     <div class="file" x-data="{ fileName: ''}">
                                         <label for="fileInput" class="file-label">
-                                            <input id="fileInput" class="file-input" type="file" name="resume" @change="fileName = $event.target.files[0].name">
+                                            <input id="fileInput" class="file-input" type="file" name="fichero-formulario" @change="fileName = $event.target.files[0].name">
                                             <span class="file-cta">
                                                         <span class="file-icon">
                                                             <ion-icon name="cloud-upload-outline"></ion-icon>
@@ -103,7 +97,7 @@
                                         </label>
                                     </div>
                                     <div class="buttons publish">
-                                        <button class="button is-link is-info">Publicar</button>
+                                        <button id='publicar-mensaje' class="button is-link is-info">Publicar</button>
                                     </div>
                                 </div>
                             </form>
