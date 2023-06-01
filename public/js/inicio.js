@@ -99,7 +99,7 @@ $(document).ready(() => {
 													</span>
 													<span id='likes-${d.id}'}>${d.likes}</span>
 												</button>
-												<button  class="button is-info">
+												<button data-twt='${d.id}' class="btn-comment button is-info">
 													<span class="icon">
 														<ion-icon name="chatbubble"></ion-icon>
 													</span>
@@ -126,6 +126,10 @@ $(document).ready(() => {
                     }
                     $(this).toggleClass("is-danger");
                     $(this).toggleClass("is-light");
+                });
+
+                $(".btn-comment").unbind().click(function() {
+                    
                 });
         
                 pagina++;
