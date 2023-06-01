@@ -87,10 +87,10 @@
                                     <label for="user-phone">Teléfono:</label>
                                     <div class="control has-icons-right">
                                         <input class="input is-2"  id="user-phone" type="text" name="_user-phone" x-model="formData.phone" @input="validatePhone" @blur="checkPhoneAvailability" :class="phoneValid && phoneAvailable ? 'is-success' : ''">
-                                        <span x-show="formData.phone && phoneValid" class="icon is-right has-text-success"><ion-icon name="checkmark"></ion-icon></span>
+                                        <span x-show="formData.phone && phoneValid && phoneAvailable" class="icon is-right has-text-success"><ion-icon name="checkmark"></ion-icon></span>
                                         <p x-show="formData.phone && !phoneValid" class="has-text-danger">El teléfono debe tener 9 dígitos</p>
                                         <p x-show="formData.phone && !phoneAvailable" class="has-text-danger">El teléfono ya está en uso</p>
-                                        <span x-show="formData.phone && !phoneValid" class="icon is-right has-text-danger"><ion-icon name="close"></ion-icon></span>
+                                        <span x-show="formData.phone && (!phoneValid || !phoneAvailable)" class="icon is-right has-text-danger"><ion-icon name="close"></ion-icon></span>
                                     </div>
                                 </div>
                                 <!-- x-text hace un bind del elemento al texto de la etiqueta -->
@@ -287,7 +287,7 @@
                         .then((response) => response.json())
                         .then((data) => {
                             this.phoneAvailable = data.available
-                            this.lastCheckedPhone = this.formData.email
+                            this.lastCheckedPhone = this.formData.phone
                         })
                         .catch((error) => {
                             console.error("Error al verificar la disponibilidad del teléfono", error)
@@ -295,6 +295,7 @@
                 },
 
                 submitUserForm() {
+                    console.log(this.phoneAvailable)
                     //Asegurarse que todos los campos tienen datos antes de mandarse
                     if (!this.formData.email.length || !this.formData.password.length ||
                         !this.formData.name.length || !this.formData.phone.length) {
@@ -470,7 +471,7 @@
                         .then((response) => response.json())
                         .then((data) => {
                             this.phoneAvailable = data.available
-                            this.lastCheckedPhone = this.formData.email
+                            this.lastCheckedPhone = this.formData.phone
                         })
                         .catch((error) => {
                             console.error("Error al verificar la disponibilidad del teléfono", error)
