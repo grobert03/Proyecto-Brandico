@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
+
 		<link rel="icon" type="image/x-icon" href="{{ asset('img/favicon.ico') }}">
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,12 +14,7 @@
 		<script src="//unpkg.com/alpinejs" defer></script>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
 		<script src="{{ asset('js/jquery.js') }}"></script>
-		<link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Oswald&family=Poppins:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet">
-		<!-- Importar Bulma CSS-->
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.2/css/bulma.min.css">
-		<!-- Importar los iconos -->
-		<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script> 
-		{% block head %}{% endblock %}
+		<link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Oswald&family=Poppins:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet"> {% block head %}{% endblock %}
 		<title>
 			{% block title %}{% endblock %}
 		</title>
