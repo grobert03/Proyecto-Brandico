@@ -375,7 +375,9 @@
                 phoneValid: false,
                 directionValid: false,
                 provinceValid: false,
+                //Variables para verificar que no estan usados
                 emailAvailable: false,
+                phoneAvailable: false,
 
                 //Validar Email
                 validateEmail() {
@@ -441,6 +443,38 @@
                         this.phoneValid = false
                     else
                         this.phoneValid = true
+                },
+
+                //Verificar que el teléfono no está usado con AJAX
+                checkPhoneAvailability() {
+                    if (!this.phoneValid || this.formData.phone === "") {
+                        return false
+                    }
+
+                    // Verificar si el teléfono ha cambiado desde la última verificación
+                    if (this.formData.email === this.lastCheckedPhone) {
+                        return false
+                    }
+
+                    //Realizar la solicitud AJAX para verificar la disponibilidad del teléfono
+                    fetch(PHONE_AVAILABILITY_URL, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Accept: "application/json",
+                        },
+                        body: JSON.stringify({
+                            phone: this.formData.phone
+                        }),
+                    })
+                        .then((response) => response.json())
+                        .then((data) => {
+                            this.phoneAvailable = data.available
+                            this.lastCheckedPhone = this.formData.email
+                        })
+                        .catch((error) => {
+                            console.error("Error al verificar la disponibilidad del teléfono", error)
+                        })
                 },
 
                 submitCompanyForm() {
