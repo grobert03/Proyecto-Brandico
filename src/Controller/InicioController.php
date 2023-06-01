@@ -35,4 +35,57 @@ class InicioController extends AbstractController
 
         return new JsonResponse(['guardado' => true]);
     }
+
+    /**
+     * @Route("/devolverPublicaciones", name="devolver_publicaciones")
+     */
+    public function devolverPub(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $pagina = $request->get('pagina');
+        $lista = $this->devolverSeguidos();
+        $condicion = '(';
+        foreach ($lista as $i => $l) {
+            $condicion = $condicion.$l;
+            if ($lista[$i + 1]) {
+                $condicion = $condicion.',';
+            } else {
+                $condicion = $condicion.')';
+            }
+        }
+        $qb = $em->getRepository(Publicacion::class)->createQueryBuilder('p');
+        $qb->where('p.autor in :condicion')->setParameter('condicion', $condicion)->orWhere('p.autor = :usu')->setParameter('usu', $this->getUser()->getId())->setMaxResults(5)->setFirstResult(($pagina - 1) * 5);
+
+        $publicaciones = $qb->getQuery()->getResult();
+
+        $json = [];
+        foreach ($publicaciones as $p) {
+            $json[] = [
+                'id' => $p->getId(),
+                'autor' => $p->getAutor()->getNombre(),
+                'correo' => $p->getAutor()->getCorreo(),
+                'fecha' => $p->getFecha(),
+                'texto' => $p->getTexto(),
+                'imagen' => $p->getImagen()
+            ];
+        }
+        return new JsonResponse($json);
+    }
+
+    function devolverSeguidos($usu = 0) {
+        $em = $this->getDoctrine()->getManager();
+        if (!$usu) {
+            $usu = $this->getUser()->getId();
+        }
+        
+        $usuarios = $em->getRepository(Usuario::class)->findBy(['id_seguidor' => $usu]);
+        $lista = [];
+
+        foreach($usuarios as $u) {
+            array_push($lista, $u->getId_seguido());
+        }
+
+        return $lista;
+
+    }
+
 }

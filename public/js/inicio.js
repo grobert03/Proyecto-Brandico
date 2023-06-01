@@ -15,3 +15,23 @@ $("#publicar-mensaje").click(() => {
         }
     });
 });
+
+$(document).ready(() => {
+    let pagina = 1;
+
+    const loadPublicaciones = () => {
+        $.ajax({
+            url: ruta_devolver_publicaciones,
+            type: 'POST',
+            data: {
+                "pagina": $pagina
+            },
+            success: function (data) {
+
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        })
+    }
+});
