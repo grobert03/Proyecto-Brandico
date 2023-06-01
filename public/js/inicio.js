@@ -143,7 +143,8 @@ $(document).ready(() => {
     loadPublicaciones();
 
     $(window).scroll(() => {
-        if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+        console.log($(window).scrollTop() + $(window).height(), $(document).height() )
+        if (Math.ceil($(window).scrollTop() + $(window).height()) == $(document).height()) {
             loadPublicaciones();
         }
     })
