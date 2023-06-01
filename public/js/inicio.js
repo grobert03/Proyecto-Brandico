@@ -33,7 +33,7 @@ $(document).ready(() => {
             success: function (data) {
                 console.log(data)
                 data.forEach(d => {
-                    $("#principal").append($(`<section class="publicacion section feed">
+                    $("#principal").append($(`<section class="publicacion section feed" x-data='{text: "hola"}'>
 					<div class="container">
 						<div class="card">
 							<div class="container">
@@ -64,13 +64,13 @@ $(document).ready(() => {
 											
 											<br>
 											<div class="buttons">
-												<button class="button is-danger">
+												<button class="button is-light">
 													<span class="icon">
 														<ion-icon name="heart"></ion-icon>
 													</span>
 													<span>0</span>
 												</button>
-												<button class="button is-light">
+												<button class="button is-info">
 													<span class="icon">
 														<ion-icon name="chatbubble"></ion-icon>
 													</span>
