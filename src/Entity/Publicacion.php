@@ -21,7 +21,7 @@ class Publicacion {
     private $autor;
 
     /**
-     * @ORM\Column(type="date", name = "fecha")
+     * @ORM\Column(type="datetime", name = "fecha")
      */
     private $fecha;
     

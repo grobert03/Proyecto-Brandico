@@ -16,12 +16,12 @@ class Seguidor  {
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="Usuario")
+     * @ORM\OneToOne(targetEntity="Usuario")
      * @ORM\JoinColumn(name="id_seguido", referencedColumnName="id")
      */
     private $id_seguido;
     /**
-     * @ORM\OneToMany(targetEntity="Usuario")
+     * @ORM\OneToOne(targetEntity="Usuario")
      * @ORM\JoinColumn(name="id_seguidor", referencedColumnName="id")
      */
     private $id_seguidor;

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Usuario;
 use App\Entity\Publicacion;
+use App\Entity\Seguidor;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -43,17 +44,15 @@ class InicioController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $pagina = $request->get('pagina');
         $lista = $this->devolverSeguidos();
-        $condicion = '(';
+        $condicion = '';
         foreach ($lista as $i => $l) {
             $condicion = $condicion.$l;
-            if ($lista[$i + 1]) {
+            if (sizeof($lista) != $i + 1) {
                 $condicion = $condicion.',';
-            } else {
-                $condicion = $condicion.')';
-            }
+            } 
         }
         $qb = $em->getRepository(Publicacion::class)->createQueryBuilder('p');
-        $qb->where('p.autor in :condicion')->setParameter('condicion', $condicion)->orWhere('p.autor = :usu')->setParameter('usu', $this->getUser()->getId())->setMaxResults(5)->setFirstResult(($pagina - 1) * 5);
+        $qb->where('p.autor in (:condicion)')->setParameter('condicion', $condicion)->orWhere('p.autor = :usu')->setParameter('usu', $this->getUser()->getId())->setMaxResults(2)->setFirstResult(($pagina - 1) * 2)->orderBy('p.fecha', 'DESC');
 
         $publicaciones = $qb->getQuery()->getResult();
 
@@ -62,10 +61,11 @@ class InicioController extends AbstractController
             $json[] = [
                 'id' => $p->getId(),
                 'autor' => $p->getAutor()->getNombre(),
+                'perfil' => 'img/perfiles/'.$p->getAutor()->getFoto(),
                 'correo' => $p->getAutor()->getCorreo(),
                 'fecha' => $p->getFecha(),
                 'texto' => $p->getTexto(),
-                'imagen' => $p->getImagen()
+                'imagen' => 'img/publicaciones/'.$p->getImagen()
             ];
         }
         return new JsonResponse($json);
@@ -77,11 +77,11 @@ class InicioController extends AbstractController
             $usu = $this->getUser()->getId();
         }
         
-        $usuarios = $em->getRepository(Usuario::class)->findBy(['id_seguidor' => $usu]);
+        $usuarios = $em->getRepository(Seguidor::class)->findBy(['id_seguidor' => $usu]);
         $lista = [];
 
         foreach($usuarios as $u) {
-            array_push($lista, $u->getId_seguido());
+            array_push($lista, $u->getId_seguido()->getId());
         }
 
         return $lista;
