@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-06-2023 a las 15:06:43
+-- Tiempo de generación: 02-06-2023 a las 11:19:23
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -46,7 +46,7 @@ CREATE TABLE `comentarios` (
 CREATE TABLE `likes` (
   `id` int(11) NOT NULL,
   `id_post` int(11) NOT NULL,
-  `id_comentario` int(11) NOT NULL,
+  `id_comentario` int(11) DEFAULT NULL,
   `id_usuario` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -128,10 +128,10 @@ CREATE TABLE `usuarios` (
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `correo`, `clave`, `nombre`, `foto`, `es_empresa`, `rol`, `telefono`, `direccion`, `provincia`, `recuperacion`, `expiracion_rec`) VALUES
-(1, 'prueba@mail.com', '$2y$10$SE5ZiXksq20NUBMIJvZ76uSYzyFPQ6Fz5bEdAh4ilcXjcxTA0Qg.2', 'Prueba', 'default.png', 0, 1, NULL, NULL, NULL, NULL, NULL),
-(2, 'robert@mail.com', '$2y$10$uYsyTxE8B1pXzCrkuHcqJu70uA7oH0aloS4qwspeqjRybuP0FMB9q', 'Robert', 'default.png', 0, 1, NULL, NULL, NULL, NULL, NULL),
-(3, 'willy@mail.com', '$2y$10$uYsyTxE8B1pXzCrkuHcqJu70uA7oH0aloS4qwspeqjRybuP0FMB9q', 'Willy', 'default.png', 0, 0, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `usuarios` (`id`, `correo`, `clave`, `nombre`, `foto`, `es_empresa`, `rol`, `telefono`, `cif`, `direccion`, `provincia`, `recuperacion`, `expiracion_rec`) VALUES
+(1, 'prueba@mail.com', '$2y$10$SE5ZiXksq20NUBMIJvZ76uSYzyFPQ6Fz5bEdAh4ilcXjcxTA0Qg.2', 'Prueba', 'default.png', 0, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, 'robert@mail.com', '$2y$10$uYsyTxE8B1pXzCrkuHcqJu70uA7oH0aloS4qwspeqjRybuP0FMB9q', 'Robert', 'default.png', 0, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(3, 'willy@mail.com', '$2y$10$uYsyTxE8B1pXzCrkuHcqJu70uA7oH0aloS4qwspeqjRybuP0FMB9q', 'Willy', 'default.png', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL);
 
 --
 -- Índices para tablas volcadas

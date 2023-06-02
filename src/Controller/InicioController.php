@@ -26,9 +26,9 @@ class InicioController extends AbstractController
         $publicacion->setAutor($this->getUser());
         $publicacion->setFecha(new DateTime());
         $publicacion->setTexto($contenido);
-        $publicacion->setImagen($fichero->getClientOriginalName());
 
         if (!is_null($fichero)) {
+            $publicacion->setImagen($fichero->getClientOriginalName());
             $fichero->move($this->getParameter('kernel.project_dir').'/public/img/publicaciones', $fichero->getClientOriginalName());
         }
     
@@ -75,7 +75,7 @@ class InicioController extends AbstractController
                 'le_gusta' => $le_gusta,
                 'likes' => sizeof($likes),
                 'texto' => $p->getTexto(),
-                'imagen' => 'img/publicaciones/'.$p->getImagen()
+                'imagen' => $p->getImagen() ? 'img/publicaciones/'.$p->getImagen() : null
             ];
         }
         return new JsonResponse($json);

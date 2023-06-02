@@ -12,7 +12,9 @@ $(document).ready(() => {
             processData: false,
             dataType: "json",
             success: function (data) {
-                console.log(data);
+                pagina = 1;
+                $(".publicacion").remove();
+                loadPublicaciones();
             },
             error: function (err) {
                 console.log(err);
@@ -62,7 +64,7 @@ $(document).ready(() => {
             success: function (data) {
                 console.log(data)
                 data.forEach(d => {
-                    $("#principal").append($(`<section class="publicacion section feed">
+                    $("#principal").append($(`<section class="publicacion section feed" x-data="{comentarios: false}">
 					<div class="container">
 						<div class="card">
 							<div class="container">
@@ -83,14 +85,12 @@ $(document).ready(() => {
                                                     <div>${d.correo}</div>
                                                     <small>${d.fecha.date.substring(0, 16)}</small>
                                                     </div>
-                                                    
 												</div>
 											</div>
 											<div class="content">
 												<p>${d.texto}</p>
-												<img src="${d.imagen}" alt="Imagen publicacion">
+												${d.imagen ? `<img src="${d.imagen}" alt="Imagen publicacion">` : ''}
 											</div>
-											
 											<br>
 											<div class="buttons">
 												<button data-twt='${d.id}' class='btn-like button ${d.le_gusta ? "is-danger" : "is-light"}'>
@@ -99,13 +99,17 @@ $(document).ready(() => {
 													</span>
 													<span id='likes-${d.id}'}>${d.likes}</span>
 												</button>
-												<button data-twt='${d.id}' class="btn-comment button is-info">
+												<button data-twt='${d.id}' @click="comentarios = !comentarios" class="btn-comment button is-info">
 													<span class="icon">
 														<ion-icon name="chatbubble"></ion-icon>
 													</span>
 													<span>0</span>
 												</button>
 											</div>
+                                            <div class='comments' x-show="comentarios">
+                                                <textarea class='textarea mb-3' maxlength="280" class='tu-comentario' placeholder='Escribe un comentario...'></textarea>
+                                                <button class='button is-info'>Enviar</button>
+                                            </div>
 										</div>
 									</div>
 								</div>
@@ -129,7 +133,7 @@ $(document).ready(() => {
                 });
 
                 $(".btn-comment").unbind().click(function() {
-                    
+                 
                 });
         
                 pagina++;
