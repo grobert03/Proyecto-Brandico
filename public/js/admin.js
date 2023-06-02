@@ -23,7 +23,7 @@ const devolverUsuarios = (nombre, rol, usuarios, empresas) => {
           )
         );
       } else {
-        $("tbody").empty();
+        $("tbody").empty();src/Controller/InicioController.php
         data.forEach((e) => {
           $("tbody").append(
             $(`<tr data-correo="${e.correo}"><td>${e.correo}</td>

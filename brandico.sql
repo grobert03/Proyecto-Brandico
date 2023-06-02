@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-06-2023 a las 11:19:23
+-- Tiempo de generación: 02-06-2023 a las 16:14:17
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -33,9 +33,18 @@ CREATE TABLE `comentarios` (
   `id` int(11) NOT NULL,
   `id_post` int(11) NOT NULL,
   `autor` int(11) NOT NULL,
-  `fecha` date NOT NULL DEFAULT current_timestamp(),
+  `fecha` datetime NOT NULL DEFAULT current_timestamp(),
   `contenido` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `comentarios`
+--
+
+INSERT INTO `comentarios` (`id`, `id_post`, `autor`, `fecha`, `contenido`) VALUES
+(1, 23, 2, '2023-06-02 11:59:04', 'Buen post!'),
+(2, 23, 3, '2023-06-02 12:00:20', 'prueba'),
+(3, 23, 2, '2023-06-02 16:01:11', 'djsakld');
 
 -- --------------------------------------------------------
 
@@ -45,10 +54,21 @@ CREATE TABLE `comentarios` (
 
 CREATE TABLE `likes` (
   `id` int(11) NOT NULL,
-  `id_post` int(11) NOT NULL,
+  `id_post` int(11) DEFAULT NULL,
   `id_comentario` int(11) DEFAULT NULL,
   `id_usuario` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `likes`
+--
+
+INSERT INTO `likes` (`id`, `id_post`, `id_comentario`, `id_usuario`) VALUES
+(2, 17, NULL, 1),
+(3, 20, NULL, 2),
+(4, NULL, 1, 2),
+(6, 23, NULL, 2),
+(13, NULL, 2, 2);
 
 -- --------------------------------------------------------
 
@@ -79,7 +99,14 @@ INSERT INTO `publicaciones` (`id`, `autor`, `fecha`, `texto`, `imagen`) VALUES
 (14, 1, '2023-06-01 14:10:00', 'xd', 'tienda.jpg'),
 (15, 1, '2023-06-01 14:48:29', 'prueba', 'Flag_of_the_Land_of_Valencia_(official).svg.png'),
 (16, 1, '2023-06-01 14:49:27', '9', 'Bandera_de_la_ciudad_de_Madrid.svg.png'),
-(17, 1, '2023-06-01 14:50:52', '10', 'Flag_of_the_Land_of_Valencia_(official).svg.png');
+(17, 1, '2023-06-01 14:50:52', '10', 'Flag_of_the_Land_of_Valencia_(official).svg.png'),
+(18, 1, '2023-06-02 11:31:00', 'Prueba sin imagen', NULL),
+(19, 1, '2023-06-02 11:32:40', 'Segunda prueba sin imagen', NULL),
+(20, 1, '2023-06-02 11:33:13', 'jskada', 'international-cat-day1-scaled.jpg'),
+(21, 1, '2023-06-02 11:33:59', 'aaa', NULL),
+(22, 1, '2023-06-02 11:34:54', 'xxdsadsad', NULL),
+(23, 1, '2023-06-02 11:36:28', 'dsdsdsds', NULL),
+(24, 2, '2023-06-02 15:40:13', 'test', NULL);
 
 -- --------------------------------------------------------
 
@@ -129,7 +156,7 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `correo`, `clave`, `nombre`, `foto`, `es_empresa`, `rol`, `telefono`, `cif`, `direccion`, `provincia`, `recuperacion`, `expiracion_rec`) VALUES
-(1, 'prueba@mail.com', '$2y$10$SE5ZiXksq20NUBMIJvZ76uSYzyFPQ6Fz5bEdAh4ilcXjcxTA0Qg.2', 'Prueba', 'default.png', 0, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(1, 'prueba@mail.com', '$2y$10$SE5ZiXksq20NUBMIJvZ76uSYzyFPQ6Fz5bEdAh4ilcXjcxTA0Qg.2', 'Prueba', 'dog-puppy-on-garden-royalty-free-image-1586966191.jpg', 0, 1, NULL, NULL, NULL, NULL, NULL, NULL),
 (2, 'robert@mail.com', '$2y$10$uYsyTxE8B1pXzCrkuHcqJu70uA7oH0aloS4qwspeqjRybuP0FMB9q', 'Robert', 'default.png', 0, 1, NULL, NULL, NULL, NULL, NULL, NULL),
 (3, 'willy@mail.com', '$2y$10$uYsyTxE8B1pXzCrkuHcqJu70uA7oH0aloS4qwspeqjRybuP0FMB9q', 'Willy', 'default.png', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL);
 
@@ -185,19 +212,19 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `comentarios`
 --
 ALTER TABLE `comentarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `likes`
 --
 ALTER TABLE `likes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `publicaciones`
 --
 ALTER TABLE `publicaciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT de la tabla `seguidores`

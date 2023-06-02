@@ -54,6 +54,36 @@ $(document).ready(() => {
         });
     }
 
+    const darLikeComentario = (id) => {
+        $.ajax({
+            url: ruta_dar_like,
+            data: { "id": id, "comentario": true },
+            type: "POST",
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    }
+
+    const quitarLikeComentario = (id) => {
+        $.ajax({
+            url: ruta_quitar_like,
+            data: { "id": id, "comentario": true },
+            type: "POST",
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    }
+
     const loadPublicaciones = () => {
         $.ajax({
             url: ruta_devolver_publicaciones,
@@ -91,7 +121,6 @@ $(document).ready(() => {
 												<p>${d.texto}</p>
 												${d.imagen ? `<img src="${d.imagen}" alt="Imagen publicacion">` : ''}
 											</div>
-											<br>
 											<div class="buttons">
 												<button data-twt='${d.id}' class='btn-like button ${d.le_gusta ? "is-danger" : "is-light"}'>
 													<span class="icon">
@@ -99,16 +128,36 @@ $(document).ready(() => {
 													</span>
 													<span id='likes-${d.id}'}>${d.likes}</span>
 												</button>
-												<button data-twt='${d.id}' @click="comentarios = !comentarios" class="btn-comment button is-info">
+												<button data-twt='${d.id}' @click="comentarios = !comentarios" class="btn-comment button" :class="comentarios ? 'is-light' : 'is-info'">
 													<span class="icon">
 														<ion-icon name="chatbubble"></ion-icon>
 													</span>
-													<span>0</span>
+													<span>${d.comentarios.length}</span>
 												</button>
 											</div>
-                                            <div class='comments' x-show="comentarios">
-                                                <textarea class='textarea mb-3' maxlength="280" class='tu-comentario' placeholder='Escribe un comentario...'></textarea>
-                                                <button class='button is-info'>Enviar</button>
+                                            <div class='comments comments-${d.id}' x-show="comentarios">
+                                                <textarea id='textarea-${d.id}' class='textarea mb-3' maxlength="180" class='tu-comentario' placeholder='Escribe un comentario...'></textarea>
+                                                <button class='button is-info crear-comment' data-post="${d.id}">Enviar</button>
+                                                <div>${d.comentarios.map((e) => `
+                                                <article class="media comentario">
+                                                <figure class="media-left">
+                                                  <p class="image is-48x48">
+                                                    <img src="${e.foto}">
+                                                  </p>
+                                                </figure>
+                                                <div class="media-content">
+                                                  <div class="content">
+                                                    <p>
+                                                      <strong>${e.autor}</strong>
+                                                      <br>
+                                                      ${e.contenido}
+                                                      <br>
+                                                      <small><span id='likes-com-${e.id}'>${e.likes}</span><ion-icon data-com='${e.id}' class='${e.le_gusta ? 'has-text-danger' : 'has-text-gray'} btn-like-com ' name="heart"></ion-icon> · ${e.fecha.date.substring(0, 16)}</small>
+                                                    </p>
+                                                  </div>
+                                                </div>
+                                              </article>
+                                                `).join("")}</div>
                                             </div>
 										</div>
 									</div>
@@ -118,8 +167,21 @@ $(document).ready(() => {
 					</div>
 				</section>`))
                 });
-                
-                $(".btn-like").unbind().click(function() {
+
+                $(".btn-like-com").unbind().click(function () {
+                    let id = $(this).data("com");
+                    if ($(this).hasClass("has-text-danger")) {
+                        $(`#likes-com-${id}`).text(Number($(`#likes-com-${id}`).text()) - 1);
+                        quitarLikeComentario(id);
+                    } else {
+                        $(`#likes-com-${id}`).text(Number($(`#likes-com-${id}`).text()) + 1);
+                        darLikeComentario(id);
+                    }
+                    console.log($(this))
+                    $(this).toggleClass("has-text-danger");
+                });
+
+                $(".btn-like").unbind().click(function () {
                     let id = $(this).data("twt");
                     if ($(this).hasClass("is-danger")) {
                         $(`#likes-${id}`).text(Number($(`#likes-${id}`).text()) - 1);
@@ -129,13 +191,23 @@ $(document).ready(() => {
                         darLike(id);
                     }
                     $(this).toggleClass("is-danger");
-                    $(this).toggleClass("is-light");
                 });
 
-                $(".btn-comment").unbind().click(function() {
-                 
+                $(".crear-comment").unbind().click(function () {
+                    $.ajax({
+                        url: ruta_crear_comentario,
+                        data: { "id": $(this).data("post"), "texto": $(`#textarea-${$(this).data("post")}`).val() },
+                        type: "POST",
+                        dataType: "json",
+                        success: function (data) {
+                            console.log(data);
+                        },
+                        error: function (err) {
+                            console.log(err);
+                        }
+                    })
                 });
-        
+
                 pagina++;
             },
             error: function (err) {

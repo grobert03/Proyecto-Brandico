@@ -99,6 +99,9 @@ body {
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.3);
 }
 
+textarea {
+    resize: none !important;
+}
 
 .scroll-to-top:hover {
     opacity: 0.8;
@@ -135,6 +138,10 @@ body {
     opacity: 0;
 }
 
+ion-icon {
+    cursor: pointer;
+}
+
 .file-name {
     display: inline-block;
     white-space: nowrap;
@@ -143,6 +150,11 @@ body {
     max-width: 200px;
     margin-left: 5px;
     vertical-align: middle;
+}
+
+
+.comments > div {
+    margin-top: 20px;
 }
 
 /* Para pantallas pequeñas el menú de navegación aparece encima de las secciones*/
@@ -293,3 +305,4 @@ body {
         margin-top: 80px;
     }
 }
+
