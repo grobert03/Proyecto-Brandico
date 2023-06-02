@@ -142,7 +142,7 @@ $(document).ready(() => {
                                                 <article class="media comentario">
                                                 <figure class="media-left">
                                                   <p class="image is-48x48">
-                                                    <img src="${e.foto}">
+                                                    <img class='is-rounded' src="${e.foto}">
                                                   </p>
                                                 </figure>
                                                 <div class="media-content">
