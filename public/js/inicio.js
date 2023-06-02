@@ -94,7 +94,7 @@ $(document).ready(() => {
             success: function (data) {
                 console.log(data)
                 data.forEach(d => {
-                    $("#principal").append($(`<section class="publicacion section feed" x-data="{comentarios: false}">
+                    $("#principal").append($(`<section id="publicacion-${d.id}" class="publicacion section feed" x-data="{comentarios: false}">
 					<div class="container">
 						<div class="card">
 							<div class="container">
@@ -194,13 +194,18 @@ $(document).ready(() => {
                 });
 
                 $(".crear-comment").unbind().click(function () {
+                    let id = $(this).data("post");
+                    let scroll = $(window).scrollTop();
+                    
+                    
+                    console.log(id);
                     $.ajax({
                         url: ruta_crear_comentario,
-                        data: { "id": $(this).data("post"), "texto": $(`#textarea-${$(this).data("post")}`).val() },
+                        data: { "id": id, "texto": $(`#textarea-${id}`).val() },
                         type: "POST",
                         dataType: "json",
                         success: function (data) {
-                            console.log(data);
+                            
                         },
                         error: function (err) {
                             console.log(err);
