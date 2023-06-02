@@ -152,7 +152,7 @@ $(document).ready(() => {
                                                       <br>
                                                       ${e.contenido}
                                                       <br>
-                                                      <small><span id='likes-com-${e.id}'>${e.likes}</span><ion-icon data-com='${e.id}' class='${e.le_gusta ? 'has-text-danger' : 'has-text-gray'} btn-like-com ' name="heart"></ion-icon> · ${e.fecha.date.substring(0, 16)}</small>
+                                                      <small><span id='likes-com-${e.id}'>${e.likes} </span><ion-icon data-com='${e.id}' class='${e.le_gusta ? 'has-text-danger' : 'has-text-gray'} btn-like-com ' name="heart"></ion-icon> · ${e.fecha.date.substring(0, 16)}</small>
                                                     </p>
                                                   </div>
                                                 </div>
