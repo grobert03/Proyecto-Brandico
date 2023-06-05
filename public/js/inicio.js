@@ -15,7 +15,8 @@ $(document).ready(() => {
                 processData: false,
                 dataType: "json",
                 success: function (data) {
-                    $("textarea").eq(0).css("border-color", "#dbdbdb");
+                    $("textarea").eq(0).css("border", "1px solid transparent");
+                    
                     pagina = 1;
                     $(".publicacion").remove();
                     loadPublicaciones();
@@ -157,7 +158,7 @@ $(document).ready(() => {
                                                     <p>
                                                       <strong>${e.autor}</strong>
                                                       <br>
-                                                      ${e.contenido}
+                                                      <span>${e.contenido}</span>
                                                       <br>
                                                       <small><span id='likes-com-${e.id}'>${e.likes} </span><ion-icon data-com='${e.id}' class='${e.le_gusta ? 'has-text-danger' : 'has-text-gray'} btn-like-com ' name="heart"></ion-icon> · ${e.fecha.date.substring(0, 16)}</small>
                                                     </p>
@@ -205,16 +206,19 @@ $(document).ready(() => {
                     let id = $(this).data("post");
                     let scroll = $(window).scrollTop();
                     if ($(`#textarea-${id}`).val().length == 0) {
-                        $(`#textarea-${id}`).css("border", "1px solid hsl(348, 100%, 61%)");
+                        $(`#textarea-${id}`).toggleClass("error");
                     } else {
-                        $(`#textarea-${id}`).val('');
-                        $(`#textarea-${id}`).css("border-color", "#dbdbdb");
+                        if ($(`#textarea-${id}`).hasClass("error")) {
+                            $(`#textarea-${id}`).toggleClass("error");
+                        }
+
                         $.ajax({
                             url: ruta_crear_comentario,
                             data: { "id": id, "texto": $(`#textarea-${id}`).val() },
                             type: "POST",
                             dataType: "json",
                             success: function (data) {
+                                $(`#textarea-${id}`).val('');
 
                             },
                             error: function (err) {

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-06-2023 a las 16:14:17
+-- Tiempo de generación: 05-06-2023 a las 13:39:03
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -44,7 +44,29 @@ CREATE TABLE `comentarios` (
 INSERT INTO `comentarios` (`id`, `id_post`, `autor`, `fecha`, `contenido`) VALUES
 (1, 23, 2, '2023-06-02 11:59:04', 'Buen post!'),
 (2, 23, 3, '2023-06-02 12:00:20', 'prueba'),
-(3, 23, 2, '2023-06-02 16:01:11', 'djsakld');
+(3, 23, 2, '2023-06-02 16:01:11', 'djsakld'),
+(4, 20, 1, '2023-06-05 11:26:33', 'xd'),
+(5, 42, 1, '2023-06-05 12:19:57', ''),
+(6, 42, 1, '2023-06-05 12:22:29', 'a'),
+(7, 42, 1, '2023-06-05 12:26:57', ''),
+(8, 42, 1, '2023-06-05 12:26:59', ''),
+(9, 42, 1, '2023-06-05 12:27:00', ''),
+(10, 42, 1, '2023-06-05 12:27:02', ''),
+(11, 42, 1, '2023-06-05 12:27:04', ''),
+(12, 42, 1, '2023-06-05 12:27:06', ''),
+(13, 42, 1, '2023-06-05 12:29:35', ''),
+(14, 41, 1, '2023-06-05 12:31:13', ''),
+(15, 42, 1, '2023-06-05 12:32:45', ''),
+(16, 42, 1, '2023-06-05 12:34:28', ''),
+(17, 42, 1, '2023-06-05 12:35:22', ''),
+(18, 42, 1, '2023-06-05 12:35:52', ''),
+(19, 42, 1, '2023-06-05 12:36:05', ''),
+(20, 42, 1, '2023-06-05 12:36:42', ''),
+(21, 42, 1, '2023-06-05 12:37:35', ''),
+(22, 42, 1, '2023-06-05 12:39:26', ''),
+(23, 42, 1, '2023-06-05 12:45:03', ''),
+(24, 42, 1, '2023-06-05 12:45:15', ''),
+(25, 42, 1, '2023-06-05 12:46:53', 'jdsklafjdasklfjdsañlf\n\nfjdsklfjdsñafjsdkñfjsadljfñdsafkdjsafkdslañfjdkslañfjdkslañfjdklsañfjdklsañfjdkñsjafklñdsjafklñdjsaklfñdjkslañfjdklsñajfkldañjfkldsñajflk');
 
 -- --------------------------------------------------------
 
@@ -68,7 +90,17 @@ INSERT INTO `likes` (`id`, `id_post`, `id_comentario`, `id_usuario`) VALUES
 (3, 20, NULL, 2),
 (4, NULL, 1, 2),
 (6, 23, NULL, 2),
-(13, NULL, 2, 2);
+(13, NULL, 2, 2),
+(16, 23, NULL, 1),
+(18, 21, NULL, 1),
+(19, 18, NULL, 1),
+(20, 16, NULL, 1),
+(21, 38, NULL, 1),
+(22, NULL, 2, 1),
+(23, 30, NULL, 1),
+(26, 42, NULL, 1),
+(28, NULL, 21, 1),
+(29, NULL, 25, 1);
 
 -- --------------------------------------------------------
 
@@ -81,32 +113,50 @@ CREATE TABLE `publicaciones` (
   `autor` int(11) NOT NULL,
   `fecha` datetime NOT NULL DEFAULT current_timestamp(),
   `texto` text DEFAULT NULL,
-  `imagen` varchar(255) DEFAULT NULL
+  `imagen` varchar(255) DEFAULT NULL,
+  `video` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `publicaciones`
 --
 
-INSERT INTO `publicaciones` (`id`, `autor`, `fecha`, `texto`, `imagen`) VALUES
-(7, 1, '2023-06-01 10:00:00', 'aaaaaa', 'logo-quality.png'),
-(8, 1, '2023-06-01 11:00:00', 'Buenas tardes', 'Cat_November_2010-1a.jpg'),
-(9, 2, '2023-06-01 11:30:00', 'Holaaa', 'Cat_August_2010-4.jpg'),
-(10, 3, '2023-06-01 11:31:00', 'kdlsajdaskldjskaldjsakldjasas', 'international-cat-day1-scaled.jpg'),
-(11, 1, '2023-06-01 12:31:00', 'FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF', 'gettyimages-1279899488_wide-f3860ceb0ef19643c335cb34df3fa1de166e2761-s1100-c50.jpg'),
-(12, 2, '2023-06-01 13:00:00', 'Holaaa', 'logo-quality.png'),
-(13, 1, '2023-06-01 13:20:00', 'Holaaa', 'Flag_of_Barcelona.svg.png'),
-(14, 1, '2023-06-01 14:10:00', 'xd', 'tienda.jpg'),
-(15, 1, '2023-06-01 14:48:29', 'prueba', 'Flag_of_the_Land_of_Valencia_(official).svg.png'),
-(16, 1, '2023-06-01 14:49:27', '9', 'Bandera_de_la_ciudad_de_Madrid.svg.png'),
-(17, 1, '2023-06-01 14:50:52', '10', 'Flag_of_the_Land_of_Valencia_(official).svg.png'),
-(18, 1, '2023-06-02 11:31:00', 'Prueba sin imagen', NULL),
-(19, 1, '2023-06-02 11:32:40', 'Segunda prueba sin imagen', NULL),
-(20, 1, '2023-06-02 11:33:13', 'jskada', 'international-cat-day1-scaled.jpg'),
-(21, 1, '2023-06-02 11:33:59', 'aaa', NULL),
-(22, 1, '2023-06-02 11:34:54', 'xxdsadsad', NULL),
-(23, 1, '2023-06-02 11:36:28', 'dsdsdsds', NULL),
-(24, 2, '2023-06-02 15:40:13', 'test', NULL);
+INSERT INTO `publicaciones` (`id`, `autor`, `fecha`, `texto`, `imagen`, `video`) VALUES
+(7, 1, '2023-06-01 10:00:00', 'aaaaaa', 'logo-quality.png', NULL),
+(8, 1, '2023-06-01 11:00:00', 'Buenas tardes', 'Cat_November_2010-1a.jpg', NULL),
+(9, 2, '2023-06-01 11:30:00', 'Holaaa', 'Cat_August_2010-4.jpg', NULL),
+(10, 3, '2023-06-01 11:31:00', 'kdlsajdaskldjskaldjsakldjasas', 'international-cat-day1-scaled.jpg', NULL),
+(11, 1, '2023-06-01 12:31:00', 'FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF', 'gettyimages-1279899488_wide-f3860ceb0ef19643c335cb34df3fa1de166e2761-s1100-c50.jpg', NULL),
+(12, 2, '2023-06-01 13:00:00', 'Holaaa', 'logo-quality.png', NULL),
+(13, 1, '2023-06-01 13:20:00', 'Holaaa', 'Flag_of_Barcelona.svg.png', NULL),
+(14, 1, '2023-06-01 14:10:00', 'xd', 'tienda.jpg', NULL),
+(15, 1, '2023-06-01 14:48:29', 'prueba', 'Flag_of_the_Land_of_Valencia_(official).svg.png', NULL),
+(16, 1, '2023-06-01 14:49:27', '9', 'Bandera_de_la_ciudad_de_Madrid.svg.png', NULL),
+(17, 1, '2023-06-01 14:50:52', '10', 'Flag_of_the_Land_of_Valencia_(official).svg.png', NULL),
+(18, 1, '2023-06-02 11:31:00', 'Prueba sin imagen', NULL, NULL),
+(19, 1, '2023-06-02 11:32:40', 'Segunda prueba sin imagen', NULL, NULL),
+(20, 1, '2023-06-02 11:33:13', 'jskada', 'international-cat-day1-scaled.jpg', NULL),
+(21, 1, '2023-06-02 11:33:59', 'aaa', NULL, NULL),
+(22, 1, '2023-06-02 11:34:54', 'xxdsadsad', NULL, NULL),
+(23, 1, '2023-06-02 11:36:28', 'dsdsdsds', NULL, NULL),
+(24, 2, '2023-06-02 15:40:13', 'test', NULL, NULL),
+(25, 1, '2023-06-05 11:38:42', '', NULL, NULL),
+(26, 1, '2023-06-05 11:39:01', 'd', NULL, NULL),
+(27, 1, '2023-06-05 11:39:13', 'a', NULL, NULL),
+(28, 1, '2023-06-05 11:40:06', 'a', NULL, NULL),
+(29, 1, '2023-06-05 11:42:22', '', 'logo-quality.png', NULL),
+(30, 1, '2023-06-05 11:42:44', '', 'logo-quality.png', NULL),
+(31, 1, '2023-06-05 11:44:37', '', 'logo-quality.png', NULL),
+(32, 1, '2023-06-05 11:46:12', '', 'logo-quality.png', NULL),
+(33, 1, '2023-06-05 11:48:05', '', 'logo-quality.png', NULL),
+(34, 1, '2023-06-05 11:49:28', '', 'logo-quality.png', NULL),
+(35, 1, '2023-06-05 11:51:54', 'ds', NULL, NULL),
+(36, 1, '2023-06-05 11:52:59', '', 'logo-quality.png', NULL),
+(38, 1, '2023-06-05 11:56:28', '', 'tienda.jpg', NULL),
+(39, 1, '2023-06-05 11:57:42', '', 'gettyimages-1279899488_wide-f3860ceb0ef19643c335cb34df3fa1de166e2761-s1100-c50.jpg', NULL),
+(40, 1, '2023-06-05 11:58:24', '', 'gettyimages-1279899488_wide-f3860ceb0ef19643c335cb34df3fa1de166e2761-s1100-c50.jpg', NULL),
+(41, 1, '2023-06-05 12:07:31', '', '647db3e3d5345.png', NULL),
+(42, 1, '2023-06-05 12:13:17', ':3', NULL, '647db53d1c339.mp4');
 
 -- --------------------------------------------------------
 
@@ -212,19 +262,19 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `comentarios`
 --
 ALTER TABLE `comentarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT de la tabla `likes`
 --
 ALTER TABLE `likes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT de la tabla `publicaciones`
 --
 ALTER TABLE `publicaciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT de la tabla `seguidores`
