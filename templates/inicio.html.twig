@@ -64,7 +64,7 @@
 									<span class="navbar-item-text">Inicio</span>
 								</div>
 							</a>
-							<a class="navbar-item" href="#">
+							<a class="navbar-item" href="{{ path('explorar') }}">
 								<div class="navbar-item-content">
 									<ion-icon name="search-outline"></ion-icon>
 									<span class="navbar-item-text">Explorar</span>
@@ -76,12 +76,14 @@
 									<span class="navbar-item-text">Perfil</span>
 								</div>
 							</a>
-							<a class="navbar-item" href="{{ path('controlador_portal_admin') }}">
-								<div class="navbar-item-content">
-									<ion-icon name="settings-outline"></ion-icon>
-									<span class="navbar-item-text">Zona Admin</span>
-								</div>
-							</a>
+							{% if is_granted('ROLE_ADMIN') %}
+								<a class="navbar-item" href="{{ path('controlador_portal_admin') }}">
+									<div class="navbar-item-content">
+										<ion-icon name="settings-outline"></ion-icon>
+										<span class="navbar-item-text">Zona Admin</span>
+									</div>
+								</a>
+							{% endif %}
 						</nav>
 					</div>
 				</div>

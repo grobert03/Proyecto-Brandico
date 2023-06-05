@@ -1,0 +1,376 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins');
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+:root {
+    --brandColor: #2e4757;
+    --background: rgb(247, 247, 247);
+    --textDark: #324054;
+    --textLight: hsla(0, 0%, 0%, 0.33);
+    --navbar-item-hover-bg: #EFF6FF;
+    --navbar-item-hover-color: #2D68FE;
+    --navbar-item-active-bg: #EFF6FF;
+    --navbar-item-active-color: #2D68FE;
+}
+
+body {
+    background-color: #f8f8f8;
+    color: var(--textDark);
+    font-family: 'Montserrat';
+}
+
+/* Header */
+.hero.is-primary {
+    background-color: var(--brandColor);
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+    color: white;
+}
+
+/* navMenuItem */
+.navMenuItem {
+    color: white;
+}
+
+/* Ajustar posición de los sections */
+.sections {
+    margin-left: 200px; /* Ancho del menú */
+}
+
+.navMenuItem {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.navMenuItem-label {
+    margin-right: 5px;
+}
+
+.hero-body h1 {
+    font-family: 'Poppins';
+    font-style: italic;
+    font-weight: 500;
+}
+
+/* Botón de publicar */
+.buttons.publish {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 10px;
+}
+
+/* Para cambiar el hover de los links de menú de navegación */
+.navbar-item:hover, .focus {
+    background-color: var(--navbar-item-hover-bg) !important;
+    color: var(--navbar-item-hover-color) !important;
+}
+
+.navbar-item.is-active {
+    background-color: var(--navbar-item-active-bg) !important;
+    color: var(--navbar-item-active-color) !important;
+}
+
+.button.is-link.is-info {
+    background-color: var(--navbar-item-hover-color);
+}
+
+.section.feed {
+    padding-top: 0;
+}
+
+/* Propiedades del boton de scroll to top */
+.scroll-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    color: black;
+    background-color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    line-height: 40px;
+    text-align: center;
+    cursor: pointer;
+    transition: opacity 0.2s ease-in-out;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.3);
+}
+
+.scroll-to-top:hover {
+    opacity: 0.8;
+}
+
+.scroll-to-top i {
+    transform: translateY(-2px);
+}
+
+.navbar-item {
+    font-size: large;
+    font-weight: 600;
+}
+
+.navbar ion-icon {
+    font-size: 22px !important;
+}
+
+/* Sección de subida de archivo */
+.file-label {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+}
+
+.file-label > * {
+    vertical-align: middle;
+}
+
+.file-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+}
+
+.file-name {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+    margin-left: 5px;
+    vertical-align: middle;
+}
+
+/* Para pantallas pequeñas el menú de navegación aparece encima de las secciones*/
+@media screen and (max-width: 768px) {
+    /* Para que los iconos del menú esten centrados con los enlaces */
+    .navbar-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .navbar-item-content {
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+    }
+
+    .navbar-item-text {
+        align-self: center;
+    }
+
+    /* Cmabiar el tamaño de los iconos */
+    .navbar-item-content ion-icon {
+        font-size: 16px !important;
+        padding-right: 5px;
+    }
+}
+
+/* Cuando el ancho este entre 769px y 1023px solo se muestren los iconos del menú de navegación lateral */
+@media (min-width: 769px) and (max-width: 1023px) {
+    .navbar {
+        height: 73vh;
+        padding: 30px 20px 0px 20px;
+        position: sticky;
+        top: 0;
+    }
+
+    /* El div del menú de navegación se queda flotando a la izquierda */
+    .is-fixed-width {
+        margin-top: 50px;
+        top: 1vh;
+        width: 130px;
+    }
+
+    /* El card del menú es sticky cuando se hace scroll */
+    .is-fixed-width .card {
+        top: 1vh;
+        position: sticky;
+    }
+
+    .navbar-item-text {
+        display: none;
+    }
+
+    .espacioblanco {
+        display: none;
+    }
+}
+
+/* El menú de navegación es más grande siempre estar hacia la izquierda sticky */
+@media screen and (min-width: 1024px) {
+    /* Ajustar posición del menú */
+    .navbar {
+        height: 73vh;
+        padding: 30px 20px 0px 20px;
+        top: 0;
+    }
+
+    /* El div del menú se queda flotando a la izquierda y además tiene un ancho fijo */
+    .is-fixed-width {
+        margin-top: 50px;
+        top: 1vh;
+        width: 270px;
+    }
+
+    /* El card del menú es sticky cuando se hace scroll */
+    .is-fixed-width .card {
+        top: 1vh;
+        position: sticky;
+    }
+
+    .nav-card {
+        width: 300px !important;
+    }
+
+    .navbar-menu {
+        padding-top: 30px;
+    }
+
+    .navbar-item {
+        margin: 5px;
+        font-size: large;
+        font-weight: 600;
+    }
+
+    .navbar-item ion-icon {
+        font-size: 22px !important;
+    }
+
+    .navbar-item-text {
+        display: inline;
+    }
+
+    .navbar-item-content {
+        display: flex;
+        align-items: center;
+    }
+
+    .navbar-item-content ion-icon {
+        padding-right: 10px;
+    }
+
+    /* Ajustar posición de las secciones */
+    .columns {
+        display: flex;
+        flex-wrap: wrap;
+        margin-left: 200px;
+    }
+
+    .column {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .column.is-2 {
+        flex: 0 0 auto;
+    }
+
+    .sections {
+        margin-top: 80px;
+    }
+}
+
+/* Añadir reglas CSS para el search box */
+.search-box {
+    position: relative;
+}
+
+.search-box input {
+    width: 100%;
+    padding-right: 40px; /* Ajustar el espacio para el icono de búsqueda */
+}
+
+.search-box .icon.is-left {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+}
+
+/* Añadir reglas CSS para el autocompletado */
+.user-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.user-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #ccc;
+}
+
+.user-item:hover {
+    background-color: #f5f5f5;
+}
+
+.user-item .image.is-64x64 {
+    margin-right: 10px;
+}
+
+/* Añadir reglas CSS para hacer el figure alineado a la izquierda */
+.user-details {
+    margin-left: 74px; /* Ancho de la imagen + margen */
+}
+
+/* Hacer el figure alineado a la izquierda */
+.user-details .image.is-64x64 {
+    float: left;
+    margin-right: 10px;
+    border-radius: 50%;
+}
+
+/* Estilos para el perfil del usuario */
+.profile-info {
+    display: flex;
+    align-items: center;
+}
+
+.profile-info .user-name {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.profile-info .follow-button {
+    margin-left: 10px;
+}
+
+.profile-info .followers {
+    margin-right: 10px;
+}
+
+.profile-info .email {
+    font-size: 14px;
+}
+
+/* Estilos adicionales */
+.image.is-100x100 {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+}
+
+.button {
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.info.columns {
+    margin-left: 0;
+}
+
+.following {
+    background-color: lightgray;
+}
