@@ -39,6 +39,8 @@ class InicioController extends AbstractController
             } else if (str_contains($mime, "image/")) {
                 $publicacion->setImagen($filename);
                 $fichero->move($this->getParameter('kernel.project_dir').'/public/img/publicaciones', $filename);
+            } else {
+                return new JsonResponse(['error' => 'Archivo no compatible!']);
             }
         }
     
@@ -89,7 +91,21 @@ class InicioController extends AbstractController
         $em->persist($comentario);
         $em->flush();
 
-        return new JsonResponse(['guardado' => true]);
+        return new JsonResponse(['comentario' => ['id' => $comentario->getId(), 'autor' => $comentario->getAutor()->getNombre(), 'foto' => 'img/perfiles/'.$comentario->getAutor()->getFoto() , 'fecha' => $comentario->getFecha(), 'contenido' => $comentario->getContenido(), 'likes' => 0, 'le_gusta' => 0]]);
+    }
+
+    /**
+     * @Route("/borrarCom", name="borrar_comentario")
+     */
+    public function borrarComentario(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $id = $request->request->get('id');
+        $comentario = $em->getRepository(Comentario::class)->findOneBy(['id' => $id]);
+
+        $em->remove($comentario);
+        $em->flush();
+
+        return new JsonResponse(['borrado' => true]);
     }
 
     /**
@@ -109,7 +125,7 @@ class InicioController extends AbstractController
         }
         // Devolver publicaciones
         $qb = $em->getRepository(Publicacion::class)->createQueryBuilder('p');
-        $qb->where('p.autor in (:condicion)')->setParameter('condicion', $condicion)->orWhere('p.autor = :usu')->setParameter('usu', $this->getUser()->getId())->setMaxResults(2)->setFirstResult(($pagina - 1) * 2)->orderBy('p.fecha', 'DESC');
+        $qb->where('p.autor in (:condicion)')->setParameter('condicion', $condicion)->orWhere('p.autor = :usu')->setParameter('usu', $this->getUser()->getId())->setMaxResults(3)->setFirstResult(($pagina - 1) * 3)->orderBy('p.fecha', 'DESC');
 
         $publicaciones = $qb->getQuery()->getResult();
 
@@ -120,11 +136,20 @@ class InicioController extends AbstractController
             // Devolver comentarios
             $comentarios = $em->getRepository(Comentario::class)->findBy(['id_post' => $p->getId()], ['fecha' => 'DESC']);
             $array_comentarios = [];
+            $array_personas = [];
+            $personas = $em->getRepository(Like::class)->findBy(['id_post' => $p->getId()]);
+            foreach($personas as $pe) {
+                if ($pe->getId_usuario()->getId() != $this->getUser()->getId()) {
+                    array_push($array_personas, ['id' => $pe->getId_usuario()->getId(), 'nombre' => $pe->getId_usuario()->getNombre(), 'foto' =>  'img/perfiles/'.$pe->getId_usuario()->getFoto()]);
+                }
+                
+            }
+
 
             foreach ($comentarios as $c) {
                 $likes_com = $em->getRepository(Like::class)->findBy(['id_comentario' => $c->getId()]);
                 $le_gusta_com = $em->getRepository(Like::class)->findOneBy(['id_usuario' => $this->getUser()->getId(), 'id_comentario' => $c->getId()]);
-                array_push($array_comentarios, ['id' => $c->getId(), 'autor' => $c->getAutor()->getNombre(), 'foto' => 'img/perfiles/'.$c->getAutor()->getFoto() , 'fecha' => $c->getFecha(), 'contenido' => $c->getContenido(), 'likes' => sizeof($likes_com), 'le_gusta' => $le_gusta_com ? 1 : 0]);
+                array_push($array_comentarios, ['id' => $c->getId(), 'correo' => $c->getAutor()->getCorreo(), 'autor' => $c->getAutor()->getNombre(), 'foto' => 'img/perfiles/'.$c->getAutor()->getFoto() , 'fecha' => $c->getFecha(), 'contenido' => $c->getContenido(), 'likes' => sizeof($likes_com), 'le_gusta' => $le_gusta_com ? 1 : 0]);
             }
 
             if ($le_gusta) {
@@ -143,7 +168,8 @@ class InicioController extends AbstractController
                 'texto' => $p->getTexto(),
                 'imagen' => $p->getImagen() ? 'img/publicaciones/'.$p->getImagen() : null,
                 'video' => $p->getVideo() ? 'videos/publicaciones/'.$p->getVideo() : null,
-                'comentarios' => $array_comentarios
+                'comentarios' => $array_comentarios,
+                'personas' => $array_personas
             ];
         }
         return new JsonResponse($json);

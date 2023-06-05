@@ -15,11 +15,22 @@ $(document).ready(() => {
                 processData: false,
                 dataType: "json",
                 success: function (data) {
-                    $("textarea").eq(0).css("border", "1px solid transparent");
+                    if (data.error) {
+                        $(".file").after($(`<p id='error' style='color: red; font-weight: bold' class='mt-4'>${data.error}</p>`));
 
-                    pagina = 1;
-                    $(".publicacion").remove();
-                    loadPublicaciones();
+                        function esconder() {
+                            $("#error").remove();
+                        }
+
+                        setTimeout(esconder, 3000);
+                    } else {
+                        $("textarea").eq(0).css("border", "1px solid transparent");
+
+                        pagina = 1;
+                        $(".publicacion").remove();
+                        loadPublicaciones();
+                    }
+
                 },
                 error: function (err) {
                     console.log(err);
@@ -140,9 +151,9 @@ $(document).ready(() => {
 													<span class="icon">
 														<ion-icon name="chatbubble"></ion-icon>
 													</span>
-													<span>${d.comentarios.length}</span>
+													<span id='nr-comentarios-${d.id}'>${d.comentarios.length}</span>
 												</button>
-                                                ${correo == d.correo ? `<button @click="borrar = !borrar" x-show="!borrar"  class="button btn-borrar-post">
+                                                ${correo == d.correo || es_admin ? `<button @click="borrar = !borrar" x-show="!borrar"  class="button btn-borrar-post">
                                                 <span class="icon">
                                                     <ion-icon name="trash-outline" style="color: red;"></ion-icon>
                                                 </span>
@@ -160,7 +171,7 @@ $(document).ready(() => {
                                                 <textarea id='textarea-${d.id}' class='textarea mb-3' maxlength="180" class='tu-comentario' placeholder='Escribe un comentario...'></textarea>
                                                 <button class='button is-info crear-comment' data-post="${d.id}">Enviar</button>
                                                 <div>${d.comentarios.map((e) => `
-                                                <article class="media comentario">
+                                                <article class="media comentario" id="comentario-${e.id}">
                                                 <figure class="media-left">
                                                   <p class="image is-48x48">
                                                     <img class='is-rounded' src="${e.foto}">
@@ -168,26 +179,42 @@ $(document).ready(() => {
                                                 </figure>
                                                 <div class="media-content">
                                                   <div class="content">
-                                                    <p>
+                                                    <p x-data="{borrar_comment: false}">
                                                       <strong>${e.autor}</strong>
                                                       <br>
                                                       <span>${e.contenido}</span>
                                                       <br>
-                                                      <small><span id='likes-com-${e.id}'>${e.likes} </span><ion-icon data-com='${e.id}' class='${e.le_gusta ? 'has-text-danger' : 'has-text-gray'} btn-like-com ' name="heart"></ion-icon> · ${e.fecha.date.substring(0, 16)}</small>
+                                                      <small><span id='likes-com-${e.id}'>${e.likes}</span> · <ion-icon data-com='${e.id}' class='${e.le_gusta ? 'has-text-danger' : 'has-text-gray'} btn-like-com ' name="heart"></ion-icon> · ${e.fecha.date.substring(0, 16)} ${e.correo == correo || es_admin ? ` · <ion-icon @click="borrar_comment = !borrar_comment" class="trash-icon" name="trash-outline" style='color: red;' x-show="!borrar_comment"></ion-icon>
+                                                      <span x-show="borrar_comment">¿Estás seguro?</span>
+                                      
+                                                        <ion-icon name="checkmark-outline" data-com='${e.id}' data-post='${d.id}' class="trash-icon btn-confirmar-borrar-comment" style="color: green;" x-show="borrar_comment"></ion-icon>
+                                                        <ion-icon @click="borrar_comment = !borrar_comment" class="trash-icon" name="close-outline" x-show="borrar_comment"></ion-icon>
+                                                   
+
+                                                    ` : ''}</small>
                                                     </p>
                                                   </div>
                                                 </div>
+                                                
                                               </article>
                                                 `).join("")}</div>
                                             </div>
+                                            <div id='personas-${d.id}' class='personas'>
+                                                <h3>Likes:</h3>
+                                                ${d.personas.map((x) => `<div class='persona-${x.id}'><img class='image is-48x48 is-rounded' src='${x.foto}'><span>${x.nombre}</span></div>`).join("")}
+                                            </div>
 										</div>
 									</div>
-								</div>
+                                    
+                                </div>
+                                
 							</div>
 						</div>
 					</div>
 				</section>`))
                 });
+
+                
 
                 $(".btn-confirmar-borrar").unbind().click(function () {
                     let id = $(this).data("cod");
@@ -200,6 +227,26 @@ $(document).ready(() => {
                         },
                         success: function (data) {
                             $(`#publicacion-${id}`).remove();
+                        },
+                        error: function (err) {
+                            console.log(err);
+                        }
+                    })
+                });
+
+                $(".btn-confirmar-borrar-comment").unbind().click(function () {
+                    let id = $(this).data("com");
+                    let id_post = $(this).data("post")
+                    $.ajax({
+                        url: ruta_borrar_comentario,
+                        method: "POST",
+                        dataType: "json",
+                        data: {
+                            "id": id
+                        },
+                        success: function (data) {
+                            $(`#comentario-${id}`).remove();
+                            $(`#nr-comentarios-${id_post}`).text(Number($(`#nr-comentarios-${id_post}`).text()) - 1);
                         },
                         error: function (err) {
                             console.log(err);
@@ -221,8 +268,10 @@ $(document).ready(() => {
                     $(this).toggleClass("has-text-danger");
                 });
 
-                $(".btn-like").unbind().click(function () {
+                $(".btn-like").click(function (e) {
+                    e.stopImmediatePropagation();
                     let id = $(this).data("twt");
+                    console.log($(this))
                     if ($(this).hasClass("is-danger")) {
                         $(`#likes-${id}`).text(Number($(`#likes-${id}`).text()) - 1);
                         quitarLike(id);
@@ -232,6 +281,17 @@ $(document).ready(() => {
                     }
                     $(this).toggleClass("is-danger");
                     $(this).toggleClass("is-light");
+                });
+
+                $(".btn-like").hover(function(e) {
+                    e.stopImmediatePropagation();
+
+                    let id = $(this).data("twt");
+                    $(`#personas-${id}`).show();
+
+                }, function() {
+                    let id = $(this).data("twt");
+                    $(`#personas-${id}`).hide();
                 });
 
                 $(".crear-comment").unbind().click(function () {
@@ -250,8 +310,84 @@ $(document).ready(() => {
                             type: "POST",
                             dataType: "json",
                             success: function (data) {
+                                console.log(data)
                                 $(`#textarea-${id}`).val('');
+                                $(`#nr-comentarios-${id}`).text(Number($(`#nr-comentarios-${id}`).text()) + 1);
+                                $(`.comments-${id} > div`).prepend(`<article class="media comentario" id="comentario-${id}">
+                                <figure class="media-left">
+                                  <p class="image is-48x48">
+                                    <img class='is-rounded' src="${data.comentario.foto}">
+                                  </p>
+                                </figure>
+                                <div class="media-content">
+                                  <div class="content">
+                                    <p x-data="{borrar_comment: false}">
+                                      <strong>${data.comentario.autor}</strong>
+                                      <br>
+                                      <span>${data.comentario.contenido}</span>
+                                      <br>
+                                      <small><span id='likes-com-${data.comentario.id}'>${data.comentario.likes}</span> · <ion-icon data-com='${data.comentario.id}' class='${data.comentario.le_gusta ? 'has-text-danger' : 'has-text-gray'} btn-like-com ' name="heart"></ion-icon> · ${data.comentario.fecha.date.substring(0, 16)} · <ion-icon @click="borrar_comment = !borrar_comment" class="trash-icon" name="trash-outline" style='color: red;' x-show="!borrar_comment"></ion-icon>
+                                      <span x-show="borrar_comment">¿Estás seguro?</span>
+                      
+                                        <ion-icon name="checkmark-outline" data-com='${data.comentario.id}' data-post='${id}' class="trash-icon btn-confirmar-borrar-comment" style="color: green;" x-show="borrar_comment"></ion-icon>
+                                        <ion-icon @click="borrar_comment = !borrar_comment" class="trash-icon" name="close-outline" x-show="borrar_comment"></ion-icon>
+                                   </small>
+                                    </p>
+                                  </div>
+                                </div>
+                              </article>`);
 
+                                $(".btn-confirmar-borrar").unbind().click(function () {
+                                    let id = $(this).data("cod");
+                                    $.ajax({
+                                        url: ruta_borrar_post,
+                                        method: "POST",
+                                        dataType: "json",
+                                        data: {
+                                            "id": id
+                                        },
+                                        success: function (data) {
+                                            $(`#publicacion-${id}`).remove();
+                                        },
+                                        error: function (err) {
+                                            console.log(err);
+                                        }
+                                    })
+                                });
+
+                                $(".btn-confirmar-borrar-comment").unbind().click(function () {
+                                    let id = $(this).data("com");
+                                    let id_post = $(this).data("post")
+                                    $.ajax({
+                                        url: ruta_borrar_comentario,
+                                        method: "POST",
+                                        dataType: "json",
+                                        data: {
+                                            "id": id
+                                        },
+                                        success: function (data) {
+                                            $(`#comentario-${id}`).remove();
+                                            $(`#nr-comentarios-${id_post}`).text(Number($(`#nr-comentarios-${id_post}`).text()) - 1);
+                                        },
+                                        error: function (err) {
+                                            console.log(err);
+                                        }
+                                    })
+                                });
+
+
+                                $(".btn-like-com").unbind().click(function () {
+                                    let id = $(this).data("com");
+                                    if ($(this).hasClass("has-text-danger")) {
+                                        $(`#likes-com-${id}`).text(Number($(`#likes-com-${id}`).text()) - 1);
+                                        quitarLikeComentario(id);
+                                    } else {
+                                        $(`#likes-com-${id}`).text(Number($(`#likes-com-${id}`).text()) + 1);
+                                        darLikeComentario(id);
+                                    }
+                                    console.log($(this))
+                                    $(this).toggleClass("has-text-danger");
+                                });
                             },
                             error: function (err) {
                                 console.log(err);

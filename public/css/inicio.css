@@ -142,6 +142,11 @@ ion-icon {
     cursor: pointer;
 }
 
+.comments .trash-icon {
+    height: 1.25em;
+    width: 1.25em;
+}
+
 .file-name {
     display: inline-block;
     white-space: nowrap;
@@ -159,8 +164,29 @@ p {
 
 .comments {
     max-height: 20em;
-    overflow-y: scroll;
+    overflow-y: auto;
+    position: relative;
     overflow-x: auto;
+}
+
+.personas {
+    display: none;
+    background-color: #f2f2f2;
+    padding: 15px;
+    margin-bottom: 5px;
+    border: 1px solid #ccc;
+    position: absolute;
+    z-index: 1;
+    bottom: 25%;
+    bottom: 7rem;
+    width: 200px;
+    max-height: 300px;
+    overflow: auto;
+    border-radius: 1em;
+}
+
+.personas div {
+    border-bottom: 0.5px solid #ccc;
 }
 
 .error {
