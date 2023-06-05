@@ -35,6 +35,11 @@ class Publicacion {
      */
     private $imagen;
 
+    /**
+     * @ORM\Column(type="string", name="video")
+     */
+    private $video;
+
 
 
     /**
@@ -133,6 +138,26 @@ class Publicacion {
     public function setImagen($imagen)
     {
         $this->imagen = $imagen;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of video
+     */ 
+    public function getVideo()
+    {
+        return $this->video;
+    }
+
+    /**
+     * Set the value of video
+     *
+     * @return  self
+     */ 
+    public function setVideo($video)
+    {
+        $this->video = $video;
 
         return $this;
     }

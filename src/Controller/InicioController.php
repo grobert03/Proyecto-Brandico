@@ -29,8 +29,15 @@ class InicioController extends AbstractController
         $publicacion->setTexto($contenido);
 
         if (!is_null($fichero)) {
-            $publicacion->setImagen($fichero->getClientOriginalName());
-            $fichero->move($this->getParameter('kernel.project_dir').'/public/img/publicaciones', $fichero->getClientOriginalName());
+            $mime = $fichero->getClientMimeType();
+            $filename = uniqid().".".$fichero->getClientOriginalExtension();
+            if (str_contains($mime, "video/")) {
+                $publicacion->setVideo($filename);
+                $fichero->move($this->getParameter('kernel.project_dir').'/public/videos/publicaciones', $filename);
+            } else if (str_contains($mime, "image/")) {
+                $publicacion->setImagen($filename);
+                $fichero->move($this->getParameter('kernel.project_dir').'/public/img/publicaciones', $filename);
+            }
         }
     
         $em->persist($publicacion);
@@ -109,6 +116,7 @@ class InicioController extends AbstractController
                 'likes' => sizeof($likes),
                 'texto' => $p->getTexto(),
                 'imagen' => $p->getImagen() ? 'img/publicaciones/'.$p->getImagen() : null,
+                'video' => $p->getVideo() ? 'videos/publicaciones/'.$p->getVideo() : null,
                 'comentarios' => $array_comentarios
             ];
         }

@@ -92,16 +92,16 @@
 							<div class="card-content">
 								<div class="content">
 									<form id='formulario-publicar' method='POST'>
-										<div class="field">
+										<div class="field"  x-data="{ fileName: ''}">
 											<label class="label">Publicar un mensaje:</label>
 											<div class="control">
 												<textarea class="textarea" maxlength="280" name='contenido-formulario' placeholder="Escribe aquí tu mensaje (máximo 280 caracteres)"></textarea>
 											</div>
 											<label class="label">Adjuntar imagen o video:</label>
 											<!-- Alpine.js maneja la subida del archivo -->
-											<div class="file" x-data="{ fileName: ''}">
+											<div class="file">
 												<label for="fileInput" class="file-label">
-													<input id="fileInput" class="file-input" type="file" name="fichero-formulario" @change="fileName = $event.target.files[0].name">
+													<input id="fileInput" class="file-input" accept="image/*, video/*" type="file" name="fichero-formulario" @change="fileName = $event.target.files[0].name">
 													<span class="file-cta">
 														<span class="file-icon">
 															<ion-icon name="cloud-upload-outline"></ion-icon>
@@ -116,7 +116,7 @@
 												</label>
 											</div>
 											<div class="buttons publish">
-												<button type='button' id='publicar-mensaje' class="button is-link is-info">Publicar</button>
+												<button @click="fileName = ''" type='button' id='publicar-mensaje' class="button is-link is-info">Publicar</button>
 											</div>
 										</div>
 									</form>
@@ -128,25 +128,7 @@
 
 				
 			</div>
-			<div class="column espacioblanco is-2">
-				<section class="section">
-					<div class="container">
-						<div class="card">
-							<div class="card-content">
-								<div class="content">
-									<h2>Sugerencias:</h2>
 
-									<div>
-										<p>1</p>
-										<p>2</p>
-										<p>3</p>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</section>
-			</div>
 			<button class="scroll-to-top" title="Volver arriba">
 				<span class="icon">
 					<ion-icon name="arrow-up-outline"></ion-icon>

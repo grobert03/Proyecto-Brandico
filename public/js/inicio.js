@@ -4,22 +4,28 @@ $(document).ready(() => {
 
     $("#publicar-mensaje").click(() => {
         let formulario = $("#formulario-publicar")[0];
-        $.ajax({
-            url: ruta_crear_publicacion,
-            data: new FormData(formulario),
-            type: "POST",
-            contentType: false,
-            processData: false,
-            dataType: "json",
-            success: function (data) {
-                pagina = 1;
-                $(".publicacion").remove();
-                loadPublicaciones();
-            },
-            error: function (err) {
-                console.log(err);
-            }
-        });
+        if ($("textarea").eq(0).val().length == 0 && document.getElementById("fileInput").files.length == 0) {
+            $("textarea").eq(0).css("border", "1px solid hsl(348, 100%, 61%)");
+        } else {
+            $.ajax({
+                url: ruta_crear_publicacion,
+                data: new FormData(formulario),
+                type: "POST",
+                contentType: false,
+                processData: false,
+                dataType: "json",
+                success: function (data) {
+                    $("textarea").eq(0).css("border-color", "#dbdbdb");
+                    pagina = 1;
+                    $(".publicacion").remove();
+                    loadPublicaciones();
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        }
+
     });
 
     const darLike = (id) => {
@@ -120,6 +126,7 @@ $(document).ready(() => {
 											<div class="content">
 												<p>${d.texto}</p>
 												${d.imagen ? `<img src="${d.imagen}" alt="Imagen publicacion">` : ''}
+                                                ${d.video ? `<video controls><source src='${d.video}'></video>` : ''}
 											</div>
 											<div class="buttons">
 												<button data-twt='${d.id}' class='btn-like button ${d.le_gusta ? "is-danger" : "is-light"}'>
@@ -191,26 +198,32 @@ $(document).ready(() => {
                         darLike(id);
                     }
                     $(this).toggleClass("is-danger");
+                    $(this).toggleClass("is-light");
                 });
 
                 $(".crear-comment").unbind().click(function () {
                     let id = $(this).data("post");
                     let scroll = $(window).scrollTop();
-                    
-                    
-                    console.log(id);
-                    $.ajax({
-                        url: ruta_crear_comentario,
-                        data: { "id": id, "texto": $(`#textarea-${id}`).val() },
-                        type: "POST",
-                        dataType: "json",
-                        success: function (data) {
-                            
-                        },
-                        error: function (err) {
-                            console.log(err);
-                        }
-                    })
+                    if ($(`#textarea-${id}`).val().length == 0) {
+                        $(`#textarea-${id}`).css("border", "1px solid hsl(348, 100%, 61%)");
+                    } else {
+                        $(`#textarea-${id}`).val('');
+                        $(`#textarea-${id}`).css("border-color", "#dbdbdb");
+                        $.ajax({
+                            url: ruta_crear_comentario,
+                            data: { "id": id, "texto": $(`#textarea-${id}`).val() },
+                            type: "POST",
+                            dataType: "json",
+                            success: function (data) {
+
+                            },
+                            error: function (err) {
+                                console.log(err);
+                            }
+                        })
+                    }
+
+
                 });
 
                 pagina++;
