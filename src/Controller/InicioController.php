@@ -8,7 +8,9 @@ use App\Entity\Usuario;
 use App\Entity\Publicacion;
 use App\Entity\Seguidor;
 use DateTime;
+use PHPUnit\Util\Filesystem;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Filesystem\Filesystem as FilesystemFilesystem;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -44,6 +46,30 @@ class InicioController extends AbstractController
         $em->flush();
 
         return new JsonResponse(['guardado' => true]);
+    }
+
+    /**
+     * @Route("/borrarPost", name="borrar_post")
+     */
+    public function borrarPost(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $id = $request->request->get('id');
+
+ 
+        $publicacion = $em->getRepository(Publicacion::class)->findOneBy(['id' => $id]);
+        $filesystem = new FilesystemFilesystem();
+
+        if ($publicacion->getImagen()) {
+            $filesystem->remove($this->getParameter('kernel.project_dir').'/public/img/publicaciones/'.$publicacion->getImagen());
+        }
+            
+        if ($publicacion->getVideo()) {
+            $filesystem->remove($this->getParameter('kernel.project_dir').'/public/videos/publicaciones/'.$publicacion->getVideo());
+        }
+
+        $em->remove($publicacion);
+        $em->flush();
+        return new JsonResponse(['borrado' => true]);
     }
 
     /**

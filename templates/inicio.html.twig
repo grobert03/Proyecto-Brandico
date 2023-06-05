@@ -13,7 +13,10 @@
             let ruta_crear_comentario = "{{path('crear_comentario')}}";
 			let ruta_devolver_publicaciones = "{{path('devolver_publicaciones')}}";
 			let ruta_dar_like = "{{path('dar_like')}}";
+			let ruta_borrar_post = "{{path('borrar_post')}}";
 			let ruta_quitar_like = "{{path('quitar_like')}}";
+			let es_admin = "{{app.user.getRol()}}";
+			let correo = "{{app.user.getCorreo()}}";
         </script>
 		<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 		<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>

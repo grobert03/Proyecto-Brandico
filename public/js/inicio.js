@@ -16,7 +16,7 @@ $(document).ready(() => {
                 dataType: "json",
                 success: function (data) {
                     $("textarea").eq(0).css("border", "1px solid transparent");
-                    
+
                     pagina = 1;
                     $(".publicacion").remove();
                     loadPublicaciones();
@@ -129,7 +129,7 @@ $(document).ready(() => {
 												${d.imagen ? `<img src="${d.imagen}" alt="Imagen publicacion">` : ''}
                                                 ${d.video ? `<video controls><source src='${d.video}'></video>` : ''}
 											</div>
-											<div class="buttons">
+											<div class="buttons" x-data="{borrar: false}">
 												<button data-twt='${d.id}' class='btn-like button ${d.le_gusta ? "is-danger" : "is-light"}'>
 													<span class="icon">
 														<ion-icon name="heart"></ion-icon>
@@ -142,6 +142,19 @@ $(document).ready(() => {
 													</span>
 													<span>${d.comentarios.length}</span>
 												</button>
+                                                ${correo == d.correo ? `<button @click="borrar = !borrar" x-show="!borrar"  class="button btn-borrar-post">
+                                                <span class="icon">
+                                                    <ion-icon name="trash-outline" style="color: red;"></ion-icon>
+                                                </span>
+                                            </button>
+                                            <span x-show="borrar">¿Estás seguro? Los comentarios se borrarán también! </span>
+                                            <button data-cod="${d.id}" @click="borrar = borrar" class="button btn-confirmar-borrar ml-3" x-show="borrar">
+                                                <ion-icon name="checkmark-outline" style="color: green;"></ion-icon>
+                                            </button>
+                                            <button @click="borrar = !borrar" class="btn-cancelar button" x-show="borrar">
+                                                <ion-icon name="close-outline"></ion-icon>
+                                            </button>`: ''}
+                                                
 											</div>
                                             <div class='comments comments-${d.id}' x-show="comentarios">
                                                 <textarea id='textarea-${d.id}' class='textarea mb-3' maxlength="180" class='tu-comentario' placeholder='Escribe un comentario...'></textarea>
@@ -175,6 +188,25 @@ $(document).ready(() => {
 					</div>
 				</section>`))
                 });
+
+                $(".btn-confirmar-borrar").unbind().click(function () {
+                    let id = $(this).data("cod");
+                    $.ajax({
+                        url: ruta_borrar_post,
+                        method: "POST",
+                        dataType: "json",
+                        data: {
+                            "id": id
+                        },
+                        success: function (data) {
+                            $(`#publicacion-${id}`).remove();
+                        },
+                        error: function (err) {
+                            console.log(err);
+                        }
+                    })
+                });
+
 
                 $(".btn-like-com").unbind().click(function () {
                     let id = $(this).data("com");
