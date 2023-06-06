@@ -1,3 +1,15 @@
+$(".rotate").click(function() {
+  if ($(this).children("ion-icon").hasClass("down")) {
+    $(".input:not(:first)").val("")
+  }
+  $(this).children("ion-icon").toggleClass("down");
+
+});
+
+$("#btn-borrar-datos").click(function() {
+  $("#formulario-crear input").val("");
+});
+
 const devolverUsuarios = (nombre, rol, usuarios, empresas) => {
   $.ajax({
     url: ruta_devolver_usuarios,

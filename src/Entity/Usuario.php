@@ -200,7 +200,7 @@ class Usuario implements UserInterface, \Serializable {
 
     public function getUserIdentifier()
     {
-        return $this->id;
+        return $this->correo;
     }
 
     /**

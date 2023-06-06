@@ -1,6 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins');
 @import url('https://fonts.googleapis.com/css?family=Montserrat');
 
+[x-cloak] {
+    display: none !important;
+}
+
+
 :root {
     --brandColor: #2e4757;
     --background: rgb(247, 247, 247);
@@ -83,8 +88,43 @@ h2 {
     max-width: 70%;
 }
 
+
+.activo {
+    background-color: #2e4757;
+}
+
+.activo i, .activo ion-icon {
+    color: white;
+}
+
+
+.rotate {
+    -moz-transition: all 0.2s linear;
+    -webkit-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+}
+
+ion-icon {
+    cursor: pointer;
+}
+
+.rotate label {
+    display: inline-block;
+    margin-right: 4px;
+    cursor: pointer;
+}
+
 #btn-crear-usu {
     background-color: #2e4757;
     font-weight: bold;
     color: white;
 }
+
+.rotate.down {
+    -ms-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+
+

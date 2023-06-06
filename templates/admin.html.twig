@@ -6,8 +6,8 @@
 	<link rel="stylesheet" href="{{asset('css/admin.css')}}"/>
 	<script>
 		let ruta_devolver_usuarios = "{{ path('devolver_usuarios') }}";
-		let ruta_crear_usuario = "{{ path('crear_usuario') }}";
-		let ruta_crear_empresa = "{{ path('crear_empresa') }}";
+let ruta_crear_usuario = "{{ path('crear_usuario') }}";
+let ruta_crear_empresa = "{{ path('crear_empresa') }}";
 let ruta_borrar_usuario = "{{ path('borrar_usuario') }}";
 let ruta_modificar_empresa = "{{ path('modificar_empresa') }}";
 let ruta_modificar_usuario = "{{ path('modificar_usuario') }}";
@@ -17,7 +17,6 @@ let rol = false;
 let nombre = '';
 let array_usu = [];
 	</script>
-
 	<script src="{{ asset('js/admin.js') }}" defer></script>
 
 
@@ -44,125 +43,166 @@ let array_usu = [];
 		</div>
 	</header>
 	<main class="columns">
-		<div class="column is-one-third">
-			<h3>Filtrar:
-			</h3>
-			<div class="field">
-				<label class="label">Nombre</label>
-				<div class="control">
-					<input class="input" id='input_nombre' type="text" placeholder="">
+		<div class="column is-one-third" x-data="{filtros: false, filtrar: true}" >
+			<div class="buttons">
+				<button id='btn-filtrar' @click="filtrar = true" class="button" :class="filtrar ? 'activo' : 'is-light'">
+					<ion-icon name="search-outline"></ion-icon>
+				</button>
+				<button @click="filtrar = false" class="button" :class="!filtrar ? 'activo' : 'is-light'">
+					<i class="fa-solid fa-user-plus"></i>
+				</button>
+			</div>
+
+			<!-- FILTRAR (botón filtrar activo) -->
+			<div id='formulario-filtrar' x-show="filtrar" x-transition x-cloak>
+				<div class="title">Filtrar:</div>
+				<div class="field">
+					<label class="label">Nombre</label>
+					<div class="control">
+						<input class="input" id='input_nombre' type="text">
+					</div>
+				</div>
+				<div class="field rotate" @click="filtros = !filtros" x-cloak>
+					<label class="label" class="label" x-text="filtros ? 'Menos filtros' : 'Más filtros'"></label>
+					<ion-icon class="rotate" name="caret-down-outline"></ion-icon>
+				</div>
+				<div class="field" x-show="filtros" x-cloak x-transition>
+					<label class="label">Correo</label>
+					<div class="control">
+						<input class="input" id='input_correo' type="text">
+					</div>
+				</div>
+				<div class="field" x-show="filtros" x-cloak x-transition>
+					<label class="label">Dirección</label>
+					<div class="control">
+						<input class="input" id='input_direccion' type="text">
+					</div>
+				</div>
+				<div class="field" x-show="filtros" x-cloak x-transition>
+					<label class="label">Provincia</label>
+					<div class="control">
+						<input class="input" id='input_provincia' type="text">
+					</div>
+				</div>
+				<div class="field" x-show="filtros" x-cloak x-transition>
+					<label class="label">CIF</label>
+					<div class="control">
+						<input class="input" id='input_cif' type="text">
+					</div>
+				</div>
+
+				<div class="field" x-cloak>
+					<label class="label">Rol</label>
+					<div class="control">
+						<label class="checkbox">
+							<input id='check_admin' type="checkbox">
+							Solo Administradores
+						</label>
+					</div>
+				</div>
+				<div class="field" x-cloak>
+					<label class="label">Tipo</label>
+					<div class="control">
+						<label class="checkbox">
+							<input id='check_usu' type="checkbox" checked>
+							Usuarios
+						</label>
+						<label class="checkbox">
+							<input id='check_empresa' type="checkbox" checked>
+							Empresas
+						</label>
+					</div>
 				</div>
 			</div>
-			<div class="field">
-				<label class="label">Rol</label>
-				<div class="control">
-					<label class="checkbox">
-						<input id='check_admin' type="checkbox">
-						Solo Administradores</a>
-				</label>
-
+			<!-- CREAR USUARIO (botón usuario activo) -->
+			<div id='formulario-crear' x-show="!filtrar" x-data="{usuario: true, empresa: false}" x-transition x-cloak>
+				<div class="title" x-cloak>Añadir Usuario</div>
+				<div class="field" x-cloak>
+					<label for='radio-usu'>Usuario</label>
+					<input @click="usuario = true, empresa = false" type='radio' name='tipo' id='radio-usu' value='usuario' checked>
+					<label for='radio-empresa'>Empresa</label>
+					<input @click="usuario = false, empresa = true" type='radio' name='tipo' id='radio-empresa' value='empresa'>
+				</div>
+				<div class="field" x-cloak>
+					<label for='input-correo'>Correo:</label>
+					<input class='input' type='email' id='input-correo' required>
+				</div>
+				<div class="field" x-cloak>
+					<label for='input-pass'>Contraseña:</label>
+					<input class='input' type='password' id='input-pass' required>
+				</div>
+				<div class="field" x-show="empresa" x-transition x-cloak>
+					<label for='input-cif'>CIF:</label>
+					<input class='input' type='text' id='input-cif' required>
+				</div>
+				<div class="field" x-cloak>
+					<label for='input-nombre'>Nombre:</label>
+					<input class='input' type='text' id='input-nombre' required>
+				</div>
+				<div class="field" x-show="usuario" x-transition x-cloak>
+					<label for='input-ape'>Apellidos:</label>
+					<input class='input' type='text' id='input-ape' required>
+				</div>
+				<div class="field" x-cloak>
+					<label for='input-nombre'>Teléfono:</label>
+					<input class='input' type='text' id='input-tel' required>
+				</div>
+				<div class="field select" x-show="usuario" class="select is-link" x-transition x-cloak>
+					<select id='select-rol'>
+						<option value='0' selected>Usuario normal</option>
+						<option value='1'>Administrador</option>
+					</select>
+				</div>
+				<div class="field" x-show="empresa" x-transition x-cloak>
+					<label for='input-dir'>Dirección:</label>
+					<input class='input' type='text' id='input-dir' required>
+				</div>
+				<div class="field" x-show="empresa" x-transition x-cloak>
+					<label for='input-prov'>Provincia:</label>
+					<input class='input' type='text' id='input-prov' required>
+				</div>
+				<div class="buttons field" x-cloak>
+					<button class='button' id='btn-crear-usu'>CREAR</button>
+					<button id='btn-borrar-datos' class="button"><i class="fa-solid fa-eraser"></i></button>
+				</div>
 			</div>
 		</div>
-		<div class="field">
-			<label class="label">Tipo</label>
-			<div class="control">
-				<label class="checkbox">
-					<input id='check_usu' type="checkbox" checked>
-					Usuarios</a>
-			</label>
-			<label class="checkbox">
-				<input id='check_empresa' type="checkbox" checked>
-				Empresas</a>
-		</label>
 	</div>
-</div></div><div x-data="{open: false}">
-<button @click="open = !open" id='crear-usu' class="button">
-	<i class="fa-solid fa-user-plus" style="color: #ffffff;"></i>
-</button>
-<div id='crear-usuario' x-show="open" x-data="{usuario: true, empresa: false}">
-	<h2>Añadir Usuario</h2>
-	<div>
-		<label for='radio-usu'>Usuario</label>
-		<input @click="usuario = true, empresa = false" type='radio' name='tipo' id='radio-usu' value='usuario' checked>
-		<label for='radio-empresa'>Empresa</label>
-		<input @click="usuario = false, empresa = true" type='radio' name='tipo' id='radio-empresa' value='empresa'>
+	<div x-data="{open: false}">
+
+		<table class="table is-fullwidth column">
+			<thead>
+				<tr>
+					<th>
+						<abbr>Correo</abbr>
+					</th>
+					<th>
+						<abbr>Nombre</abbr>
+					</th>
+					<th>
+						<abbr>Apellidos</abbr>
+					</th>
+					<th>
+						<abbr>Rol</abbr>
+					</th>
+					<th>
+						<abbr>DNI/CIF</abbr>
+					</th>
+					<th>
+						<abbr>Teléfono</abbr>
+					</th>
+					<th>
+						<abbr>Dirección</abbr>
+					</th>
+					<th>
+						<abbr>Provincia</abbr>
+					</th>
+					<th>
+						<abbr>Acciones</abbr>
+					</th>
+				</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
 	</div>
-	<div>
-		<label for='input-correo'>Correo:</label>
-		<input class='input' type='email' id='input-correo' required>
-	</div>
-	<div>
-		<label for='input-pass'>Contraseña:</label>
-		<input class='input' type='password' id='input-pass' required>
-	</div>
-	<div x-show="usuario">
-		<label for='input-dni'>DNI:</label>
-		<input class='input' type='text' id='input-dni' required>
-	</div>
-	<div x-show="empresa">
-		<label for='input-cif'>CIF:</label>
-		<input class='input' type='text' id='input-cif' required>
-	</div>
-	<div>
-		<label for='input-nombre'>Nombre:</label>
-		<input class='input' type='text' id='input-nombre' required>
-	</div>
-	<div x-show="usuario">
-		<label for='input-ape'>Apellidos:</label>
-		<input class='input' type='text' id='input-ape' required>
-	</div>
-	<div>
-		<label for='input-nombre'>Teléfono:</label>
-		<input class='input' type='text' id='input-tel' required>
-	</div>
-	<div x-show="usuario">
-		<label for='select-rol'>Rol:</label>
-		<select  id='select-rol'>
-			<option value='0' selected>0 (Normal)</option>
-			<option value='1'>1 (Admin)</option>
-		</select>
-	</div>
-	<div x-show="empresa">
-		<label for='input-dir'>Dirección:</label>
-		<input class='input' type='text' id='input-dir' required>
-	</div>
-	<div x-show="empresa">
-		<label for='input-prov'>Provincia:</label>
-		<input class='input' type='text' id='input-prov' required>
-	</div>
-	<button class='button' id='btn-crear-usu'>CREAR</button>
-</div>
-<table class="table is-fullwidth column">
-	<thead>
-		<tr>
-			<th>
-				<abbr>Correo</abbr>
-			</th>
-			<th>
-				<abbr>Nombre</abbr>
-			</th>
-			<th>
-				<abbr>Apellidos</abbr>
-			</th>
-			<th>
-				<abbr>Rol</abbr>
-			</th>
-			<th>
-				<abbr>DNI/CIF</abbr>
-			</th>
-			<th>
-				<abbr>Teléfono</abbr>
-			</th>
-			<th>
-				<abbr>Dirección</abbr>
-			</th>
-			<th>
-				<abbr>Provincia</abbr>
-			</th>
-			<th>
-				<abbr>Acciones</abbr>
-			</th>
-		</tr>
-	</thead>
-	<tbody></tbody>
-</table></div></main>{% endblock %}
+</main>{% endblock %}
