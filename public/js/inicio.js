@@ -25,6 +25,7 @@ $(document).ready(() => {
                         setTimeout(esconder, 3000);
                     } else {
                         $("textarea").eq(0).css("border", "1px solid transparent");
+                        $("textarea").eq(0).val("");
 
                         pagina = 1;
                         $(".publicacion").remove();
@@ -313,7 +314,7 @@ $(document).ready(() => {
                                 console.log(data)
                                 $(`#textarea-${id}`).val('');
                                 $(`#nr-comentarios-${id}`).text(Number($(`#nr-comentarios-${id}`).text()) + 1);
-                                $(`.comments-${id} > div`).prepend(`<article class="media comentario" id="comentario-${id}">
+                                $(`.comments-${id} > div`).prepend(`<article class="media comentario" id="comentario-${data.comentario.id}">
                                 <figure class="media-left">
                                   <p class="image is-48x48">
                                     <img class='is-rounded' src="${data.comentario.foto}">
@@ -366,6 +367,7 @@ $(document).ready(() => {
                                             "id": id
                                         },
                                         success: function (data) {
+                                            console.log( $(`#comentario-${id}`));
                                             $(`#comentario-${id}`).remove();
                                             $(`#nr-comentarios-${id_post}`).text(Number($(`#nr-comentarios-${id_post}`).text()) - 1);
                                         },

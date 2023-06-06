@@ -7,7 +7,6 @@
 	<script>
 		let ruta_devolver_usuarios = "{{ path('devolver_usuarios') }}";
 let ruta_crear_usuario = "{{ path('crear_usuario') }}";
-let ruta_crear_empresa = "{{ path('crear_empresa') }}";
 let ruta_borrar_usuario = "{{ path('borrar_usuario') }}";
 let ruta_modificar_empresa = "{{ path('modificar_empresa') }}";
 let ruta_modificar_usuario = "{{ path('modificar_usuario') }}";
@@ -139,11 +138,7 @@ let array_usu = [];
 					<label for='input-nombre'>Nombre:</label>
 					<input class='input' type='text' id='input-nombre' required>
 				</div>
-				<div class="field" x-show="usuario" x-transition x-cloak>
-					<label for='input-ape'>Apellidos:</label>
-					<input class='input' type='text' id='input-ape' required>
-				</div>
-				<div class="field" x-cloak>
+				<div class="field" x-cloak x-show="empresa">
 					<label for='input-nombre'>Teléfono:</label>
 					<input class='input' type='text' id='input-tel' required>
 				</div>
@@ -155,11 +150,11 @@ let array_usu = [];
 				</div>
 				<div class="field" x-show="empresa" x-transition x-cloak>
 					<label for='input-dir'>Dirección:</label>
-					<input class='input' type='text' id='input-dir' required>
+					<input class='input' type='text' id='input-dir'>
 				</div>
 				<div class="field" x-show="empresa" x-transition x-cloak>
 					<label for='input-prov'>Provincia:</label>
-					<input class='input' type='text' id='input-prov' required>
+					<input class='input' type='text' id='input-prov'>
 				</div>
 				<div class="buttons field" x-cloak>
 					<button class='button' id='btn-crear-usu'>CREAR</button>
@@ -167,42 +162,11 @@ let array_usu = [];
 				</div>
 			</div>
 		</div>
+		<div id='lista-usuarios' class="column">
+			<div class="title">
+				Usuarios:
+			</div>
+		</div>
 	</div>
-	<div x-data="{open: false}">
-
-		<table class="table is-fullwidth column">
-			<thead>
-				<tr>
-					<th>
-						<abbr>Correo</abbr>
-					</th>
-					<th>
-						<abbr>Nombre</abbr>
-					</th>
-					<th>
-						<abbr>Apellidos</abbr>
-					</th>
-					<th>
-						<abbr>Rol</abbr>
-					</th>
-					<th>
-						<abbr>DNI/CIF</abbr>
-					</th>
-					<th>
-						<abbr>Teléfono</abbr>
-					</th>
-					<th>
-						<abbr>Dirección</abbr>
-					</th>
-					<th>
-						<abbr>Provincia</abbr>
-					</th>
-					<th>
-						<abbr>Acciones</abbr>
-					</th>
-				</tr>
-			</thead>
-			<tbody></tbody>
-		</table>
-	</div>
+	
 </main>{% endblock %}

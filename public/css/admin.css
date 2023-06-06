@@ -127,4 +127,6 @@ ion-icon {
     transform: rotate(180deg);
 }
 
-
+#lista-usuarios {
+    background-color: white;
+}
