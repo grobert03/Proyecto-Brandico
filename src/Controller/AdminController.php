@@ -16,9 +16,9 @@ class AdminController extends AbstractController
      */
     public function devolverUsuarios(Request $request)
     {
-        $rol = boolval($request->request->get('rol'));
-        $usu = boolval($request->request->get('usuarios'));
-        $emp = boolval($request->request->get('empresas'));
+        $rol = ($request->request->get('rol')) == "true" ? true : false;
+        $usu = ($request->request->get('usuarios')) == "true" ? true : false;
+        $emp = ($request->request->get('empresas')) == "true" ? true : false;
         $correo = $request->request->get('correo');
         $nombre = $request->request->get('nombre');
         $direccion = $request->request->get('direccion');
@@ -28,14 +28,33 @@ class AdminController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $json = [];
 
+        if ($usu && $emp) {
+            $tipo = "(0,1)";
+        } else if ($usu) {
+            $tipo = "(0)";
+        } else {
+            $tipo = "(1)";
+        }
+
+        if ($rol) {
+            $rol = "(1)";
+        } else {
+            $rol = "(0,1)";
+        }
+
         $qb = $em->getRepository(Usuario::class)->createQueryBuilder('u');
-        $qb->andWhere("u.nombre LIKE '%:nom%'")->setParameter('nom', $nombre)->andWhere("u.correo LIKE '%:cor%'")->setParameter('cor', $correo)->andWhere("u.es_empresa = :usu")->setParameter('usu', $usu)->orWhere("u.es_empresa = :emp")->setParameter("emp", $emp)->andWhere("u.rol = :rol")->setParameter("rol", $rol);
+        $qb->andWhere("u.nombre LIKE '$nombre%'")->andWhere("u.correo LIKE '$correo%'")->andWhere("u.es_empresa in $tipo")->andWhere("u.rol in $rol");
+
         
         $usuarios = $qb->getQuery()->getResult();
 
         foreach ($usuarios as $u) {
             if (str_contains(strtolower($u->getDireccion()), strtolower($direccion)) && str_contains(strtolower($u->getProvincia()), strtolower($provincia)) && str_contains(strtolower($u->getCif()), strtolower($cif))) {
-                $json[] = ['nombre' => $u->getNombre()];
+                if ($u->getEs_empresa()) {
+                    $json[] = ['id' => $u->getId(), 'correo' => $u->getCorreo(), 'nombre' => $u->getNombre(), 'foto' => 'img/perfiles/'.$u->getFoto(), 'es_empresa' => $u->getEs_empresa(), 'telefono' => $u->getTelefono(), 'cif' => $u->getCif(), 'direccion' => $u->getDireccion(), 'provincia' => $u->getProvincia()];
+                } else {
+                    $json[] = ['id' => $u->getId(), 'correo' => $u->getCorreo(), 'nombre' => $u->getNombre(), 'foto' => 'img/perfiles/'.$u->getFoto(), 'es_empresa' => $u->getEs_empresa()];
+                }
             }    
         }
 
@@ -76,8 +95,8 @@ class AdminController extends AbstractController
         $tel = $request->request->get('tel');
         $cif = $request->request->get('cif');
         $rol = intval($request->request->get('rol'));
-        $direccion = $request->request->get('direccion');
-        $provincia = $request->request->get('provincia');
+        $direccion = $request->request->get('dir');
+        $provincia = $request->request->get('prov');
         $empresa = boolval($request->request->get('empresa'));
 
         $usu = new Usuario();
