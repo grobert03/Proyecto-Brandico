@@ -336,9 +336,3 @@ body {
     float: left;
     margin-right: 10px;
 }
-
-@media screen and (max-width: 550px) {
-    .user-details {
-        margin-left: 35px !important; /* Ancho de la imagen + margen */
-    }
-}

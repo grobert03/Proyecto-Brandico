@@ -68,16 +68,11 @@ class AdminController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
 
-        $correo = $request->request->get('correo');
+        $id = $request->request->get('id');
 
-        $usu = $em->getRepository(Usuario::class)->findOneBy(['correo' => $correo]);
+        $usu = $em->getRepository(Usuario::class)->findOneBy(['id' => $id]);
 
-        if ($usu) {
-            $em->remove($usu);
-        } else {
-            $emp = $em->getRepository(Empresa::class)->findOneBy(['correo' => $correo]);
-            $em->remove($emp);
-        }
+        $em->remove($usu);
         $em->flush();
         return new JsonResponse(['borrado' => true]);
     }
@@ -97,7 +92,7 @@ class AdminController extends AbstractController
         $rol = intval($request->request->get('rol'));
         $direccion = $request->request->get('dir');
         $provincia = $request->request->get('prov');
-        $empresa = boolval($request->request->get('empresa'));
+        $empresa = ($request->request->get('empresa')) == "true" ? true : false;
 
         $usu = new Usuario();
         $usu->setCorreo($correo);
@@ -124,56 +119,21 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/modificarEmpresa", name="modificar_empresa")
-     */
-    public function modificarEmpresa(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $buscar = $request->request->get('aBuscar');
-        $correo = $request->request->get('correo');
-        $nombre = $request->request->get('nombre');
-        $tel = $request->request->get('telefono');
-        $cif = $request->request->get('cif');
-        $dir = $request->request->get('direccion');
-        $prov = $request->request->get('provincia');
-
-        $empresa = $em->getRepository(Empresa::class)->findOneBy(['correo' => $buscar]);
-        $empresa->setCorreo($correo);
-        $empresa->setCif($cif);
-        $empresa->setNombre($nombre);
-        $empresa->setTelefono($tel);
-        $empresa->setDireccion($dir);
-        $empresa->setProvincia($prov);
-
-        $em->persist($empresa);
-        $em->flush();
-
-        return new JsonResponse(['modificado' => true]);
-    }
-
-    /**
      * @Route("/modificarUsuario", name="modificar_usuario")
      */
     public function modificarUsuario(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $buscar = $request->request->get('aBuscar');
-        $correo = $request->request->get('correo');
-        $nombre = $request->request->get('nombre');
-        $tel = $request->request->get('telefono');
-        $dni = $request->request->get('dni');
-        $ape = $request->request->get('apellidos');
-        $rol = $request->request->get('rol');
+        $buscar = $request->request->get('id');
+        $correo = $request->request->get('mod_correo');
+        $nombre = $request->request->get('mod_nombre');
+        $tipo = $request->request->get('mod_tipo');
 
-        $usu = $em->getRepository(Usuario::class)->findOneBy(['correo' => $buscar]);
+        $usu = $em->getRepository(Usuario::class)->findOneBy(['id' => $buscar]);
         $usu->setCorreo($correo);
-        $usu->setDni($dni);
         $usu->setNombre($nombre);
-        $usu->setApellidos($ape);
-        $usu->setTelefono($tel);
-        $usu->setRol($rol);
+        $usu->setEs_empresa($tipo);
 
         $em->persist($usu);
         $em->flush();

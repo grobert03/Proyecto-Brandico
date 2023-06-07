@@ -24,7 +24,7 @@ $("#btn-borrar-datos").click(function () {
 });
 
 const devolverUsuarios = () => {
-  $(".user-list").empty();
+  $(".user-item").remove();
   $.ajax({
     url: ruta_devolver_usuarios,
     method: "POST",
@@ -44,24 +44,112 @@ const devolverUsuarios = () => {
       console.log(data);
       data.forEach((p) => {
         $(".user-list").append(
-          $(`<dt class="user-item">
+          $(`<dt class="user-item" x-data="{modificar: false, empresa: ${
+            p.es_empresa
+          }}">
         <div class='izquierda'>
         <figure class="avatar image  is-64x64 mr-0">
             <img class="is-rounded" src="${p.foto}" alt="User Avatar">
         </figure>
         <div class="user-details">
-            <p class="user-type">${p.es_empresa ? `EMPRESA (${p.direccion}, ${p.provincia})` : 'USUARIO'}</p>
-            <h4 class="user-name">${p.nombre}</h4>
-            <p class="user-email">${p.correo}</p>
+            <p class="user-type" x-show="!modificar">${
+              p.es_empresa
+                ? `EMPRESA (${p.direccion}, ${p.provincia})`
+                : "USUARIO"
+            }</p>
+            <h4 class="user-name" x-show="!modificar" >${p.nombre}</h4>
+            <p class="user-email" x-show="!modificar">${p.correo}</p>
+            <div data-usu="${
+              p.id
+            }" class="modificar-datos" x-show="modificar" x-transition x-cloak>
+
+              <div class="field">
+                <label class="label">Nombre:</label>
+                <input class="input" id="mod_nombre-${p.id}" value="${p.nombre}">
+              </div>
+              <div class="field">
+                <label class="label">Correo:</label>
+                <input class="input" type="email" id="mod_correo-${p.id}" value="${
+                  p.correo
+                }">
+              </div>
+              <div class="field">
+                <label class="label">Clave:</label>
+                <input class="input" type="password" id="mod_clave-${p.id}">
+              </div>
+              <div class="field select" x-cloak>
+                <select id="mod_tipo-${p.id}">
+                  <option value='0' :selected="!empresa">Usuario</option>
+                  <option value='1' :selected="empresa">Empresa</option>
+                </select>
+				      </div>
+              <div class="buttons field">
+                <button data-usu="${p.id}" class="btn-modificar-usu button is-success">Guardar</button>
+              </div>
+            </div>
         </div>
+        
         </div>
+
         <div class="buttons">
-          <button class="button is-warning"><i class="fa-solid fa-pen-to-square" style="color: #000000;"></i></button>
-          <button class="button is-danger"><i class="fa-solid fa-trash" style="color: #ffffff;"></i></button>
+          <button  @click="modificar = !modificar" data-usu="${
+            p.id
+          }" class="button btn-modificar-usuario is-warning"><i class="fa-solid fa-pen-to-square" style="color: #000000;"></i></button>
+          <button data-usu="${
+            p.id
+          }" class="button is-danger btn-borrar-usuario"><i class="fa-solid fa-trash" style="color: #ffffff;"></i></button>
         </div>
     </dt>`)
         );
       });
+
+      $(".btn-modificar-usu").unbind().click(function () {
+        let id = $(this).data("usu");
+        $.ajax({
+          url: ruta_modificar_usuario,
+          method: "POST",
+          dataType: "json",
+          data: {
+            id: id,
+            mod_nombre: $(`#mod_nombre-${id}`).val(),
+            mod_correo:  $(`#mod_correo-${id}`).val(),
+            mod_clave:  $(`#mod_clave-${id}`).val(),
+            mod_tipo:  $(`#mod_tipo-${id}`).val()
+          },
+          success: function (data) {
+            console.log(data);
+            devolverUsuarios();
+          },
+          error: function (err) {
+            console.log(err);
+          }
+        })
+      })
+
+
+      $(".btn-borrar-usuario")
+        .unbind()
+        .click(function () {
+          let conf = confirm("Estás seguro de que quieres borrar el usuario?");
+          let id = $(this).data("usu");
+          if (conf) {
+            $.ajax({
+              url: ruta_borrar_usuario,
+              method: "POST",
+              dataType: "json",
+              data: {
+                id: id,
+              },
+              success: function (data) {
+                console.log(data);
+                devolverUsuarios();
+              },
+              error: function (err) {
+                console.log(err);
+              },
+            });
+          }
+        });
     },
     error: function (errorThrown) {
       console.log(errorThrown);

@@ -133,6 +133,8 @@ ion-icon {
     list-style-type: none;
     padding: 0;
     background-color: white;
+    max-height: 65%;
+    overflow: scroll;
 }
 
 .user-item {
