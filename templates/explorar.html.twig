@@ -79,7 +79,7 @@
                 <div class="card">
                     <div class="card-content">
                         <div class="content">
-                            <form x-data="searchUsers()" @submit="getUserDetails">
+                            <form x-data="searchUsers()">
                                 <div class="field">
                                     <div class="control has-icons-left">
                                         <input type="text" class="input" placeholder="Buscar usuarios" x-model="searchTerm" @input="getUsers(searchTerm)">
@@ -168,30 +168,6 @@
                     })
                     .catch(error => {
                         console.error(error)
-                    })
-            },
-
-            getUserDetails(userId) {
-                const userDetailsUrl = USER_DETAILS_URL.replace('__userId__', userId)
-                fetch(userDetailsUrl, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Accept: 'application/json',
-                    }
-                })
-                    .then(response => {
-                        if(!response.ok) {
-                            throw new Error('Error en la petición')
-                        }
-                        return response.json()
-                    })
-                    .then(data => {
-                        // Aquí puedes hacer algo con la respuesta del controlador, como redireccionar a la página userProfile.html.twig
-                        window.location.href = userDetailsUrl;  // Redireccionar a la página de perfil
-                    })
-                    .catch(error => {
-                        console.log(error)
                     })
             },
 

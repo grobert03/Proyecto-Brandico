@@ -27,7 +27,7 @@ class UserProfileController extends AbstractController {
         $seguidores = $seguidoresRepository->count(['id_seguido' => $userId]);
 
         // Verificar si el usuario actual sigue al usuario que se está visualizando
-        $userFollows = $seguidoresRepository->findOneBy(['id_seguido' => $userId, 'id_seguidor' => $this->getUser()->getUserIdentifier()]);
+        $userFollows = $seguidoresRepository->findOneBy(['id_seguido' => $userId, 'id_seguidor' => $this->getUser()->getId()]);
         // Guardamos booleano si ha encontrado registro (Si hay registro es que esta siguiendo al usuario)
         $isFollowing = ($userFollows !== null);
 
@@ -43,7 +43,7 @@ class UserProfileController extends AbstractController {
         $entityManager = $this->getDoctrine()->getManager();
         $seguidoresRepository = $entityManager->getRepository(Seguidor::class);
         $user = $this->getUser();
-        $follows = $seguidoresRepository->findOneBy(['id_seguido' => $userId, 'id_seguidor' => $user->getUserIdentifier()]);
+        $follows = $seguidoresRepository->findOneBy(['id_seguido' => $userId, 'id_seguidor' => $user->getId()]);
 
         if ($follows) {
             // Le esta siguiendo por tanto se deja de seguir
@@ -53,7 +53,7 @@ class UserProfileController extends AbstractController {
             // No le sigue asi que se crea el registro de seguir
             $usuarioRepository = $entityManager->getRepository(Usuario::class);
             $userToFollow = $usuarioRepository->findOneBy(['id' => $userId]);
-            $currentUser = $usuarioRepository->findOneBy(['id' => $this->getUser()->getUserIdentifier()]);
+            $currentUser = $usuarioRepository->findOneBy(['id' => $this->getUser()->getId()]);
 
             $newFollow = new Seguidor();
             $newFollow->setId_seguido($userToFollow);
