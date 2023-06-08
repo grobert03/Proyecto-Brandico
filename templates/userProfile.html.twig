@@ -1,141 +1,183 @@
 <head>
-    <meta charset="utf-8">
-    <title>Brandico Perfil</title>
-    <!-- Importar Bulma CSS-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
-    <!-- Importar los iconos -->
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <!-- Importar Alpine.js -->
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <link rel="stylesheet" href="{{ asset('css/userProfile.css') }}">
+	<meta charset="utf-8">
+	<title>Brandico Perfil</title>
+	<!-- Importar Bulma CSS-->
+	<link
+	rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
+	<!-- Importar los iconos -->
+	<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+	<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+	<!-- Importar Alpine.js -->
+	<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="{{ asset('css/userProfile.css') }}">
+	<script>
+		let userId = {{ userId }};
+let ruta_crear_comentario_perfil = "{{ path('crear_comentario_perfil') }}";
+let ruta_dar_like = "{{ path('dar_like') }}";
+let ruta_borrar_post = "{{ path('borrar_post') }}";
+let ruta_borrar_comentario = "{{ path('borrar_comentario') }}";
+let ruta_quitar_like = "{{ path('quitar_like') }}";
+let es_admin = "{{ app.user.getRol() }}";
+let ruta_fotos = "{{ asset('img/') }}";
+let ruta_videos = "{{ asset('videos/') }}";
+let ruta_devolver_publicaciones_perfil = "{{ path('devolver_publicaciones_perfil') }}";
+let correo = "{{ app.user.getCorreo() }}";
+	</script>
+	<script src="{{asset('js/jquery.js')}}" defer></script>
+	<script src="{{ asset('js/userProfile.js') }}" defer></script>
 </head>
 <body>
-<!-- Header -->
-<header class="hero is-primary is-small">
-    <div class="hero-body">
-        <div class="container">
-            <div class="is-flex is-align-items-center is-justify-content-flex-start">
-                <figure class="image is-64x64">
-                    <img src="{{ asset('img/BrandicoLogo2White.png') }}" alt="icono BRANDICO">
-                </figure>
-                <div style="white-space: nowrap; align-self: center">
-                    <h1 class="title">BRANDICO</h1>
-                </div>
-            </div>
-            <div class="is-flex is-align-items-center is-justify-content-flex-start">
-                <a href="{{ path('controlador_logout') }}" class="navMenuItem">
-                    <span class="navMenuItem-label">Logout</span>
-                    <ion-icon name="log-out-outline"></ion-icon>
-                </a>
-            </div>
-        </div>
-    </div>
-</header>
+	<!-- Header -->
+	<header class="hero is-primary is-small">
+		<div class="hero-body">
+			<div class="container">
+				<div class="is-flex is-align-items-center is-justify-content-flex-start">
+					<figure class="image is-64x64">
+						<img src="{{ asset('img/BrandicoLogo2White.png') }}" alt="icono BRANDICO">
+					</figure>
+					<div style="white-space: nowrap; align-self: center">
+						<h1 class="title">BRANDICO</h1>
+					</div>
+				</div>
+				<div class="is-flex is-align-items-center is-justify-content-flex-start">
+					<a href="{{ path('controlador_logout') }}" class="navMenuItem">
+						<span class="navMenuItem-label">Logout</span>
+						<ion-icon name="log-out-outline"></ion-icon>
+					</a>
+				</div>
+			</div>
+		</div>
+	</header>
 
-<section class="columns is-gapless">
-    <!-- Navigation -->
-    <div class="is-fixed-width">
-        <div class="card">
-            <div class="card-content">
-                <nav class="navbar is-flex is-flex-direction-column" role="navigation" aria-label="main navigation">
-                    <a class="navbar-item" href="{{ path('controlador_portal_inicio') }}">
-                        <div class="navbar-item-content">
-                            <ion-icon name="home-outline"></ion-icon>
-                            <span class="navbar-item-text">Inicio</span>
-                        </div>
-                    </a>
-                    <a class="navbar-item" href="{{ path('explorar') }}">
-                        <div class="navbar-item-content">
-                            <ion-icon name="search-outline"></ion-icon>
-                            <span class="navbar-item-text">Explorar</span>
-                        </div>
-                    </a>
-                    <a class="navbar-item" href="{{ path('miperfil') }}">
-                        <div class="navbar-item-content">
-                            <ion-icon name="person-outline"></ion-icon>
-                            <span class="navbar-item-text">Perfil</span>
-                        </div>
-                    </a>
-                    {% if is_granted('ROLE_ADMIN') %}
-                        <a class="navbar-item" href="{{ path('controlador_portal_admin') }}">
-                            <div class="navbar-item-content">
-                                <ion-icon name="settings-outline"></ion-icon>
-                                <span class="navbar-item-text">Zona Admin</span>
-                            </div>
-                        </a>
-                    {% endif %}
-                </nav>
-            </div>
-        </div>
-    </div>
-    <!-- Secciones de Perfil y las Publicaciones del perfil -->
-    <div class="column">
-        <!-- Profile info Box -->
-        <section class="section">
-            <div class="container">
-                <div class="card">
-                    <div class="card-content">
-                        <div class="content">
-                            <div class="info columns">
-                                <div class="column is-one-quarter">
-                                    <figure class="image is-100x100">
-                                        <img src="{{ asset('img/perfiles/' ~ user.foto) }}" alt="User Avatar">
-                                    </figure>
-                                </div>
-                                <div class="column">
-                                    <p class="title">{{ user.nombre }}</p>
-                                    <p class="subtitle">Seguidores: {{ user.seguidores }}</p>
-                                    <p class="subtitle">{{ user.correo }}</p>
-                                </div>
-                                {% if (user.id != app.user.id) %}
-                                <div class="column is-narrow">
-                                    <button class="button" x-data="followUser({{ userId }}, {{ isFollowing ? 'true' : 'false' }})" @click="toggleFollowing()" x-text="following ? 'Siguiendo' : 'Seguir'" :class="following ? 'following' : 'is-link'"></button>
-                                </div>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Publicaciones del usuario -->
-    </div>
-    <div class="column espacioblanco is-2"></div>
-    <button class="scroll-to-top" title="Volver arriba">
-        <span class="icon">
-            <ion-icon name="arrow-up-outline"></ion-icon>
-        </span>
-    </button>
-</section>
-<script>
-    const FOLLOW_USER_URL = "{{ path('follow', {'userId': '__userId__'}) }}"
+	<section
+		class="columns is-gapless">
+		<!-- Navigation -->
+		<div class="is-fixed-width">
+			<div class="card">
+				<div class="card-content">
+					<nav class="navbar is-flex is-flex-direction-column" role="navigation" aria-label="main navigation">
+						<a class="navbar-item" href="{{ path('controlador_portal_inicio') }}">
+							<div class="navbar-item-content">
+								<ion-icon name="home-outline"></ion-icon>
+								<span class="navbar-item-text">Inicio</span>
+							</div>
+						</a>
+						<a class="navbar-item" href="{{ path('explorar') }}">
+							<div class="navbar-item-content">
+								<ion-icon name="search-outline"></ion-icon>
+								<span class="navbar-item-text">Explorar</span>
+							</div>
+						</a>
+						<a class="navbar-item" href="{{ path('miperfil') }}">
+							<div class="navbar-item-content">
+								<ion-icon name="person-outline"></ion-icon>
+								<span class="navbar-item-text">Perfil</span>
+							</div>
+						</a>
+						{% if is_granted('ROLE_ADMIN') %}
+							<a class="navbar-item" href="{{ path('controlador_portal_admin') }}">
+								<div class="navbar-item-content">
+									<ion-icon name="settings-outline"></ion-icon>
+									<span class="navbar-item-text">Zona Admin</span>
+								</div>
+							</a>
+						{% endif %}
+					</nav>
+				</div>
+			</div>
+		</div>
+		<!-- Secciones de Perfil y las Publicaciones del perfil -->
+		<div
+			class="column">
+			<!-- Profile info Box -->
+			<section class="section">
+				<div class="container">
+					<div class="card">
+						<div class="card-content">
+							<div class="content">
+								<div class="info columns">
+									<div class="column is-one-quarter">
+										<figure class="image is-100x100">
+											<img src="{{ asset('img/perfiles/' ~ user.foto) }}" alt="User Avatar">
+										</figure>
+									</div>
+									<div class="column">
+										<p class="title">{{ user.nombre }}</p>
+										<p class="subtitle">Seguidores:
+											{{ user.seguidores }}</p>
+										<p class="subtitle">{{ user.correo }}</p>
+									</div>
+									{% if (user.id != app.user.id) %}
+										<div class="column is-narrow">
+											<button class="button" x-data="followUser({{ userId }}, {{ isFollowing ? 'true' : 'false' }})" @click="toggleFollowing()" x-text="following ? 'Siguiendo' : 'Seguir'" :class="following ? 'following' : 'is-link'"></button>
+										</div>
+									{% endif %}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 
-    function followUser(userId) {
-        return {
-            following: {{ isFollowing ? 'true' : 'false' }},
+				<!-- Publicaciones del usuario -->
+				<div id="principal">
+					<div class="title">
+						Últimas publicaciones:</div>
+				</div>
+			</section>
 
-            toggleFollowing() {
-                const followUserUrl = FOLLOW_USER_URL.replace('__userId__', userId)
-                fetch(followUserUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-Requested-With': 'XMLHttpRequest',
-                    },
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        const { message } = data;
-                        alert(message)
-                        this.following = !this.following
-                    })
-                    .catch(error => {
-                        console.error(error)
-                    })
-            }
-        }
-    }
-</script>
-</body>
-</html>
+		</div>
+		<div class="column espacioblanco is-2"></div>
+		<button class="scroll-to-top" title="Volver arriba">
+			<span class="icon">
+				<ion-icon name="arrow-up-outline"></ion-icon>
+			</span>
+		</button>
+	</section>
+	<script>
+		// Para el botón para subir arriba
+document.addEventListener('DOMContentLoaded', function () {
+var scrollBtn = document.querySelector('.scroll-to-top');
+
+window.addEventListener('scroll', function () {
+if (window.pageYOffset > 300) {
+scrollBtn.classList.add('show');
+} else {
+scrollBtn.classList.remove('show');
+}
+});
+
+scrollBtn.addEventListener('click', function (e) {
+e.preventDefault();
+window.scrollTo({top: 0, behavior: 'smooth'});
+});
+});
+
+const FOLLOW_USER_URL = "{{ path('follow', {'userId': '__userId__'}) }}"
+
+function followUser(userId) {
+return {
+following: {{ isFollowing ? 'true' : 'false' }},
+
+toggleFollowing() {
+const followUserUrl = FOLLOW_USER_URL.replace('__userId__', userId)
+fetch(followUserUrl, {
+method: 'POST',
+headers: {
+'Content-Type': 'application/json',
+'X-Requested-With': 'XMLHttpRequest'
+}
+}).then(response => response.json()).then(data => {
+const {message} = data;
+alert(message)
+this.following = !this.following
+}).catch(error => {
+console.error(error)
+})
+}
+}
+}
+	</script>
+</body></html>

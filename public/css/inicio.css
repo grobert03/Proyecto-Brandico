@@ -197,6 +197,8 @@ p {
     margin-top: 20px;
 }
 
+
+
 /* Para pantallas pequeñas el menú de navegación aparece encima de las secciones*/
 @media screen and (max-width: 768px) {
     /* Para que los iconos del menú esten centrados con los enlaces */

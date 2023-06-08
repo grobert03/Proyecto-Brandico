@@ -145,6 +145,84 @@ body {
     vertical-align: middle;
 }
 
+textarea {
+    resize: none !important;
+}
+
+ion-icon {
+    cursor: pointer;
+}
+
+.comments .trash-icon {
+    height: 1.25em;
+    width: 1.25em;
+}
+
+.file-name {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+    margin-left: 5px;
+    vertical-align: middle;
+}
+
+p {
+    width: 100%;
+    height: auto;
+}
+
+.comments {
+    max-height: 20em;
+    overflow-y: auto;
+    position: relative;
+    overflow-x: auto;
+}
+
+.personas {
+    display: none;
+    background-color: #f2f2f2;
+    padding: 15px;
+    margin-bottom: 5px;
+    border: 1px solid #ccc;
+    position: absolute;
+    z-index: 1;
+    bottom: 25%;
+    bottom: 7rem;
+    width: 200px;
+    max-height: 300px;
+    overflow: auto;
+    border-radius: 1em;
+}
+
+.personas div {
+    border-bottom: 0.5px solid #ccc;
+}
+
+.error {
+    border: 1px solid hsl(348, 100%, 61%);
+}
+
+.comments > div {
+    margin-top: 20px;
+}
+
+#principal {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.feed {
+    width: 80%;
+}
+
+#principal > div.title {
+    text-align: center;
+}
+
 /* Para pantallas pequeñas el menú de navegación aparece encima de las secciones*/
 @media screen and (max-width: 768px) {
     /* Para que los iconos del menú esten centrados con los enlaces */
