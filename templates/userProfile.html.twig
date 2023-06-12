@@ -15,16 +15,16 @@
 	<link rel="stylesheet" href="{{ asset('css/userProfile.css') }}">
 	<script>
 		let userId = {{ userId }};
-let ruta_crear_comentario_perfil = "{{ path('crear_comentario_perfil') }}";
-let ruta_dar_like = "{{ path('dar_like') }}";
-let ruta_borrar_post = "{{ path('borrar_post') }}";
-let ruta_borrar_comentario = "{{ path('borrar_comentario') }}";
-let ruta_quitar_like = "{{ path('quitar_like') }}";
-let es_admin = "{{ app.user.getRol() }}";
-let ruta_fotos = "{{ asset('img/') }}";
-let ruta_videos = "{{ asset('videos/') }}";
-let ruta_devolver_publicaciones_perfil = "{{ path('devolver_publicaciones_perfil') }}";
-let correo = "{{ app.user.getCorreo() }}";
+		let ruta_crear_comentario_perfil = "{{ path('crear_comentario_perfil') }}";
+		let ruta_dar_like = "{{ path('dar_like') }}";
+		let ruta_borrar_post = "{{ path('borrar_post') }}";
+		let ruta_borrar_comentario = "{{ path('borrar_comentario') }}";
+		let ruta_quitar_like = "{{ path('quitar_like') }}";
+		let es_admin = "{{ app.user.getRol() }}";
+		let ruta_fotos = "{{ asset('img/') }}";
+		let ruta_videos = "{{ asset('videos/') }}";
+		let ruta_devolver_publicaciones_perfil = "{{ path('devolver_publicaciones_perfil') }}";
+		let correo = "{{ app.user.getCorreo() }}";
 	</script>
 	<script src="{{asset('js/jquery.js')}}" defer></script>
 	<script src="{{ asset('js/userProfile.js') }}" defer></script>
@@ -90,8 +90,7 @@ let correo = "{{ app.user.getCorreo() }}";
 			</div>
 		</div>
 		<!-- Secciones de Perfil y las Publicaciones del perfil -->
-		<div
-			class="column">
+		<div class="column">
 			<!-- Profile info Box -->
 			<section class="section">
 				<div class="container">
@@ -99,10 +98,8 @@ let correo = "{{ app.user.getCorreo() }}";
 						<div class="card-content">
 							<div class="content">
 								<div class="info columns">
-									<div class="column is-one-quarter">
-										<figure class="image is-100x100">
-											<img src="{{ asset('img/perfiles/' ~ user.foto) }}" alt="User Avatar">
-										</figure>
+									<div class="column is-one-quarter has-text-centered profile-image-field">
+										<img class="image is-100x100" src="{{ asset('img/perfiles/' ~ user.foto) }}" alt="User Avatar">
 									</div>
 									<div class="column">
 										<p class="title">{{ user.nombre }}</p>
@@ -138,46 +135,46 @@ let correo = "{{ app.user.getCorreo() }}";
 	</section>
 	<script>
 		// Para el botón para subir arriba
-document.addEventListener('DOMContentLoaded', function () {
-var scrollBtn = document.querySelector('.scroll-to-top');
+		document.addEventListener('DOMContentLoaded', function () {
+			var scrollBtn = document.querySelector('.scroll-to-top');
 
-window.addEventListener('scroll', function () {
-if (window.pageYOffset > 300) {
-scrollBtn.classList.add('show');
-} else {
-scrollBtn.classList.remove('show');
-}
-});
+			window.addEventListener('scroll', function () {
+				if (window.pageYOffset > 300) {
+					scrollBtn.classList.add('show');
+				} else {
+					scrollBtn.classList.remove('show');
+				}
+			});
 
-scrollBtn.addEventListener('click', function (e) {
-e.preventDefault();
-window.scrollTo({top: 0, behavior: 'smooth'});
-});
-});
+			scrollBtn.addEventListener('click', function (e) {
+				e.preventDefault();
+				window.scrollTo({top: 0, behavior: 'smooth'});
+			});
+		});
 
-const FOLLOW_USER_URL = "{{ path('follow', {'userId': '__userId__'}) }}"
+		const FOLLOW_USER_URL = "{{ path('follow', {'userId': '__userId__'}) }}"
 
-function followUser(userId) {
-return {
-following: {{ isFollowing ? 'true' : 'false' }},
+		function followUser(userId) {
+			return {
+				following: {{ isFollowing ? 'true' : 'false' }},
 
-toggleFollowing() {
-const followUserUrl = FOLLOW_USER_URL.replace('__userId__', userId)
-fetch(followUserUrl, {
-method: 'POST',
-headers: {
-'Content-Type': 'application/json',
-'X-Requested-With': 'XMLHttpRequest'
-}
-}).then(response => response.json()).then(data => {
-const {message} = data;
-alert(message)
-this.following = !this.following
-}).catch(error => {
-console.error(error)
-})
-}
-}
-}
+				toggleFollowing() {
+					const followUserUrl = FOLLOW_USER_URL.replace('__userId__', userId)
+					fetch(followUserUrl, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+							'X-Requested-With': 'XMLHttpRequest'
+						}
+					}).then(response => response.json()).then(data => {
+						const {message} = data;
+						alert(message)
+						this.following = !this.following
+					}).catch(error => {
+						console.error(error)
+					})
+				}
+			}
+		}
 	</script>
 </body></html>

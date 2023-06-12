@@ -15,6 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserProfileController extends AbstractController {
     #[Route('/getprofile/{userId}', name: 'getprofile')]
     public function getProfile(Request $request, $userId) {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         //Encontrar los datos del usuario y renderizar el twig
         $entityManager = $this->getDoctrine()->getManager();
         $usuarioRepository = $entityManager->getRepository(Usuario::class);
@@ -42,6 +43,7 @@ class UserProfileController extends AbstractController {
 
     #[Route('follow/{userId}', name: 'follow')]
     public function follow(Request $request, $userId) {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         // Seguir a un usuario según si no le esta siguiendo
         $entityManager = $this->getDoctrine()->getManager();
         $seguidoresRepository = $entityManager->getRepository(Seguidor::class);

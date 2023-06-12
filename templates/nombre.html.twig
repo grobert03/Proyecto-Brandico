@@ -45,20 +45,19 @@
                             <form x-data="userEditData()" @submit.prevent="saveChanges">
                                 <a href="{{ path('miperfil') }}"><ion-icon name="arrow-back-outline"></ion-icon> Volver</a>
                                 <div class="field">
-                                    <label class="label" for="phone">
-                                        <h1>Teléfono</h1>
+                                    <label class="label" for="name">
+                                        <h1>Nombre</h1>
                                     </label>
                                     <div class="control has-icons-right">
-                                        <input class="input is-2"  id="phone" type="text" name="_phone" x-model="formData.phone" @input="validatePhone" @blur="checkPhoneAvailability" :class="phoneValid && phoneAvailable ? 'is-success' : ''">
-                                        <span x-show="formData.phone && phoneValid && phoneAvailable" class="icon is-right has-text-success"><ion-icon name="checkmark"></ion-icon></span>
-                                        <p x-show="formData.phone && !phoneValid" class="has-text-danger">El teléfono debe tener 9 dígitos</p>
-                                        <p x-show="formData.phone && !phoneAvailable" class="has-text-danger">El teléfono ya está en uso</p>
-                                        <span x-show="formData.phone && (!phoneValid || !phoneAvailable)" class="icon is-right has-text-danger"><ion-icon name="close"></ion-icon></span>
+                                        <input class="input" id="name" type="text" name="name" x-model="formData.name" @input="validateNoEmpty('name')" :class="nameValid ? 'is-success' : ''">
+                                        <span x-show="formData.name && nameValid" class="icon is-right has-text-success"><ion-icon name="checkmark"></ion-icon></span>
+                                        <p x-show="formData.name && !nameValid" class="has-text-left  has-text-danger">Debe rellenar el campo</p>
+                                        <span x-show="formData.name && !nameValid" class="icon is-right has-text-danger"><ion-icon name="close"></ion-icon></span>
                                     </div>
                                 </div>
                                 <div class="field">
                                     <div class="control buttons publish">
-                                        <button class="button is-link" :disabled="!phoneValid">Guardar</button>
+                                        <button class="button is-link" :disabled="!nameValid">Guardar</button>
                                     </div>
                                 </div>
                                 <div x-text="formMessage"></div>
@@ -72,70 +71,25 @@
     <div class="column espacioblanco is-2"></div>
 </section>
 <script>
-    const FORM_URL = "{{ path('actualizartelefono') }}"
-    const PHONE_AVAILABILITY_URL = "{{ path('phoneavailable') }}"
+    const FORM_URL = "{{ path('actualizarnombre') }}"
 
     function userEditData() {
         return {
             formData: {
-                phone: "{{ user.telefono }}",
+                name: "{{ user.nombre }}",
             },
-            phoneValid: true,
+            nameValid: true,
             formMessage: "",
-            phoneAvailable: true,
 
-            //Validar Teléfono
-            validatePhone() {
-                const phoneRegex = /^\d{9}$/
-                if (!phoneRegex.test(this.formData.phone))
-                    this.phoneValid = false
+            //Validar no empty
+            validateNoEmpty(campo) {
+                if (!this.formData[campo].length)
+                    this[campo + 'Valid'] = false
                 else
-                    this.phoneValid = true
-            },
-
-            //Verificar que el teléfono no está usado con AJAX
-            checkPhoneAvailability() {
-                if (!this.phoneValid || this.formData.phone === "") {
-                    return false
-                }
-
-                // Verificar si el teléfono ha cambiado desde la última verificación
-                if (this.formData.email === this.lastCheckedPhone) {
-                    return false
-                }
-
-                //Realizar la solicitud AJAX para verificar la disponibilidad del teléfono
-                fetch(PHONE_AVAILABILITY_URL, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Accept: "application/json",
-                    },
-                    body: JSON.stringify({
-                        phone: this.formData.phone
-                    }),
-                })
-                    .then((response) => response.json())
-                    .then((data) => {
-                        this.phoneAvailable = data.available
-                        this.lastCheckedPhone = this.formData.phone
-                    })
-                    .catch((error) => {
-                        console.error("Error al verificar la disponibilidad del teléfono", error)
-                    })
+                    this[campo + 'Valid'] = true
             },
 
             saveChanges() {
-                this.checkPhoneAvailability()
-
-                if (!this.formData.phone.length) {
-                    return
-                }
-
-                if (!this.phoneValid) {
-                    return
-                }
-
                 fetch(FORM_URL, {
                     method: "POST",
                     headers: {
@@ -143,7 +97,7 @@
                         Accept: "application/json",
                     },
                     body: JSON.stringify({
-                        phone: this.formData.phone,
+                        name: this.formData.name,
                     }),
                 })
                     .then((response) => {

@@ -90,9 +90,7 @@
                                     <dl class="user-list">
                                         <template x-for="user in users" :key="user.id">
                                             <dt class="user-item" @click="goToProfile(user.id)">
-                                                <figure class="avatar image is-64x64 mr-0">
-                                                    <img class="" :src="`${assetBaseFotoPerfil}${user.foto}`" alt="User Avatar">
-                                                </figure>
+                                                <img class="avatar image is-64x64 mr-0" :src="`${assetBaseFotoPerfil}${user.foto}`" alt="User Avatar">
                                                 <div class="user-details">
                                                     <h4 class="user-name" x-text="user.nombre"></h4>
                                                     <p class="user-email" x-text="user.correo"></p>

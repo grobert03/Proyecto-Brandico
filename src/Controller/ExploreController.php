@@ -11,11 +11,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class ExploreController extends AbstractController {
     #[Route('/explorar', name: 'explorar')]
     public function explorar() {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         return $this->render('explorar.html.twig');
     }
 
     #[Route('/searchusers', name: 'searchusers')]
     public function getUsers(Request $request) {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         //Obtener los usuarios que coincidan con el search bar que introdujo el usuario
         $entityManager = $this->getDoctrine()->getManager();
         $usuarioRepository = $entityManager->getRepository(Usuario::class);

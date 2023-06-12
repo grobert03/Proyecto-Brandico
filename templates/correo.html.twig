@@ -1,14 +1,160 @@
-{# templates/correo.html.twig #}
-{% extends 'base.html.twig' %}
-{% block head %}
-	{#<link rel="stylesheet" href="{{ asset('css/login.css') }}">#}
-	<title>Actualizar correo</title>
-{% endblock %}
-{% block content %}
-    <center><h3>CAMBIO DE CORREO</h3></center>
-    <form action="{{path('actualizarcorreo')}}" method="post">
-        Introduzca el nuevo correo: <input type="email" name="correo">
-        <button type="submit"> Actualizar </button>
-    </form>
-    <a href="{{path('miperfil')}}" style='color:grey; font-size:13px'> Atrás</a>
-{% endblock %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Brandico Mi Perfil</title>
+    <!-- Importar Bulma CSS-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
+    <!-- Importar los iconos -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <!-- Importar Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="{{ asset('css/miperfil.css') }}">
+</head>
+<body>
+<!-- Header -->
+<header class="hero is-primary is-small">
+    <div class="hero-body">
+        <div class="container">
+            <div class="is-flex is-align-items-center is-justify-content-flex-start">
+                <figure class="image is-64x64">
+                    <img src="{{ asset('img/BrandicoLogo2White.png') }}" alt="icono BRANDICO">
+                </figure>
+                <div style="white-space: nowrap; align-self: center">
+                    <h1 class="title">BRANDICO</h1>
+                </div>
+            </div>
+            <div class="is-flex is-align-items-center is-justify-content-flex-start">
+                <a href="{{ path('controlador_logout') }}" class="navMenuItem">
+                    <span class="navMenuItem-label">Logout</span>
+                    <ion-icon name="log-out-outline"></ion-icon>
+                </a>
+            </div>
+        </div>
+    </div>
+</header>
+<section class="columns is-gapless">
+    <div class="column espacioblanco is-2"></div>
+    <div class="column">
+        <section class="section">
+            <div class="container">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="content contenido">
+                            <form x-data="userEditData()" @submit.prevent="saveChanges">
+                                <a href="{{ path('miperfil') }}"><ion-icon name="arrow-back-outline"></ion-icon> Volver</a>
+                                <div class="field">
+                                    <label class="label" for="email">
+                                        <h1>Correo</h1>
+                                    </label>
+                                    <div class="control has-icons-right">
+                                        <input class="input is-2" id="email" type="email" name="_email" x-model="formData.email" @input="validateEmail" @blur="checkEmailAvailability" :class="emailAvailable && emailValid ? 'is-success' : ''">
+                                        <span x-show="formData.email && emailValid && emailAvailable" class="icon is-right has-text-success"><ion-icon name="checkmark"></ion-icon></span>
+                                        <p x-show="formData.email && !emailValid && emailAvailable" class="has-text-danger">El email debe tener el formato de someone@example.com</p>
+                                        <p x-show="formData.email && !emailAvailable" class="has-text-danger">El email ya está en uso</p>
+                                        <span x-show="formData.email && (!emailValid || !emailAvailable)" class="icon is-right has-text-danger"><ion-icon name="close"></ion-icon></span>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="control buttons publish">
+                                        <button class="button is-link" :disabled="!emailValid">Guardar</button>
+                                    </div>
+                                </div>
+                                <div x-text="formMessage"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="column espacioblanco is-2"></div>
+</section>
+<script>
+    const FORM_URL = "{{ path('actualizarcorreo') }}"
+    const EMAIL_AVAILABILITY_URL = "{{ path('emailavailable') }}"
+
+    function userEditData() {
+        return {
+            formData: {
+                email: "{{ user.correo }}",
+            },
+            emailValid: true,
+            formMessage: "",
+            emailAvailable: true,
+
+            //Validar Email
+            validateEmail() {
+                const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+                if (!emailRegex.test(this.formData.email))
+                    this.emailValid = false
+                else
+                    this.emailValid = true
+            },
+
+            //Verificar que el email no está usado con AJAX
+            checkEmailAvailability() {
+                if (!this.emailValid || this.formData.email === "")
+                    return false
+
+                // Verificar si el email ha cambiado desde la última verificación
+                if (this.formData.email === this.lastCheckedEmail) {
+                    return false
+                }
+
+                //Realizar la solicitud AJAX para verificar la disponibilidad del email
+                fetch(EMAIL_AVAILABILITY_URL, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Accept: "application/json",
+                    },
+                    body: JSON.stringify({
+                        email: this.formData.email,
+                    }),
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        this.emailAvailable = data.available
+                        this.lastCheckedEmail = this.formData.email
+                    })
+                    .catch((error) => {
+                        console.error("Error al verificar la disponibilidad del email", error)
+                    })
+            },
+
+            saveChanges() {
+                this.checkEmailAvailability()
+
+                if (!this.formData.email.length) {
+                    return
+                }
+
+                if (!this.emailValid) {
+                    return
+                }
+
+                fetch(FORM_URL, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Accept: "application/json",
+                    },
+                    body: JSON.stringify({
+                        email: this.formData.email,
+                    }),
+                })
+                    .then((response) => {
+                        if (response.status === 201) {
+                            window.location.href = "{{ path('miperfil') }}"
+                        }
+                    })
+                    .catch((error) => {
+                        this.formMessage = "Algo ha ido mal"
+                    })
+            }
+        }
+    }
+</script>
+</body>

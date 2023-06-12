@@ -45,20 +45,22 @@
                             <form x-data="userEditData()" @submit.prevent="saveChanges">
                                 <a href="{{ path('miperfil') }}"><ion-icon name="arrow-back-outline"></ion-icon> Volver</a>
                                 <div class="field">
-                                    <label class="label" for="phone">
-                                        <h1>Teléfono</h1>
+                                    <label class="label" for="photo">
+                                        <h1>Imagen de Perfil</h1>
                                     </label>
-                                    <div class="control has-icons-right">
-                                        <input class="input is-2"  id="phone" type="text" name="_phone" x-model="formData.phone" @input="validatePhone" @blur="checkPhoneAvailability" :class="phoneValid && phoneAvailable ? 'is-success' : ''">
-                                        <span x-show="formData.phone && phoneValid && phoneAvailable" class="icon is-right has-text-success"><ion-icon name="checkmark"></ion-icon></span>
-                                        <p x-show="formData.phone && !phoneValid" class="has-text-danger">El teléfono debe tener 9 dígitos</p>
-                                        <p x-show="formData.phone && !phoneAvailable" class="has-text-danger">El teléfono ya está en uso</p>
-                                        <span x-show="formData.phone && (!phoneValid || !phoneAvailable)" class="icon is-right has-text-danger"><ion-icon name="close"></ion-icon></span>
+                                    <div class="has-text-centered">
+                                        <img class="imagen is-250x250" src="{{ asset('img/perfiles/' ~ user.foto) }}" alt="Imagen de perfil pequeña redonda">
+                                    </div>
+                                    <div class="control has-text-centered">
+                                        <input type="file" id="photo" name="photo" accept="image/*" @change="validatePhoto($event)">
+                                        <span x-show="formData.photo && photoValid" class="icon is-right has-text-success"><ion-icon name="checkmark"></ion-icon></span>
+                                        <p x-show="formData.photo && !photoValid" class="has-text-danger">No es un formato válido</p>
+                                        <span x-show="formData.photo && !photoValid" class="icon is-right has-text-danger"><ion-icon name="close"></ion-icon></span>
                                     </div>
                                 </div>
                                 <div class="field">
                                     <div class="control buttons publish">
-                                        <button class="button is-link" :disabled="!phoneValid">Guardar</button>
+                                        <button class="button is-link" :disabled="!photoValid">Cambiar</button>
                                     </div>
                                 </div>
                                 <div x-text="formMessage"></div>
@@ -72,79 +74,45 @@
     <div class="column espacioblanco is-2"></div>
 </section>
 <script>
-    const FORM_URL = "{{ path('actualizartelefono') }}"
-    const PHONE_AVAILABILITY_URL = "{{ path('phoneavailable') }}"
+    const FORM_URL = "{{ path('actualizarfoto') }}"
 
     function userEditData() {
         return {
             formData: {
-                phone: "{{ user.telefono }}",
+                photo: null,
             },
-            phoneValid: true,
+            photoValid: true,
             formMessage: "",
-            phoneAvailable: true,
 
-            //Validar Teléfono
-            validatePhone() {
-                const phoneRegex = /^\d{9}$/
-                if (!phoneRegex.test(this.formData.phone))
-                    this.phoneValid = false
-                else
-                    this.phoneValid = true
-            },
+            validatePhoto(event) {
+                const fileInput = event.target
+                const file = fileInput.files[0]
+                const allowedExtensions = ['jpg', 'jpeg', 'png']
+                const extension = file.name.split('.').pop().toLowerCase()
 
-            //Verificar que el teléfono no está usado con AJAX
-            checkPhoneAvailability() {
-                if (!this.phoneValid || this.formData.phone === "") {
-                    return false
+                if (!allowedExtensions.includes(extension)) {
+                    this.photoValid = false
+                } else {
+                    this.photoValid = true
+                    this.formData.photo = file
                 }
-
-                // Verificar si el teléfono ha cambiado desde la última verificación
-                if (this.formData.email === this.lastCheckedPhone) {
-                    return false
-                }
-
-                //Realizar la solicitud AJAX para verificar la disponibilidad del teléfono
-                fetch(PHONE_AVAILABILITY_URL, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Accept: "application/json",
-                    },
-                    body: JSON.stringify({
-                        phone: this.formData.phone
-                    }),
-                })
-                    .then((response) => response.json())
-                    .then((data) => {
-                        this.phoneAvailable = data.available
-                        this.lastCheckedPhone = this.formData.phone
-                    })
-                    .catch((error) => {
-                        console.error("Error al verificar la disponibilidad del teléfono", error)
-                    })
             },
 
             saveChanges() {
-                this.checkPhoneAvailability()
-
-                if (!this.formData.phone.length) {
+                if (!this.formData.photo) {
                     return
                 }
 
-                if (!this.phoneValid) {
+                if (!this.photoValid) {
                     return
                 }
+
+                const formData = new FormData()
+                formData.append('photo', this.formData.photo)
 
                 fetch(FORM_URL, {
                     method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Accept: "application/json",
-                    },
-                    body: JSON.stringify({
-                        phone: this.formData.phone,
-                    }),
+                    body: formData,
                 })
                     .then((response) => {
                         if (response.status === 201) {

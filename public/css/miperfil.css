@@ -13,6 +13,7 @@
 }
 
 body {
+    height: 100vh;
     background-color: #f8f8f8;
     color: var(--textDark);
     font-family: 'Montserrat';
@@ -60,6 +61,10 @@ body {
     justify-content: flex-end;
     align-items: center;
     margin-top: 10px;
+}
+
+.content.contenido {
+    padding: 2rem;
 }
 
 /* Para cambiar el hover de los links de menú de navegación */
@@ -143,84 +148,6 @@ body {
     max-width: 200px;
     margin-left: 5px;
     vertical-align: middle;
-}
-
-textarea {
-    resize: none !important;
-}
-
-ion-icon {
-    cursor: pointer;
-}
-
-.comments .trash-icon {
-    height: 1.25em;
-    width: 1.25em;
-}
-
-.file-name {
-    display: inline-block;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 200px;
-    margin-left: 5px;
-    vertical-align: middle;
-}
-
-p {
-    width: 100%;
-    height: auto;
-}
-
-.comments {
-    max-height: 20em;
-    overflow-y: auto;
-    position: relative;
-    overflow-x: auto;
-}
-
-.personas {
-    display: none;
-    background-color: #f2f2f2;
-    padding: 15px;
-    margin-bottom: 5px;
-    border: 1px solid #ccc;
-    position: absolute;
-    z-index: 1;
-    bottom: 25%;
-    bottom: 7rem;
-    width: 200px;
-    max-height: 300px;
-    overflow: auto;
-    border-radius: 1em;
-}
-
-.personas div {
-    border-bottom: 0.5px solid #ccc;
-}
-
-.error {
-    border: 1px solid hsl(348, 100%, 61%);
-}
-
-.comments > div {
-    margin-top: 20px;
-}
-
-#principal {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.feed {
-    width: 80%;
-}
-
-#principal > div.title {
-    text-align: center;
 }
 
 /* Para pantallas pequeñas el menú de navegación aparece encima de las secciones*/
@@ -338,7 +265,6 @@ p {
     .columns {
         display: flex;
         flex-wrap: wrap;
-        margin-left: 200px;
     }
 
     .column {
@@ -355,106 +281,38 @@ p {
     }
 }
 
-/* Añadir reglas CSS para el search box */
-.search-box {
-    position: relative;
-}
-
-.search-box input {
-    width: 100%;
-    padding-right: 40px; /* Ajustar el espacio para el icono de búsqueda */
-}
-
-.search-box .icon.is-left {
-    position: absolute;
-    top: 50%;
-    left: 10px;
-    transform: translateY(-50%);
-}
-
-/* Añadir reglas CSS para el autocompletado */
-.user-list {
-    list-style-type: none;
-    padding: 0;
-}
-
-.user-item {
-    display: flex;
-    align-items: center;
-    padding: 10px;
+/* Para la lista de datos de perfil */
+.data-item {
     cursor: pointer;
     border-bottom: 1px solid #ccc;
 }
 
-.user-item:hover {
+.data-item:hover {
     background-color: #f5f5f5;
 }
 
-.user-item .image.is-64x64 {
-    margin-right: 10px;
-}
-
-/* Añadir reglas CSS para hacer el figure alineado a la izquierda */
-.user-details {
-    margin-left: 74px; /* Ancho de la imagen + margen */
-}
-
-/* Hacer el figure alineado a la izquierda */
-.user-details .image.is-64x64 {
-    float: left;
+.imagen.is-64x64 {
+    width: 64px;
     margin-right: 10px;
     border-radius: 50%;
+    object-fit: contain;
 }
 
-/* Estilos para el perfil del usuario */
-.profile-info {
+.imagen.is-250x250 {
+    width: 250px;
+    border-radius: 50%;
+    object-fit: contain;
+}
+
+.file-control {
     display: flex;
     align-items: center;
 }
 
-.profile-info .user-name {
+.file-control p {
+    margin-bottom: 0;
+}
+
+dt {
     font-weight: bold;
-    margin-right: 10px;
-}
-
-.profile-info .follow-button {
-    margin-left: 10px;
-}
-
-.profile-info .followers {
-    margin-right: 10px;
-}
-
-.profile-info .email {
-    font-size: 14px;
-}
-
-/* Estilos adicionales */
-.image.is-100x100 {
-    height: 100px;
-    width: 100px;
-    border-radius: 50%;
-}
-
-.button {
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.info.columns {
-    margin-left: 0;
-}
-
-.following {
-    background-color: lightgray;
-}
-
-.profile-image-field {
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
