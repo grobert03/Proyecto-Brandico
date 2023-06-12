@@ -32,7 +32,7 @@ class ContactController extends AbstractController {
         $email->from($formData['email']);
 
         // Set the "To address"
-        $email->to('brandico.digital@gmail.com');
+        $email->to('brandico.digital@gmail.com', $formData['email']);
 
         // Set a "subject"
         $email->subject($formData['subject']);
@@ -44,7 +44,14 @@ class ContactController extends AbstractController {
         $email->html('
             <strong>Nombre: </strong>' . $formData['name'] . '<br>' .
             '<strong>Email: </strong>' . $formData['email'] . '<br>' .
-            '<strong>Mensaje: </strong><br>' . $formData['message']
+            '<strong>Mensaje: </strong><br>' . $formData['message'] . '<br><br>' .
+            '<div style="width: 100%; padding: 2rem; text-align: center; background-color: #f2f2f2">
+            <h1>Su petición de contacto ha sido recibida</h1>
+            <p>La petición de contacto ha sido recibida correctamente y será procesada entre 24-48 horas. Para añadir más información, por favor conteste directamente a este email.</p>
+            <p>BRANDICO - Marketing y Digitalización</p>
+            <p>Email: brandico.digital@gmail.com</p>
+            <p>Web: brandicodigital.com</p>
+            </div>'
         );
 
         try {
