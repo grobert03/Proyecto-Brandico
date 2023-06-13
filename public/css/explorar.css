@@ -336,3 +336,19 @@ body {
     float: left;
     margin-right: 10px;
 }
+
+.personas {
+    display: none;
+    background-color: #f2f2f2;
+    padding: 15px;
+    margin-bottom: 5px;
+    border: 1px solid #ccc;
+    position: absolute;
+    z-index: 1;
+    bottom: 25%;
+    bottom: 7rem;
+    width: 200px;
+    max-height: 300px;
+    overflow: auto;
+    border-radius: 1em;
+}

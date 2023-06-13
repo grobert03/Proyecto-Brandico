@@ -3,14 +3,26 @@
 <head>
     <meta charset="utf-8">
     <title>Brandico Explorar</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Importar Bulma CSS-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
     <!-- Importar los iconos -->
+    <script>
+        let ruta_devolver_recomendados = "{{ path('devolver_publicaciones_explorar') }}";
+        let es_admin = "{{app.user.getRol()}}";
+		let correo = "{{app.user.getCorreo()}}";
+        let ruta_borrar_comentario = "{{path('borrar_comentario')}}";
+		let ruta_quitar_like = "{{path('quitar_like')}}";
+        let ruta_dar_like = "{{path('dar_like')}}";
+        let ruta_crear_comentario = "{{path('crear_comentario')}}";
+    </script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script src="{{ asset('js/jquery.js') }}"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <!-- Importar Alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link rel="icon" href="{{ asset('img/logoHeader.png') }}">
+    <script src="{{ asset('js/explorar.js') }}" defer></script>
     <link rel="stylesheet" href="{{ asset('css/explorar.css') }}">
 </head>
 <body>
@@ -105,9 +117,22 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Post Feed recomendados -->
+        <div class="container mt-5">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="content" id='recomendaciones'>
+                            <div class="title">
+                                Para tí:
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
 
-        <!-- Post Feed recomendados -->
+        
     </div>
     <div class="column espacioblanco is-2"></div>
     <button class="scroll-to-top" title="Volver arriba">
