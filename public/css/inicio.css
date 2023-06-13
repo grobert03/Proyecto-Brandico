@@ -25,27 +25,11 @@ body {
     color: white;
 }
 
-/* Logout */
-.logout {
-    color: white;
-}
+
 
 /* Ajustar posición de los sections */
 .sections {
     margin-left: 200px; /* Ancho del menú */
-}
-
-.logout {
-    position: absolute;
-    top: 0;
-    right: 0;
-    margin: 1rem;
-    display: flex;
-    align-items: center;
-}
-
-.logout-label {
-    margin-right: 5px;
 }
 
 .hero-body h1 {
