@@ -1,6 +1,6 @@
 <?php
 namespace App\Controller;
-// src/Controller/Base.php
+// src/Controller/UpdateController.php
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 /**
  * @Security("is_granted('ROLE_USER')")
  */
-class Base extends AbstractController{
+class UpdateController extends AbstractController{
 
     /**
      * @Route("/miperfil", name="miperfil")

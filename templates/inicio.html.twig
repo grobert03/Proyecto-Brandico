@@ -42,12 +42,7 @@
 							<h1 class="title">BRANDICO</h1>
 						</div>
 					</div>
-					<div class="is-flex is-align-items-center is-justify-content-flex-start">
-						<a href="{{ path('controlador_logout') }}" class="logout">
-							<span class="logout-label">Logout</span>
-							<ion-icon name="log-out-outline"></ion-icon>
-						</a>
-					</div>
+					
 				</div>
 			</div>
 		</header>
@@ -85,6 +80,12 @@
 									</div>
 								</a>
 							{% endif %}
+							<a href="{{ path('controlador_logout') }}" class="navbar-item">
+								<div class="navbar-item-content">
+									<ion-icon name="log-out-outline"></ion-icon>
+									<span class="navMenuItem-label">Logout</span>
+								</div>
+							</a>
 						</nav>
 					</div>
 				</div>
