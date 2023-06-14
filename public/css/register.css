@@ -106,3 +106,6 @@ h1 {
     font-style: italic;
 }
 
+.logo-field {
+    cursor: pointer;
+}

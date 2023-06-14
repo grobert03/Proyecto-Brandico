@@ -35,7 +35,7 @@
 		<header class="hero is-primary is-small">
 			<div class="hero-body">
 				<div class="container">
-					<div class="is-flex is-align-items-center is-justify-content-flex-start">
+					<div class="is-flex is-align-items-center is-justify-content-flex-start logo-field">
 						<figure class="image is-64x64">
 							<img src="{{ asset('img/BrandicoLogo2White.png') }}" alt="icono BRANDICO">
 						</figure>
@@ -146,22 +146,28 @@
 		</section>
 		<script>
 			// Para el botón para subir arriba
-document.addEventListener('DOMContentLoaded', function () {
-var scrollBtn = document.querySelector('.scroll-to-top');
+			document.addEventListener('DOMContentLoaded', function () {
+				var scrollBtn = document.querySelector('.scroll-to-top');
 
-window.addEventListener('scroll', function () {
-if (window.pageYOffset > 300) {
-scrollBtn.classList.add('show');
-} else {
-scrollBtn.classList.remove('show');
-}
-});
+				window.addEventListener('scroll', function () {
+					if (window.pageYOffset > 300) {
+						scrollBtn.classList.add('show');
+					} else {
+						scrollBtn.classList.remove('show');
+					}
+				});
 
-scrollBtn.addEventListener('click', function (e) {
-e.preventDefault();
-window.scrollTo({top: 0, behavior: 'smooth'});
-});
-});
+				scrollBtn.addEventListener('click', function (e) {
+					e.preventDefault();
+					window.scrollTo({top: 0, behavior: 'smooth'});
+				});
+
+				var logoDiv = document.querySelector('.logo-field');
+
+				logoDiv.addEventListener('click', function() {
+					window.location.href = "{{ path('controlador_portal_inicio') }}";
+				});
+			});
 		</script>
 	</body>
 </html>

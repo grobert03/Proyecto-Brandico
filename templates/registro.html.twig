@@ -26,7 +26,7 @@
             <div class="column is-10 is-offset-1 register">
                 <div class="columns">
                     <div class="column left" style="padding-top: 5rem">
-                        <div class="logo is-flex is-align-items-center is-justify-content-flex-start">
+                        <div class="logo is-flex is-align-items-center is-justify-content-flex-start logo-field">
                             <figure class="image is-64x64">
                                 <img src="{{ asset('img/logoHeader.png') }}" alt="icono BRANDICO">
                             </figure>
@@ -190,6 +190,14 @@
         const FORM_URL = "{{ path('createuser') }}"
         const EMAIL_AVAILABILITY_URL = "{{ path('emailavailable') }}"
         const PHONE_AVAILABILITY_URL = "{{ path('phoneavailable') }}"
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var logoDiv = document.querySelector('.logo-field');
+
+            logoDiv.addEventListener('click', function() {
+                window.location.href = "{{ path('promocion') }}";
+            });
+        })
 
         function userForm() {
             //Función que permite mandar por AJAX los datos del formulario de usuario con Alpine.js

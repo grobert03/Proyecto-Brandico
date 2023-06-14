@@ -22,7 +22,7 @@
     <div class="header-body">
         <div class="contenido container">
             <div class="is-flex is-align-items-center is-justify-content-space-between">
-                <div class="is-flex is-align-items-center">
+                <div class="is-flex is-align-items-center logo-field">
                     <figure class="image is-64x64">
                         <img src="{{ asset('img/BrandicoLogo2White.png') }}" alt="icono BRANDICO"/>
                     </figure>
@@ -302,6 +302,12 @@
         }
 
         fadeInElementsOnScroll();
+
+        var logoDiv = document.querySelector('.logo-field');
+
+        logoDiv.addEventListener('click', function() {
+            window.location.href = "{{ path('promocion') }}";
+        });
     })
 
     const FORM_URL = "{{ path('contact') }}"

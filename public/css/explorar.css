@@ -352,3 +352,7 @@ body {
     overflow: auto;
     border-radius: 1em;
 }
+
+.logo-field {
+    cursor: pointer;
+}

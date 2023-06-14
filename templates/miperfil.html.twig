@@ -1,218 +1,225 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>Brandico Mi Perfil</title>
-		<!-- Importar Bulma CSS-->
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+    <meta charset="utf-8">
+    <title>Brandico Mi Perfil</title>
+    <!-- Importar Bulma CSS-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-		<link
-		rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
-		<!-- Importar los iconos -->
-		<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-		<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-		<!-- Importar Alpine.js -->
-		<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-		<link rel="icon" href="{{ asset('img/logoHeader.png') }}">
-		<link rel="stylesheet" href="{{ asset('css/miperfil.css') }}">
-	</head>
-	<body>
-		<!-- Header -->
-		<header class="hero is-primary is-small">
-			<div class="hero-body">
-				<div class="container">
-					<div class="is-flex is-align-items-center is-justify-content-flex-start">
-						<figure class="image is-64x64">
-							<img src="{{ asset('img/BrandicoLogo2White.png') }}" alt="icono BRANDICO">
-						</figure>
-						<div style="white-space: nowrap; align-self: center">
-							<h1 class="title">BRANDICO</h1>
-						</div>
-					</div>
+    <link
+            rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
+    <!-- Importar los iconos -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <!-- Importar Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="icon" href="{{ asset('img/logoHeader.png') }}">
+    <link rel="stylesheet" href="{{ asset('css/miperfil.css') }}">
+</head>
+<body>
+<!-- Header -->
+<header class="hero is-primary is-small">
+    <div class="hero-body">
+        <div class="container">
+            <div class="is-flex is-align-items-center is-justify-content-flex-start logo-field">
+                <figure class="image is-64x64">
+                    <img src="{{ asset('img/BrandicoLogo2White.png') }}" alt="icono BRANDICO">
+                </figure>
+                <div style="white-space: nowrap; align-self: center">
+                    <h1 class="title">BRANDICO</h1>
+                </div>
+            </div>
 
-				</div>
-			</div>
-		</header>
+        </div>
+    </div>
+</header>
 
-		<section
-			class="columns is-gapless">
-			<!-- Navigation -->
-			<div class="is-fixed-width">
-				<div class="card">
-					<div class="card-content">
-						<nav class="navbar is-flex is-flex-direction-column" role="navigation" aria-label="main navigation">
-							<a class="navbar-item" href="{{ path('controlador_portal_inicio') }}">
-								<div class="navbar-item-content">
-									<ion-icon name="home-outline"></ion-icon>
-									<span class="navbar-item-text">Inicio</span>
-								</div>
-							</a>
-							<a class="navbar-item" href="{{ path('explorar') }}">
-								<div class="navbar-item-content">
-									<ion-icon name="search-outline"></ion-icon>
-									<span class="navbar-item-text">Explorar</span>
-								</div>
-							</a>
-							<a class="navbar-item focus" href="{{ path('miperfil') }}">
-								<div class="navbar-item-content">
-									<ion-icon name="person-outline"></ion-icon>
-									<span class="navbar-item-text">Perfil</span>
-								</div>
-							</a>
-							{% if is_granted('ROLE_ADMIN') %}
-								<a class="navbar-item" href="{{ path('controlador_portal_admin') }}">
-									<div class="navbar-item-content">
-										<ion-icon name="settings-outline"></ion-icon>
-										<span class="navbar-item-text">Zona Admin</span>
-									</div>
-								</a>
-							{% endif %}
-							<a href="{{ path('controlador_logout') }}" class="navbar-item">
-								<div class="navbar-item-content">
-									<ion-icon name="log-out-outline"></ion-icon>
-									<span class="navbar-item-text">Logout</span>
-								</div>
-							</a>
-						</nav>
-					</div>
-				</div>
-			</div>
-			<!-- Secciones Mi Perfil -->
-			<div
-				class="column">
-				<!-- My Profile Box -->
-				<section class="section">
-					<div class="container">
-						<div class="card">
-							<div class="card-content">
-								<div class="content contenido" x-data="userData()">
-									<h1>Información Personal</h1>
-									<dl>
-										<div class="columns data-item" @click="editProfilePhoto">
-											<dt class="column is-one-quarter">Imagen de perfil</dt>
-											<dd class="column is-two-quarters">
-												Una foto de perfil ayuda a personalizar su cuenta
-											</dd>
-											<dd class="column is-one-quarter">
-												<img class="imagen is-64x64" src="{{ asset('img/perfiles/' ~ user.foto) }}" alt="Imagen de perfil pequeña redonda">
-											</dd>
-										</div>
-										<div class="columns data-item" @click="editName">
-											<dt class="column is-one-quarter">Nombre</dt>
-											<dd class="column is-two-quarters">
-												{{ user.nombre }}
-											</dd>
-											<dd class="column is-one-quarter">
-												<ion-icon name="chevron-forward-outline"></ion-icon>
-											</dd>
-										</div>
-										<div class="columns data-item" @click="editEmail">
-											<dt class="column is-one-quarter">Email</dt>
-											<dd class="column is-two-quarters">
-												{{ user.correo }}
-											</dd>
-											<dd class="column is-one-quarter">
-												<ion-icon name="chevron-forward-outline"></ion-icon>
-											</dd>
-										</div>
-										<div class="columns data-item" @click="editPhone">
-											<dt class="column is-one-quarter">Teléfono</dt>
-											<dd class="column is-two-quarters">
-												{{ user.telefono }}
-											</dd>
-											<dd class="column is-one-quarter">
-												<ion-icon name="chevron-forward-outline"></ion-icon>
-											</dd>
-										</div>
-										{% if user.es_empresa == 1 %}
-											<div class="columns data-item" @click="editCIF">
-												<dt class="column is-one-quarter">CIF</dt>
-												<dd class="column is-two-quarters">
-													{{ user.cif }}
-												</dd>
-												<dd class="column is-one-quarter">
-													<ion-icon name="chevron-forward-outline"></ion-icon>
-												</dd>
-											</div>
-											<div class="columns data-item" @click="editDirection">
-												<dt class="column is-one-quarter">Dirección</dt>
-												<dd class="column is-two-quarters">
-													{{ user.direccion }}
-												</dd>
-												<dd class="column is-one-quarter">
-													<ion-icon name="chevron-forward-outline"></ion-icon>
-												</dd>
-											</div>
-											<div class="columns data-item" @click="editProvince">
-												<dt class="column is-one-quarter">Provincia</dt>
-												<dd class="column is-two-quarters">
-													{{ user.provincia }}
-												</dd>
-												<dd class="column is-one-quarter">
-													<ion-icon name="chevron-forward-outline"></ion-icon>
-												</dd>
-											</div>
-										{% endif %}
-									</dl>
-								</div>
-							</div>
-						</div>
-					</div>
-				</section>
+<section
+        class="columns is-gapless">
+    <!-- Navigation -->
+    <div class="is-fixed-width">
+        <div class="card">
+            <div class="card-content">
+                <nav class="navbar is-flex is-flex-direction-column" role="navigation" aria-label="main navigation">
+                    <a class="navbar-item" href="{{ path('controlador_portal_inicio') }}">
+                        <div class="navbar-item-content">
+                            <ion-icon name="home-outline"></ion-icon>
+                            <span class="navbar-item-text">Inicio</span>
+                        </div>
+                    </a>
+                    <a class="navbar-item" href="{{ path('explorar') }}">
+                        <div class="navbar-item-content">
+                            <ion-icon name="search-outline"></ion-icon>
+                            <span class="navbar-item-text">Explorar</span>
+                        </div>
+                    </a>
+                    <a class="navbar-item focus" href="{{ path('miperfil') }}">
+                        <div class="navbar-item-content">
+                            <ion-icon name="person-outline"></ion-icon>
+                            <span class="navbar-item-text">Perfil</span>
+                        </div>
+                    </a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a class="navbar-item" href="{{ path('controlador_portal_admin') }}">
+                            <div class="navbar-item-content">
+                                <ion-icon name="settings-outline"></ion-icon>
+                                <span class="navbar-item-text">Zona Admin</span>
+                            </div>
+                        </a>
+                    {% endif %}
+                    <a href="{{ path('controlador_logout') }}" class="navbar-item">
+                        <div class="navbar-item-content">
+                            <ion-icon name="log-out-outline"></ion-icon>
+                            <span class="navbar-item-text">Logout</span>
+                        </div>
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- Secciones Mi Perfil -->
+    <div
+            class="column">
+        <!-- My Profile Box -->
+        <section class="section">
+            <div class="container">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="content contenido" x-data="userData()">
+                            <h1>Información Personal</h1>
+                            <dl>
+                                <div class="columns data-item" @click="editProfilePhoto">
+                                    <dt class="column is-one-quarter">Imagen de perfil</dt>
+                                    <dd class="column is-two-quarters">
+                                        Una foto de perfil ayuda a personalizar su cuenta
+                                    </dd>
+                                    <dd class="column is-one-quarter">
+                                        <img class="imagen is-64x64" src="{{ asset('img/perfiles/' ~ user.foto) }}"
+                                             alt="Imagen de perfil pequeña redonda">
+                                    </dd>
+                                </div>
+                                <div class="columns data-item" @click="editName">
+                                    <dt class="column is-one-quarter">Nombre</dt>
+                                    <dd class="column is-two-quarters">
+                                        {{ user.nombre }}
+                                    </dd>
+                                    <dd class="column is-one-quarter">
+                                        <ion-icon name="chevron-forward-outline"></ion-icon>
+                                    </dd>
+                                </div>
+                                <div class="columns data-item" @click="editEmail">
+                                    <dt class="column is-one-quarter">Email</dt>
+                                    <dd class="column is-two-quarters">
+                                        {{ user.correo }}
+                                    </dd>
+                                    <dd class="column is-one-quarter">
+                                        <ion-icon name="chevron-forward-outline"></ion-icon>
+                                    </dd>
+                                </div>
+                                <div class="columns data-item" @click="editPhone">
+                                    <dt class="column is-one-quarter">Teléfono</dt>
+                                    <dd class="column is-two-quarters">
+                                        {{ user.telefono }}
+                                    </dd>
+                                    <dd class="column is-one-quarter">
+                                        <ion-icon name="chevron-forward-outline"></ion-icon>
+                                    </dd>
+                                </div>
+                                {% if user.es_empresa == 1 %}
+                                    <div class="columns data-item" @click="editCIF">
+                                        <dt class="column is-one-quarter">CIF</dt>
+                                        <dd class="column is-two-quarters">
+                                            {{ user.cif }}
+                                        </dd>
+                                        <dd class="column is-one-quarter">
+                                            <ion-icon name="chevron-forward-outline"></ion-icon>
+                                        </dd>
+                                    </div>
+                                    <div class="columns data-item" @click="editDirection">
+                                        <dt class="column is-one-quarter">Dirección</dt>
+                                        <dd class="column is-two-quarters">
+                                            {{ user.direccion }}
+                                        </dd>
+                                        <dd class="column is-one-quarter">
+                                            <ion-icon name="chevron-forward-outline"></ion-icon>
+                                        </dd>
+                                    </div>
+                                    <div class="columns data-item" @click="editProvince">
+                                        <dt class="column is-one-quarter">Provincia</dt>
+                                        <dd class="column is-two-quarters">
+                                            {{ user.provincia }}
+                                        </dd>
+                                        <dd class="column is-one-quarter">
+                                            <ion-icon name="chevron-forward-outline"></ion-icon>
+                                        </dd>
+                                    </div>
+                                {% endif %}
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-				<!-- Post Feed recomendados -->
-			</div>
-			<div class="column espacioblanco is-2"></div>
-			<button class="scroll-to-top" title="Volver arriba">
+        <!-- Post Feed recomendados -->
+    </div>
+    <div class="column espacioblanco is-2"></div>
+    <button class="scroll-to-top" title="Volver arriba">
 				<span class="icon">
 					<ion-icon name="arrow-up-outline"></ion-icon>
 				</span>
-			</button>
-		</section>
-		<script>
-			function userData() {
-return {
-editProfilePhoto() {
-window.location.href = '{{ path('editarfoto') }}'
-},
-editName() {
-window.location.href = '{{ path('editarnombre') }}'
-},
-editEmail() {
-window.location.href = '{{ path('editarcorreo') }}'
-},
-editPhone() {
-window.location.href = '{{ path('editartelefono') }}'
-},
-editCIF() {
-window.location.href = '{{ path('editarcif') }}'
-},
-editDirection() {
-window.location.href = '{{ path('editardireccion') }}'
-},
-editProvince() {
-window.location.href = '{{ path('editarprovincia') }}'
-}
-}
-}
+    </button>
+</section>
+<script>
+    function userData() {
+        return {
+            editProfilePhoto() {
+                window.location.href = '{{ path('editarfoto') }}'
+            },
+            editName() {
+                window.location.href = '{{ path('editarnombre') }}'
+            },
+            editEmail() {
+                window.location.href = '{{ path('editarcorreo') }}'
+            },
+            editPhone() {
+                window.location.href = '{{ path('editartelefono') }}'
+            },
+            editCIF() {
+                window.location.href = '{{ path('editarcif') }}'
+            },
+            editDirection() {
+                window.location.href = '{{ path('editardireccion') }}'
+            },
+            editProvince() {
+                window.location.href = '{{ path('editarprovincia') }}'
+            }
+        }
+    }
 
-// Para el botón para subir arriba
-document.addEventListener('DOMContentLoaded', function () {
-var scrollBtn = document.querySelector('.scroll-to-top');
+    // Para el botón para subir arriba
+    document.addEventListener('DOMContentLoaded', function () {
+        var scrollBtn = document.querySelector('.scroll-to-top');
 
-window.addEventListener('scroll', function () {
-if (window.pageYOffset > 300) {
-scrollBtn.classList.add('show');
-} else {
-scrollBtn.classList.remove('show');
-}
-});
+        window.addEventListener('scroll', function () {
+            if (window.pageYOffset > 300) {
+                scrollBtn.classList.add('show');
+            } else {
+                scrollBtn.classList.remove('show');
+            }
+        });
 
-scrollBtn.addEventListener('click', function (e) {
-e.preventDefault();
-window.scrollTo({top: 0, behavior: 'smooth'});
-});
-});
-		</script>
-	</body>
+        scrollBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        });
+
+		var logoDiv = document.querySelector('.logo-field');
+
+		logoDiv.addEventListener('click', function() {
+			window.location.href = "{{ path('controlador_portal_inicio') }}";
+		});
+    });
+</script>
+</body>
 </html>

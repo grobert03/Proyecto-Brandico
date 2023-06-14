@@ -458,3 +458,7 @@ p {
     align-items: center;
     justify-content: center;
 }
+
+.logo-field {
+    cursor: pointer;
+}

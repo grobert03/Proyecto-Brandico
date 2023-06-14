@@ -19,7 +19,7 @@
 <header class="hero is-primary is-small">
     <div class="hero-body">
         <div class="container">
-            <div class="is-flex is-align-items-center is-justify-content-flex-start">
+            <div class="is-flex is-align-items-center is-justify-content-flex-start logo-field">
                 <figure class="image is-64x64">
                     <img src="{{ asset('img/BrandicoLogo2White.png') }}" alt="icono BRANDICO">
                 </figure>
@@ -27,7 +27,6 @@
                     <h1 class="title">BRANDICO</h1>
                 </div>
             </div>
-            
         </div>
     </div>
 </header>
@@ -71,6 +70,14 @@
 <script>
     const FORM_URL = "{{ path('actualizarcorreo') }}"
     const EMAIL_AVAILABILITY_URL = "{{ path('emailavailable') }}"
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var logoDiv = document.querySelector('.logo-field');
+
+        logoDiv.addEventListener('click', function() {
+            window.location.href = "{{ path('controlador_portal_inicio') }}";
+        });
+    });
 
     function userEditData() {
         return {

@@ -19,19 +19,13 @@
 <header class="hero is-primary is-small">
     <div class="hero-body">
         <div class="container">
-            <div class="is-flex is-align-items-center is-justify-content-flex-start">
+            <div class="is-flex is-align-items-center is-justify-content-flex-start logo-field">
                 <figure class="image is-64x64">
                     <img src="{{ asset('img/BrandicoLogo2White.png') }}" alt="icono BRANDICO">
                 </figure>
                 <div style="white-space: nowrap; align-self: center">
                     <h1 class="title">BRANDICO</h1>
                 </div>
-            </div>
-            <div class="is-flex is-align-items-center is-justify-content-flex-start">
-                <a href="{{ path('controlador_logout') }}" class="navMenuItem">
-                    <ion-icon name="log-out-outline"></ion-icon>
-                    <span class="navMenuItem-label">Logout</span>
-                </a>
             </div>
         </div>
     </div>
@@ -77,6 +71,14 @@
 </section>
 <script>
     const FORM_URL = "{{ path('actualizarfoto') }}"
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var logoDiv = document.querySelector('.logo-field');
+
+        logoDiv.addEventListener('click', function() {
+            window.location.href = "{{ path('controlador_portal_inicio') }}";
+        });
+    });
 
     function userEditData() {
         return {

@@ -170,6 +170,10 @@ body {
     opacity: 1;
 }
 
+.logo-field {
+    cursor: pointer;
+}
+
 @media (max-width: 1022px) {
     .banner .block {
         padding-left: 5rem;
