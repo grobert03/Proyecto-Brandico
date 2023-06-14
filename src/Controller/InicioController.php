@@ -91,7 +91,7 @@ class InicioController extends AbstractController
         $em->persist($comentario);
         $em->flush();
 
-        return new JsonResponse(['comentario' => ['id' => $comentario->getId(), 'autor' => $comentario->getAutor()->getNombre(), 'foto' => 'img/perfiles/'.$comentario->getAutor()->getFoto() , 'fecha' => $comentario->getFecha(), 'contenido' => $comentario->getContenido(), 'likes' => 0, 'le_gusta' => 0]]);
+        return new JsonResponse(['comentario' => ['id' => $comentario->getId(), 'autor' => $comentario->getAutor()->getNombre(), 'id_autor' => $comentario->getAutor()->getId(), 'foto' => 'img/perfiles/'.$comentario->getAutor()->getFoto() , 'fecha' => $comentario->getFecha(), 'contenido' => $comentario->getContenido(), 'likes' => 0, 'le_gusta' => 0]]);
     }
 
     /**
@@ -149,7 +149,7 @@ class InicioController extends AbstractController
             foreach ($comentarios as $c) {
                 $likes_com = $em->getRepository(Like::class)->findBy(['id_comentario' => $c->getId()]);
                 $le_gusta_com = $em->getRepository(Like::class)->findOneBy(['id_usuario' => $this->getUser()->getId(), 'id_comentario' => $c->getId()]);
-                array_push($array_comentarios, ['id' => $c->getId(), 'correo' => $c->getAutor()->getCorreo(), 'autor' => $c->getAutor()->getNombre(), 'foto' => 'img/perfiles/'.$c->getAutor()->getFoto() , 'fecha' => $c->getFecha(), 'contenido' => $c->getContenido(), 'likes' => sizeof($likes_com), 'le_gusta' => $le_gusta_com ? 1 : 0]);
+                array_push($array_comentarios, ['id' => $c->getId(), 'correo' => $c->getAutor()->getCorreo(), 'autor' => $c->getAutor()->getNombre(), 'id_autor' => $c->getAutor()->getId(), 'foto' => 'img/perfiles/'.$c->getAutor()->getFoto() , 'fecha' => $c->getFecha(), 'contenido' => $c->getContenido(), 'likes' => sizeof($likes_com), 'le_gusta' => $le_gusta_com ? 1 : 0]);
             }
 
             if ($le_gusta) {
@@ -160,6 +160,7 @@ class InicioController extends AbstractController
             $json[] = [
                 'id' => $p->getId(),
                 'autor' => $p->getAutor()->getNombre(),
+                'id_autor' => $p->getAutor()->getId(),
                 'perfil' => 'img/perfiles/'.$p->getAutor()->getFoto(),
                 'correo' => $p->getAutor()->getCorreo(),
                 'fecha' => $p->getFecha(),

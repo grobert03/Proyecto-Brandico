@@ -129,7 +129,7 @@ $(document).ready(() => {
 													</figure>
 												</div>
 												<div class="media-content">
-													<div class="title is-4">${d.autor}</div>
+													<div class="title is-4"><a href="${ruta_perfil}/${d.id_autor}">${d.autor}</a></div>
 													<div class="subtitle is-6">
                                                     <div>${d.correo}</div>
                                                     <small>${d.fecha.date.substring(0, 16)}</small>
@@ -181,7 +181,7 @@ $(document).ready(() => {
                                                 <div class="media-content">
                                                   <div class="content">
                                                     <p x-data="{borrar_comment: false}">
-                                                      <strong>${e.autor}</strong>
+                                                      <strong><a href="${ruta_perfil}/${e.id_autor}">${e.autor}</a></strong>
                                                       <br>
                                                       <span>${e.contenido}</span>
                                                       <br>
@@ -323,7 +323,7 @@ $(document).ready(() => {
                                 <div class="media-content">
                                   <div class="content">
                                     <p x-data="{borrar_comment: false}">
-                                      <strong>${data.comentario.autor}</strong>
+                                      <strong><a href="${ruta_perfil}/${data.comentario.id_autor}">${data.comentario.autor}</a></strong>
                                       <br>
                                       <span>${data.comentario.contenido}</span>
                                       <br>
@@ -411,7 +411,7 @@ $(document).ready(() => {
     loadPublicaciones();
 
     $(window).scroll(() => {
-        if (Math.ceil($(window).scrollTop() + $(window).height()) == $(document).height()) {
+        if (window.innerHeight + Math.round(window.scrollY) >= document.body.offsetHeight) {
             loadPublicaciones();
         }
     })

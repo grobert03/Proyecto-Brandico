@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class UserProfileController extends AbstractController {
     #[Route('/getprofile/{userId}', name: 'getprofile')]
-    public function getProfile(Request $request, $userId) {
+    public function getProfile(Request $request, $userId = null) {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         //Encontrar los datos del usuario y renderizar el twig
         $entityManager = $this->getDoctrine()->getManager();

@@ -1,66 +1,63 @@
 let pagina = 1;
 
 const darLike = (id) => {
-    console.log('xd')
-    $.ajax({
-        url: ruta_dar_like,
-        data: { "id": id },
-        type: "POST",
-        dataType: "json",
-        success: function (data) {
-            console.log(data);
-        },
-        error: function (err) {
-            console.log(err);
-        }
-    });
-}
+  console.log("xd");
+  $.ajax({
+    url: ruta_dar_like,
+    data: { id: id },
+    type: "POST",
+    dataType: "json",
+    success: function (data) {
+      console.log(data);
+    },
+    error: function (err) {
+      console.log(err);
+    },
+  });
+};
 
 const quitarLike = (id) => {
-    $.ajax({
-        url: ruta_quitar_like,
-        data: { "id": id },
-        type: "POST",
-        dataType: "json",
-        success: function (data) {
-
-
-        },
-        error: function (err) {
-            console.log(err);
-        }
-    });
-}
+  $.ajax({
+    url: ruta_quitar_like,
+    data: { id: id },
+    type: "POST",
+    dataType: "json",
+    success: function (data) {},
+    error: function (err) {
+      console.log(err);
+    },
+  });
+};
 
 const darLikeComentario = (id) => {
-    $.ajax({
-        url: ruta_dar_like,
-        data: { "id": id, "comentario": true },
-        type: "POST",
-        dataType: "json",
-        success: function (data) {
-            console.log(data);
-        },
-        error: function (err) {
-            console.log(err);
-        }
-    });
-}
+  $.ajax({
+    url: ruta_dar_like,
+    data: { id: id, comentario: true },
+    type: "POST",
+    dataType: "json",
+    success: function (data) {
+      console.log(data);
+    },
+    error: function (err) {
+      console.log(err);
+    },
+  });
+};
 
 const quitarLikeComentario = (id) => {
-    $.ajax({
-        url: ruta_quitar_like,
-        data: { "id": id, "comentario": true },
-        type: "POST",
-        dataType: "json",
-        success: function (data) {
-            console.log(data);
-        },
-        error: function (err) {
-            console.log(err);
-        }
-    });
-}
+  $.ajax({
+    url: ruta_quitar_like,
+    data: { id: id, comentario: true },
+    type: "POST",
+    dataType: "json",
+    success: function (data) {
+      console.log(data);
+    },
+    error: function (err) {
+      console.log(err);
+    },
+  });
+};
 
 const devolverRecomendados = () => {
   $.ajax({
@@ -93,9 +90,9 @@ const devolverRecomendados = () => {
                                                 </figure>
                                             </div>
                                             <div class="media-content">
-                                                <div class="title is-4">${
+                                                <div class="title is-4"><a href="${ruta_perfil}/${d.id_autor}">${
                                                   d.autor
-                                                }</div>
+                                                }</a></div>
                                                 <div class="subtitle is-6">
                                                 <div>${d.correo}</div>
                                                 <small>${d.fecha.date.substring(
@@ -186,7 +183,7 @@ const devolverRecomendados = () => {
                                             <div class="media-content">
                                               <div class="content">
                                                 <p x-data="{borrar_comment: false}">
-                                                  <strong>${e.autor}</strong>
+                                                  <strong><a href="${ruta_perfil}/${e.id_autor}">${e.autor}</a></strong>
                                                   <br>
                                                   <span>${e.contenido}</span>
                                                   <br>
@@ -375,7 +372,7 @@ const devolverRecomendados = () => {
                             <div class="media-content">
                               <div class="content">
                                 <p x-data="{borrar_comment: false}">
-                                  <strong>${data.comentario.autor}</strong>
+                                  <strong><a href="${ruta_pefil}/${data.comentario.id_autor}">${data.comentario.autor}</a></strong>
                                   <br>
                                   <span>${data.comentario.contenido}</span>
                                   <br>
@@ -484,8 +481,8 @@ devolverRecomendados();
 
 $(window).scroll(() => {
   if (
-    Math.ceil($(window).scrollTop() + $(window).height()) ==
-    $(document).height()
+    window.innerHeight + Math.round(window.scrollY) >=
+    document.body.offsetHeight
   ) {
     devolverRecomendados();
   }

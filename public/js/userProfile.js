@@ -371,7 +371,7 @@ $(document).ready(() => {
     loadPublicaciones();
 
     $(window).scroll(() => {
-        if (Math.ceil($(window).scrollTop() + $(window).height()) == $(document).height()) {
+        if (window.innerHeight + Math.round(window.scrollY) >= document.body.offsetHeight) {
             loadPublicaciones();
         }
     })

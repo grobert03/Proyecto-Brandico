@@ -57,7 +57,7 @@ const devolverUsuarios = () => {
                 ? `EMPRESA (${p.direccion}, ${p.provincia})`
                 : "USUARIO"
             }</p>
-            <h4 class="user-name" x-show="!modificar" >${p.nombre}</h4>
+            <h4 class="user-name" x-show="!modificar" ><a href="${ruta_perfil}/${p.id}">${p.nombre}</a></h4>
             <p class="user-email" x-show="!modificar">${p.correo}</p>
             <div data-usu="${
               p.id
