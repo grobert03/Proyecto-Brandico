@@ -60,7 +60,7 @@
                                 <div class="field">
                                     <label for="user-email">Email:</label>
                                     <div class="control has-icons-right">
-                                        <input class="input is-2" id="user-email" type="email" name="_user-email" x-model="formData.email" @input="validateEmail" @blur="checkEmailAvailability" :class="emailAvailable && emailValid ? 'is-success' : ''">
+                                        <input class="input is-2" id="user-email" type="email" name="_user-email" x-model="formData.email" @input="validateEmail" @input.debounce.500ms="checkEmailAvailability" :class="emailAvailable && emailValid ? 'is-success' : ''">
                                         <span x-show="formData.email && emailValid && emailAvailable" class="icon is-right has-text-success"><ion-icon name="checkmark"></ion-icon></span>
                                         <p x-show="formData.email && !emailValid && emailAvailable" class="has-text-danger">El email debe tener el formato de someone@example.com</p>
                                         <p x-show="formData.email && !emailAvailable" class="has-text-danger">El email ya está en uso</p>
@@ -90,7 +90,7 @@
                                 <div class="field">
                                     <label for="user-phone">Teléfono:</label>
                                     <div class="control has-icons-right">
-                                        <input class="input is-2"  id="user-phone" type="text" name="_user-phone" x-model="formData.phone" @input="validatePhone" @blur="checkPhoneAvailability" :class="phoneValid && phoneAvailable ? 'is-success' : ''">
+                                        <input class="input is-2"  id="user-phone" type="text" name="_user-phone" x-model="formData.phone" @input="validatePhone" @input.debounce.500ms="checkPhoneAvailability" :class="phoneValid && phoneAvailable ? 'is-success' : ''">
                                         <span x-show="formData.phone && phoneValid && phoneAvailable" class="icon is-right has-text-success"><ion-icon name="checkmark"></ion-icon></span>
                                         <p x-show="formData.phone && !phoneValid" class="has-text-danger">El teléfono debe tener 9 dígitos</p>
                                         <p x-show="formData.phone && !phoneAvailable" class="has-text-danger">El teléfono ya está en uso</p>
@@ -110,7 +110,7 @@
                                 <div class="field">
                                     <label for="company-email">Email:</label>
                                     <div class="control has-icons-right">
-                                        <input class="input is-2" id="company-email" type="email" name="_company-email" x-model="formData.email" @input="validateEmail" @blur="checkEmailAvailability" :class="emailAvailable && emailValid ? 'is-success' : ''">
+                                        <input class="input is-2" id="company-email" type="email" name="_company-email" x-model="formData.email" @input="validateEmail" @input.debounce.500ms="checkEmailAvailability" :class="emailAvailable && emailValid ? 'is-success' : ''">
                                         <span x-show="formData.email && emailValid && emailAvailable" class="icon is-right has-text-success"><ion-icon name="checkmark"></ion-icon></span>
                                         <p x-show="formData.email && !emailValid && emailAvailable" class="has-text-danger">El email debe tener el formato de someone@example.com</p>
                                         <p x-show="formData.email && !emailAvailable" class="has-text-danger">El email ya está en uso</p>
@@ -131,10 +131,11 @@
                                 <div class="field">
                                     <label for="company-cif">CIF:</label>
                                     <div class="control has-icons-right">
-                                        <input class="input is-2" id="company-cif" type="text" name="_company-cif" x-model="formData.cif" @input="validateCIF" :class="cifValid ? 'is-success' : ''">
-                                        <span x-show="formData.cif && cifValid" class="icon is-right has-text-success"><ion-icon name="checkmark"></ion-icon></span>
-                                        <p x-show="formData.cif && !cifValid" class="has-text-danger">El cif debe tener el formato de AXXXXXXXX o AXXXXXXXA</p>
-                                        <span x-show="formData.cif && !cifValid" class="icon is-right has-text-danger"><ion-icon name="close"></ion-icon></span>
+                                        <input class="input is-2" id="company-cif" type="text" name="_company-cif" x-model="formData.cif" @input="validateCIF" @input.debounce.500ms="checkCifAvailability" :class="cifValid ? 'is-success' : ''">
+                                        <span x-show="formData.cif && cifValid && cifAvailable" class="icon is-right has-text-success"><ion-icon name="checkmark"></ion-icon></span>
+                                        <p x-show="formData.cif && !cifValid && cifAvailable" class="has-text-danger">El CIF debe tener el formato de AXXXXXXXX o AXXXXXXXA</p>
+                                        <p x-show="formData.cif && !cifAvailable" class="has-text-danger">El CIF ya está en uso</p>
+                                        <span x-show="formData.cif && (!cifValid || !cifAvailable)" class="icon is-right has-text-danger"><ion-icon name="close"></ion-icon></span>
                                     </div>
                                 </div>
                                 <div class="field">
@@ -149,7 +150,7 @@
                                 <div class="field">
                                     <label for="company-phone">Teléfono:</label>
                                     <div class="control has-icons-right">
-                                        <input class="input is-2" id="company-phone" type="text" name="_company-phone" x-model="formData.phone" @input="validatePhone" @blur="checkPhoneAvailability" :class="phoneValid && phoneAvailable ? 'is-success' : ''">
+                                        <input class="input is-2" id="company-phone" type="text" name="_company-phone" x-model="formData.phone" @input="validatePhone" @input.debounce.500ms="checkPhoneAvailability" :class="phoneValid && phoneAvailable ? 'is-success' : ''">
                                         <span x-show="formData.phone && phoneValid && phoneAvailable" class="icon is-right has-text-success"><ion-icon name="checkmark"></ion-icon></span>
                                         <p x-show="formData.phone && !phoneValid" class="has-text-danger">El teléfono debe tener 9 dígitos</p>
                                         <p x-show="formData.phone && !phoneAvailable" class="has-text-danger">El teléfono ya está en uso</p>
@@ -190,6 +191,7 @@
         const FORM_URL = "{{ path('createuser') }}"
         const EMAIL_AVAILABILITY_URL = "{{ path('emailavailable') }}"
         const PHONE_AVAILABILITY_URL = "{{ path('phoneavailable') }}"
+        const CIF_AVAILABILITY_URL = "{{ path('cifavailable') }}"
 
         document.addEventListener("DOMContentLoaded", function () {
             var logoDiv = document.querySelector('.logo-field');
@@ -218,22 +220,28 @@
                 phoneValid: false,
                 passwordValid: false,
                 //Variables para verificar que no estan usados
-                emailAvailable: false,
-                phoneAvailable: false,
+                emailAvailable: true,
+                phoneAvailable: true,
 
                 //Validar Email
                 validateEmail() {
-                    const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-                    if (!emailRegex.test(this.formData.email))
-                        this.emailValid = false
-                    else
-                        this.emailValid = true
+                    const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+                    if (!emailRegex.test(this.formData.email) || this.formData.email === "") {
+                        this.emailValid = false;
+                    } else if (this.formData.email.includes(" ")) {
+                        this.emailValid = false; // Email contiene espacios
+                    } else {
+                        this.emailValid = true;
+                    }
                 },
 
                 //Verificar que el email no está usado con AJAX
                 checkEmailAvailability() {
-                    if (!this.emailValid || this.formData.email === "")
+                    if (!this.emailValid || this.formData.email.trim() === "") {
+                        this.emailAvailable = true // Restablecer a disponible si el campo está vacío
                         return false
+                    }
 
                     // Verificar si el email ha cambiado desde la última verificación
                     if (this.formData.email === this.lastCheckedEmail) {
@@ -255,6 +263,11 @@
                         .then((data) => {
                             this.emailAvailable = data.available
                             this.lastCheckedEmail = this.formData.email
+
+                            // Restablecer el estado de disponibilidad si el campo del email está vacío
+                            if (this.formData.email === "") {
+                                this.emailAvailable = true;
+                            }
                         })
                         .catch((error) => {
                             console.error("Error al verificar la disponibilidad del email", error)
@@ -281,6 +294,7 @@
                 //Verificar que el teléfono no está usado con AJAX
                 checkPhoneAvailability() {
                     if (!this.phoneValid || this.formData.phone === "") {
+                        this.phoneAvailable = true
                         return false
                     }
 
@@ -304,6 +318,11 @@
                         .then((data) => {
                             this.phoneAvailable = data.available
                             this.lastCheckedPhone = this.formData.phone
+
+                            // Restablecer el estado de disponibilidad si el campo del teléfono está vacío
+                            if (this.formData.phone === "") {
+                                this.phoneAvailable = true;
+                            }
                         })
                         .catch((error) => {
                             console.error("Error al verificar la disponibilidad del teléfono", error)
@@ -330,7 +349,8 @@
 
                     // Comprobar si todos los campos son válidos
                     if (!this.emailValid || !this.emailAvailable ||
-                        !this.nameValid || !this.phoneValid || !this.passwordValid) {
+                        !this.nameValid || !this.phoneValid || !this.passwordValid ||
+                        !this.emailAvailable || !this.phoneAvailable) {
                         alert("Debe corregir los errores en el formulario antes de enviarlo")
                         return
                     }
@@ -411,22 +431,29 @@
                 provinceValid: false,
                 passwordValid: false,
                 //Variables para verificar que no estan usados
-                emailAvailable: false,
-                phoneAvailable: false,
+                emailAvailable: true,
+                phoneAvailable: true,
+                cifAvailable: true,
 
                 //Validar Email
                 validateEmail() {
-                    const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-                    if (!emailRegex.test(this.formData.email))
-                        this.emailValid = false
-                    else
-                        this.emailValid = true
+                    const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+                    if (!emailRegex.test(this.formData.email) || this.formData.email === "") {
+                        this.emailValid = false;
+                    } else if (this.formData.email.includes(" ")) {
+                        this.emailValid = false; // Email contiene espacios
+                    } else {
+                        this.emailValid = true;
+                    }
                 },
 
                 //Verificar que el email no está usado con AJAX
                 checkEmailAvailability() {
-                    if (!this.emailValid || this.formData === "")
+                    if (!this.emailValid || this.formData.email === "") {
+                        this.emailAvailable = true // Restablecer a disponible si el campo está vacío
                         return false
+                    }
 
                     // Verificar si el email ha cambiado desde la última verificación
                     if (this.formData.email === this.lastCheckedEmail) {
@@ -448,6 +475,11 @@
                         .then((data) => {
                             this.emailAvailable = data.available
                             this.lastCheckedEmail = this.formData.email
+
+                            // Restablecer el estado de disponibilidad si el campo del email está vacío
+                            if (this.formData.email === "") {
+                                this.emailAvailable = true;
+                            }
                         })
                         .catch((error) => {
                             console.error("Error al verificar la disponibilidad del email", error)
@@ -461,6 +493,44 @@
                         this.cifValid = false
                     else
                         this.cifValid = true
+                },
+
+                //Verificar que el cif no está usado con AJAX
+                checkCifAvailability() {
+                    if (!this.cifValid || this.formData.cif === "") {
+                        this.cifAvailable = true // Restablecer a disponible si el campo está vacío
+                        return false
+                    }
+
+                    // Verificar si el email ha cambiado desde la última verificación
+                    if (this.formData.cif === this.lastCheckedCif) {
+                        return false
+                    }
+
+                    //Realizar la solicitud AJAX para verificar la disponibilidad del email
+                    fetch(CIF_AVAILABILITY_URL, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Accept: "application/json",
+                        },
+                        body: JSON.stringify({
+                            cif: this.formData.cif,
+                        }),
+                    })
+                        .then((response) => response.json())
+                        .then((data) => {
+                            this.cifAvailable = data.available
+                            this.lastCheckedCif = this.formData.cif
+
+                            // Restablecer el estado de disponibilidad si el campo del cif está vacío
+                            if (this.formData.cif === "") {
+                                this.cifAvailable = true;
+                            }
+                        })
+                        .catch((error) => {
+                            console.error("Error al verificar la disponibilidad del cif", error)
+                        })
                 },
 
                 //Validar nombre, dirección y provincia
@@ -483,6 +553,7 @@
                 //Verificar que el teléfono no está usado con AJAX
                 checkPhoneAvailability() {
                     if (!this.phoneValid || this.formData.phone === "") {
+                        this.phoneAvailable = true
                         return false
                     }
 
@@ -506,6 +577,11 @@
                         .then((data) => {
                             this.phoneAvailable = data.available
                             this.lastCheckedPhone = this.formData.phone
+
+                            // Restablecer el estado de disponibilidad si el campo del teléfono está vacío
+                            if (this.formData.phone === "") {
+                                this.phoneAvailable = true;
+                            }
                         })
                         .catch((error) => {
                             console.error("Error al verificar la disponibilidad del teléfono", error)
@@ -532,7 +608,9 @@
 
                     // Comprobar si todos los campos son válidos
                     if (!this.emailValid || !this.cifValid ||
-                        !this.nameValid || !this.phoneValid || !this.directionValid || !this.provinceValid || !this.passwordValid) {
+                        !this.nameValid || !this.phoneValid || !this.directionValid ||
+                        !this.provinceValid || !this.passwordValid ||
+                        !this.emailAvailable || !this.phoneAvailable || !this.cifAvailable) {
                         alert("Debe corregir los errores en el formulario antes de enviarlo")
                         return
                     }

@@ -55,9 +55,34 @@ class SignUpController extends AbstractController {
 
         $isAvailable = true;
 
-        //Verificar si el email ya está utilizado
+        //Verificar si el teléfono ya está utilizado
         foreach ($usuarios as $usuario) {
             if ($usuario->getTelefono() === $phone) {
+                $isAvailable = false;
+                break;
+            }
+        }
+
+        return new JsonResponse(['available' => $isAvailable]);
+    }
+
+    #[Route('/cifavailable', name: 'cifavailable')]
+    public function cifavailable(Request $request) {
+        $entityManager = $this->getDoctrine()->getManager();
+        $usuarioRepository = $entityManager->getRepository(Usuario::class);
+
+        $jsonData = $request->getContent();
+        $formData = json_decode($jsonData, true);
+
+        $cif = $formData['cif'];
+
+        $usuarios = $usuarioRepository->findAll();
+
+        $isAvailable = true;
+
+        //Verificar si el cif ya está utilizado
+        foreach ($usuarios as $usuario) {
+            if ($usuario->getCif() === $cif) {
                 $isAvailable = false;
                 break;
             }
