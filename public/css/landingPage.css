@@ -179,6 +179,11 @@ body {
     align-self: center !important;
 }
 
+.image.is-64x64 {
+    width: 64px;
+    height: 64px;
+}
+
 @media (max-width: 1022px) {
     .banner .block {
         padding-left: 5rem;
@@ -261,7 +266,7 @@ body {
         font-size: 1.5rem !important;
     }
 
-    .image.is-64x64 img {
+    .image.is-64x64 {
         width: 40px;
         height: 40px;
     }
