@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 05-06-2023 a las 13:39:03
--- Versión del servidor: 10.4.28-MariaDB
--- Versión de PHP: 8.2.4
+-- Host: 127.0.0.1
+-- Generation Time: Jun 15, 2023 at 12:09 AM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `brandico`
+-- Database: `brandico`
 --
 CREATE DATABASE IF NOT EXISTS `brandico` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `brandico`;
@@ -26,7 +26,7 @@ USE `brandico`;
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `comentarios`
+-- Table structure for table `comentarios`
 --
 
 CREATE TABLE `comentarios` (
@@ -38,40 +38,21 @@ CREATE TABLE `comentarios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `comentarios`
+-- Dumping data for table `comentarios`
 --
 
 INSERT INTO `comentarios` (`id`, `id_post`, `autor`, `fecha`, `contenido`) VALUES
-(1, 23, 2, '2023-06-02 11:59:04', 'Buen post!'),
-(2, 23, 3, '2023-06-02 12:00:20', 'prueba'),
-(3, 23, 2, '2023-06-02 16:01:11', 'djsakld'),
-(4, 20, 1, '2023-06-05 11:26:33', 'xd'),
-(5, 42, 1, '2023-06-05 12:19:57', ''),
-(6, 42, 1, '2023-06-05 12:22:29', 'a'),
-(7, 42, 1, '2023-06-05 12:26:57', ''),
-(8, 42, 1, '2023-06-05 12:26:59', ''),
-(9, 42, 1, '2023-06-05 12:27:00', ''),
-(10, 42, 1, '2023-06-05 12:27:02', ''),
-(11, 42, 1, '2023-06-05 12:27:04', ''),
-(12, 42, 1, '2023-06-05 12:27:06', ''),
-(13, 42, 1, '2023-06-05 12:29:35', ''),
-(14, 41, 1, '2023-06-05 12:31:13', ''),
-(15, 42, 1, '2023-06-05 12:32:45', ''),
-(16, 42, 1, '2023-06-05 12:34:28', ''),
-(17, 42, 1, '2023-06-05 12:35:22', ''),
-(18, 42, 1, '2023-06-05 12:35:52', ''),
-(19, 42, 1, '2023-06-05 12:36:05', ''),
-(20, 42, 1, '2023-06-05 12:36:42', ''),
-(21, 42, 1, '2023-06-05 12:37:35', ''),
-(22, 42, 1, '2023-06-05 12:39:26', ''),
-(23, 42, 1, '2023-06-05 12:45:03', ''),
-(24, 42, 1, '2023-06-05 12:45:15', ''),
-(25, 42, 1, '2023-06-05 12:46:53', 'jdsklafjdasklfjdsañlf\n\nfjdsklfjdsñafjsdkñfjsadljfñdsafkdjsafkdslañfjdkslañfjdkslañfjdklsañfjdklsañfjdkñsjafklñdsjafklñdjsaklfñdjkslañfjdklsñajfkldañjfkldsñajflk');
+(33, 63, 15, '2023-06-14 23:41:27', 'Muy buen video!'),
+(34, 55, 15, '2023-06-14 23:43:15', 'Buen video!'),
+(35, 63, 15, '2023-06-14 23:54:22', 'aaa'),
+(36, 63, 15, '2023-06-15 00:06:24', 'test'),
+(37, 63, 15, '2023-06-15 00:07:10', 'test2'),
+(38, 63, 15, '2023-06-15 00:07:57', 'test3');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `likes`
+-- Table structure for table `likes`
 --
 
 CREATE TABLE `likes` (
@@ -82,30 +63,20 @@ CREATE TABLE `likes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `likes`
+-- Dumping data for table `likes`
 --
 
 INSERT INTO `likes` (`id`, `id_post`, `id_comentario`, `id_usuario`) VALUES
-(2, 17, NULL, 1),
-(3, 20, NULL, 2),
-(4, NULL, 1, 2),
-(6, 23, NULL, 2),
-(13, NULL, 2, 2),
-(16, 23, NULL, 1),
-(18, 21, NULL, 1),
-(19, 18, NULL, 1),
-(20, 16, NULL, 1),
-(21, 38, NULL, 1),
-(22, NULL, 2, 1),
-(23, 30, NULL, 1),
-(26, 42, NULL, 1),
-(28, NULL, 21, 1),
-(29, NULL, 25, 1);
+(43, 63, NULL, 17),
+(44, 63, NULL, 14),
+(45, 63, NULL, 15),
+(46, 55, NULL, 15),
+(48, NULL, 33, 15);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `publicaciones`
+-- Table structure for table `publicaciones`
 --
 
 CREATE TABLE `publicaciones` (
@@ -118,50 +89,24 @@ CREATE TABLE `publicaciones` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `publicaciones`
+-- Dumping data for table `publicaciones`
 --
 
 INSERT INTO `publicaciones` (`id`, `autor`, `fecha`, `texto`, `imagen`, `video`) VALUES
-(7, 1, '2023-06-01 10:00:00', 'aaaaaa', 'logo-quality.png', NULL),
-(8, 1, '2023-06-01 11:00:00', 'Buenas tardes', 'Cat_November_2010-1a.jpg', NULL),
-(9, 2, '2023-06-01 11:30:00', 'Holaaa', 'Cat_August_2010-4.jpg', NULL),
-(10, 3, '2023-06-01 11:31:00', 'kdlsajdaskldjskaldjsakldjasas', 'international-cat-day1-scaled.jpg', NULL),
-(11, 1, '2023-06-01 12:31:00', 'FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF', 'gettyimages-1279899488_wide-f3860ceb0ef19643c335cb34df3fa1de166e2761-s1100-c50.jpg', NULL),
-(12, 2, '2023-06-01 13:00:00', 'Holaaa', 'logo-quality.png', NULL),
-(13, 1, '2023-06-01 13:20:00', 'Holaaa', 'Flag_of_Barcelona.svg.png', NULL),
-(14, 1, '2023-06-01 14:10:00', 'xd', 'tienda.jpg', NULL),
-(15, 1, '2023-06-01 14:48:29', 'prueba', 'Flag_of_the_Land_of_Valencia_(official).svg.png', NULL),
-(16, 1, '2023-06-01 14:49:27', '9', 'Bandera_de_la_ciudad_de_Madrid.svg.png', NULL),
-(17, 1, '2023-06-01 14:50:52', '10', 'Flag_of_the_Land_of_Valencia_(official).svg.png', NULL),
-(18, 1, '2023-06-02 11:31:00', 'Prueba sin imagen', NULL, NULL),
-(19, 1, '2023-06-02 11:32:40', 'Segunda prueba sin imagen', NULL, NULL),
-(20, 1, '2023-06-02 11:33:13', 'jskada', 'international-cat-day1-scaled.jpg', NULL),
-(21, 1, '2023-06-02 11:33:59', 'aaa', NULL, NULL),
-(22, 1, '2023-06-02 11:34:54', 'xxdsadsad', NULL, NULL),
-(23, 1, '2023-06-02 11:36:28', 'dsdsdsds', NULL, NULL),
-(24, 2, '2023-06-02 15:40:13', 'test', NULL, NULL),
-(25, 1, '2023-06-05 11:38:42', '', NULL, NULL),
-(26, 1, '2023-06-05 11:39:01', 'd', NULL, NULL),
-(27, 1, '2023-06-05 11:39:13', 'a', NULL, NULL),
-(28, 1, '2023-06-05 11:40:06', 'a', NULL, NULL),
-(29, 1, '2023-06-05 11:42:22', '', 'logo-quality.png', NULL),
-(30, 1, '2023-06-05 11:42:44', '', 'logo-quality.png', NULL),
-(31, 1, '2023-06-05 11:44:37', '', 'logo-quality.png', NULL),
-(32, 1, '2023-06-05 11:46:12', '', 'logo-quality.png', NULL),
-(33, 1, '2023-06-05 11:48:05', '', 'logo-quality.png', NULL),
-(34, 1, '2023-06-05 11:49:28', '', 'logo-quality.png', NULL),
-(35, 1, '2023-06-05 11:51:54', 'ds', NULL, NULL),
-(36, 1, '2023-06-05 11:52:59', '', 'logo-quality.png', NULL),
-(38, 1, '2023-06-05 11:56:28', '', 'tienda.jpg', NULL),
-(39, 1, '2023-06-05 11:57:42', '', 'gettyimages-1279899488_wide-f3860ceb0ef19643c335cb34df3fa1de166e2761-s1100-c50.jpg', NULL),
-(40, 1, '2023-06-05 11:58:24', '', 'gettyimages-1279899488_wide-f3860ceb0ef19643c335cb34df3fa1de166e2761-s1100-c50.jpg', NULL),
-(41, 1, '2023-06-05 12:07:31', '', '647db3e3d5345.png', NULL),
-(42, 1, '2023-06-05 12:13:17', ':3', NULL, '647db53d1c339.mp4');
+(53, 14, '2023-06-14 23:29:59', 'Publicación de Robert (solo mensaje)', NULL, NULL),
+(54, 14, '2023-06-14 23:30:10', '', '648a31628971f.gif', NULL),
+(55, 14, '2023-06-14 23:31:03', 'Publicación de Robert con mensaje y video', NULL, '648a31974c0ba.mp4'),
+(56, 15, '2023-06-14 23:33:20', 'Publicación de Usuario 2', NULL, NULL),
+(57, 15, '2023-06-14 23:33:41', '', '648a3235db98f.jpg', NULL),
+(59, 15, '2023-06-14 23:35:24', 'Video de Usuario2', NULL, '648a329cd9039.mp4'),
+(60, 17, '2023-06-14 23:38:08', 'Bienvenidos a Brandico!', NULL, NULL),
+(62, 17, '2023-06-14 23:39:20', 'Prueba', NULL, NULL),
+(63, 17, '2023-06-14 23:39:55', '', NULL, '648a33abbc7b5.mp4');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `seguidores`
+-- Table structure for table `seguidores`
 --
 
 CREATE TABLE `seguidores` (
@@ -171,18 +116,16 @@ CREATE TABLE `seguidores` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `seguidores`
+-- Dumping data for table `seguidores`
 --
 
 INSERT INTO `seguidores` (`id`, `id_seguido`, `id_seguidor`) VALUES
-(1, 1, 2),
-(2, 1, 3),
-(3, 2, 1);
+(7, 14, 15);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `usuarios`
+-- Table structure for table `usuarios`
 --
 
 CREATE TABLE `usuarios` (
@@ -202,20 +145,23 @@ CREATE TABLE `usuarios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `usuarios`
+-- Dumping data for table `usuarios`
 --
 
 INSERT INTO `usuarios` (`id`, `correo`, `clave`, `nombre`, `foto`, `es_empresa`, `rol`, `telefono`, `cif`, `direccion`, `provincia`, `recuperacion`, `expiracion_rec`) VALUES
-(1, 'prueba@mail.com', '$2y$10$SE5ZiXksq20NUBMIJvZ76uSYzyFPQ6Fz5bEdAh4ilcXjcxTA0Qg.2', 'Prueba', 'dog-puppy-on-garden-royalty-free-image-1586966191.jpg', 0, 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(2, 'robert@mail.com', '$2y$10$uYsyTxE8B1pXzCrkuHcqJu70uA7oH0aloS4qwspeqjRybuP0FMB9q', 'Robert', 'default.png', 0, 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(3, 'willy@mail.com', '$2y$10$uYsyTxE8B1pXzCrkuHcqJu70uA7oH0aloS4qwspeqjRybuP0FMB9q', 'Willy', 'default.png', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+(14, 'gainarobert47@gmail.com', '$2y$10$xyr6AimzV2TMnNKQkR79h.nR8VphT.pj6TYlEhi3qoRghr1qth73a', 'Robert12', '648a31e7b3925_chinese-dog-breeds-4797219-hero-2a1e9c5ed2c54d00aef75b05c5db399c.jpg', 0, 1, '123321123', NULL, NULL, NULL, NULL, NULL),
+(15, 'usuario2@mail.com', '$2y$10$rnhME22WcZkfGfTN566RX.KsStOdeWWlBu.sa.Bs8Q2tYeCR4YnYG', 'Usuario2', 'default.png', 0, 0, '321111123', NULL, NULL, NULL, NULL, NULL),
+(16, 'usuario3@mail.com', '$2y$10$O1aZNyeekXSKW4AzbRAme.SCMLKy9xKZ6K00vRjNuLy.LT0AIlJhG', 'Usuario3', 'default.png', 0, 0, '111222333', NULL, NULL, NULL, NULL, NULL),
+(17, 'brandico.digital@gmail.com', '$2y$10$1FoBAmofqFaXBV8SHzWRDecXooN5MlsKeArSibkGAj10pEmDdvkAS', 'Brandico', '648a332d58318_logoHeader.png', 1, 0, '333222111', 'D13954672', 'Calle Padre Claret 12', 'Madrid', NULL, NULL),
+(18, 'empresa1@mail.com', '$2y$10$Yhe/0v.mTdgzL/HdELLy7u/KKxuZy3N2vo4zUcQ7yTANGIJXcm1h2', 'Empresa1', 'default.png', 1, 0, '121212121', 'G52273786', 'Calle Prueba NR 23', 'Madrid', NULL, NULL),
+(19, 'empresa2@mail.com', '$2y$10$wec0BDWFWsnpb1q1jvCsAOW3Sw2uRDplshcD9grWSfiaDq6sqOApa', 'Empresa2', 'default.png', 1, 0, '332211332', 'J21972609', 'Avenida Prueba NR 12', 'Madrid', NULL, NULL);
 
 --
--- Índices para tablas volcadas
+-- Indexes for dumped tables
 --
 
 --
--- Indices de la tabla `comentarios`
+-- Indexes for table `comentarios`
 --
 ALTER TABLE `comentarios`
   ADD PRIMARY KEY (`id`),
@@ -223,7 +169,7 @@ ALTER TABLE `comentarios`
   ADD KEY `id_post` (`id_post`);
 
 --
--- Indices de la tabla `likes`
+-- Indexes for table `likes`
 --
 ALTER TABLE `likes`
   ADD PRIMARY KEY (`id`),
@@ -232,14 +178,14 @@ ALTER TABLE `likes`
   ADD KEY `id_usuario` (`id_usuario`);
 
 --
--- Indices de la tabla `publicaciones`
+-- Indexes for table `publicaciones`
 --
 ALTER TABLE `publicaciones`
   ADD PRIMARY KEY (`id`),
   ADD KEY `autor` (`autor`);
 
 --
--- Indices de la tabla `seguidores`
+-- Indexes for table `seguidores`
 --
 ALTER TABLE `seguidores`
   ADD PRIMARY KEY (`id`),
@@ -247,7 +193,7 @@ ALTER TABLE `seguidores`
   ADD KEY `id_seguidor` (`id_seguidor`);
 
 --
--- Indices de la tabla `usuarios`
+-- Indexes for table `usuarios`
 --
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id`),
@@ -255,52 +201,52 @@ ALTER TABLE `usuarios`
   ADD UNIQUE KEY `telefono` (`telefono`);
 
 --
--- AUTO_INCREMENT de las tablas volcadas
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT de la tabla `comentarios`
+-- AUTO_INCREMENT for table `comentarios`
 --
 ALTER TABLE `comentarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
--- AUTO_INCREMENT de la tabla `likes`
+-- AUTO_INCREMENT for table `likes`
 --
 ALTER TABLE `likes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
--- AUTO_INCREMENT de la tabla `publicaciones`
+-- AUTO_INCREMENT for table `publicaciones`
 --
 ALTER TABLE `publicaciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
--- AUTO_INCREMENT de la tabla `seguidores`
+-- AUTO_INCREMENT for table `seguidores`
 --
 ALTER TABLE `seguidores`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT de la tabla `usuarios`
+-- AUTO_INCREMENT for table `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
--- Restricciones para tablas volcadas
+-- Constraints for dumped tables
 --
 
 --
--- Filtros para la tabla `comentarios`
+-- Constraints for table `comentarios`
 --
 ALTER TABLE `comentarios`
   ADD CONSTRAINT `comentarios_ibfk_1` FOREIGN KEY (`autor`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `comentarios_ibfk_2` FOREIGN KEY (`id_post`) REFERENCES `publicaciones` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `likes`
+-- Constraints for table `likes`
 --
 ALTER TABLE `likes`
   ADD CONSTRAINT `likes_ibfk_1` FOREIGN KEY (`id_comentario`) REFERENCES `comentarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -308,13 +254,13 @@ ALTER TABLE `likes`
   ADD CONSTRAINT `likes_ibfk_3` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `publicaciones`
+-- Constraints for table `publicaciones`
 --
 ALTER TABLE `publicaciones`
   ADD CONSTRAINT `publicaciones_ibfk_1` FOREIGN KEY (`autor`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `seguidores`
+-- Constraints for table `seguidores`
 --
 ALTER TABLE `seguidores`
   ADD CONSTRAINT `seguidores_ibfk_1` FOREIGN KEY (`id_seguido`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
