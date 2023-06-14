@@ -104,6 +104,10 @@ h2 {
     transition: all 0.2s linear;
 }
 
+.buttons {
+    flex-wrap: nowrap;
+}
+
 ion-icon {
     cursor: pointer;
 }
@@ -158,7 +162,6 @@ ion-icon {
 
 .image.is-64x64 .img {
     overflow: hidden;
-
     width: 100%;
     height: 100%;
 }
@@ -191,4 +194,27 @@ ion-icon {
 
 .texto figure, .texto > div {
     cursor: pointer;
+}
+
+
+@media screen and (max-width: 975px) {
+    .user-details {
+        margin-left: 34px;
+        max-width: 50%;
+    }
+
+}
+
+@media screen and (max-width: 550px) {
+    #lista-usuarios .buttons:not(.field) {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        
+    }
+
+    #lista-usuarios .buttons button {
+        margin: 0 0 0.5em 0 !important;
+    }
+
 }
