@@ -154,7 +154,16 @@ class LoginController extends AbstractController
 		if (!$usu) {
 			return $this->render('login.html.twig');
 		} else {
-			return $this->render('cambiar.html.twig', ['id' => $usu->getId()]);
+			if ($usu->getExpiracion_rec() < new \DateTime()) {
+				$usu->setRecuperacion(null);
+				$usu->setExpiracion_rec(null);
+				$em->flush();
+				return $this->render('login.html.twig', ['aviso' => 'El código ha caducado!']);
+
+			} else {
+				return $this->render('cambiar.html.twig', ['id' => $usu->getId()]);
+
+			}
 		}
 	}
 

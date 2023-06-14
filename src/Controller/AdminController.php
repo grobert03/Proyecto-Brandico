@@ -94,6 +94,11 @@ class AdminController extends AbstractController
         $provincia = $request->request->get('prov');
         $empresa = ($request->request->get('empresa')) == "true" ? true : false;
 
+        $user = $em->getRepository(Usuario::class)->findOneBy(['correo' => $correo]);
+        if ($user) {
+            return new JsonResponse(['error' => 'El correo ya está en uso!']);
+        }
+
         $usu = new Usuario();
         $usu->setCorreo($correo);
         $usu->setClave(password_hash($pass, PASSWORD_DEFAULT));
@@ -101,6 +106,14 @@ class AdminController extends AbstractController
         $usu->setFoto('default.png');
 
         if ($empresa) {
+            $user = $em->getRepository(Usuario::class)->findOneBy(['telefono' => $tel]);
+            if ($user) {
+                return new JsonResponse(['error' => 'El teléfono ya está en uso!']);
+            }
+            $user = $em->getRepository(Usuario::class)->findOneBy(['cif' => $cif]);
+            if ($user) {
+                return new JsonResponse(['error' => 'El cif ya está en uso!']);
+            }
             $usu->setEs_empresa(1);
             $usu->setTelefono($tel);
             $usu->setCif($cif);
@@ -129,11 +142,45 @@ class AdminController extends AbstractController
         $correo = $request->request->get('mod_correo');
         $nombre = $request->request->get('mod_nombre');
         $tipo = $request->request->get('mod_tipo');
+        $tel = $request->request->get('mod_tel');
+        $cif = $request->request->get('mod_cif');
+        $dir = $request->request->get('mod_dir');
+        $prov = $request->request->get('mod_prov');
 
         $usu = $em->getRepository(Usuario::class)->findOneBy(['id' => $buscar]);
+
+        $buscarCorreo = $em->getRepository(Usuario::class)->findOneBy(['correo' => $correo]);
+
+        $buscarTel = $em->getRepository(Usuario::class)->findOneBy(['telefono' => $tel]);
+
+        $buscarCif = $em->getRepository(Usuario::class)->findOneBy(['cif' => $cif]);
+
+        if ($buscarCorreo && $correo != $usu->getCorreo()) {
+            return new JsonResponse(['error' => 'El correo ya está en uso!']);
+        }
+
+        if ($buscarTel  && $tel != $usu->getTelefono()) {
+            return new JsonResponse(['error' => 'El teléfono ya está en uso!']);
+        }
+
+        if ($buscarCif && $cif != $usu->getCif()) {
+            return new JsonResponse(['error' => 'El CIF ya está en uso!']);
+        }
+
         $usu->setCorreo($correo);
+        $usu->setTelefono($tel);
         $usu->setNombre($nombre);
-        $usu->setEs_empresa($tipo);
+        if ($usu->getEs_empresa() && $tipo == "0") {
+            $usu->setDireccion(null);   
+            $usu->setProvincia(null);   
+            $usu->setCif(null);   
+        } else if ($tipo == "1") {
+            $usu->setDireccion($dir);   
+            $usu->setProvincia($prov);  
+            $usu->setCif($cif);   
+        }
+        $usu->setEs_empresa($tipo);   
+
 
         $em->persist($usu);
         $em->flush();

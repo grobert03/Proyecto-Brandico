@@ -22,6 +22,11 @@
 				<p id="mensaje-error" style='color: #dc2626; font-weight: bold;'>{{mensaje}}</p>
 			</div>
 		{% endif %}
+		{% if aviso is defined %}
+			<div class="form-element">
+				<p id="mensaje-error" style='color: #dc2626; font-weight: bold;'>{{aviso}}</p>
+			</div>
+		{% endif %}
 		
 		<div class="form-element">
 			<label for="correo">Correo:</label>

@@ -31,6 +31,13 @@ class InicioController extends AbstractController
         $publicacion->setTexto($contenido);
 
         if (!is_null($fichero)) {
+            $maxFileSize = 150 * 1024 * 1024; // 150 MB in bytes
+            $fileSize = $fichero->getSize();
+            
+            if ($fileSize > $maxFileSize) {
+                return new JsonResponse(['error' => 'El archivo no puede superar los 150 MB!']);
+            }
+            
             $mime = $fichero->getClientMimeType();
             $filename = uniqid().".".$fichero->getClientOriginalExtension();
             if (str_contains($mime, "video/")) {

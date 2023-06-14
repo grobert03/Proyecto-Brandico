@@ -171,9 +171,12 @@ ion-icon {
     align-items: center;
 }
 
+
+
 /* Añadir reglas CSS para hacer el figure alineado a la izquierda */
 .user-details {
     margin-left: 74px; /* Ancho de la imagen + margen */
+    word-break: break-all;
 }
 
 /* Hacer el figure alineado a la izquierda */

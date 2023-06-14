@@ -11,26 +11,38 @@
 			<span>BRANDICO</span>
 			<img src="{{ asset('img/logoHeader.png') }}">
 		</div>
-        <div class="form-element">
-            <label for="pass">Nueva contraseña:</label>
-    		<input id='pass' type="password" name="pass">
-        </div>
-        <div class='form-element'>
-            <label for="confirmar">Confirmar contraseña:</label>
-		    <input id='confirmar' type="password" name="confirmar_pass">
-        </div>
+		<div class="form-element">
+			<label for="pass">Nueva contraseña:</label>
+			<input id='pass' type="password" name="pass">
+		</div>
+		<div class='form-element'>
+			<label for="confirmar">Confirmar contraseña:</label>
+			<input id='confirmar' type="password" name="confirmar_pass">
+		</div>
 		<input type='hidden' name='id' value='{{ id }}'>
 		<button type="button" id='btn-submit'>Cambiar</button>
 	</form>
 
 	<script>
-		$("#btn-submit").click(() => {
-			if ($("#pass").val() === $("#confirmar").val() && $("#pass").val().replace(/\s/g, '').length > 0) {
-				$("#form-login").submit();
-			} else {
-				$("#error").remove();
-				$("#form-header").after($(`<p id='error' style='color: red; font-weight: bold' class='mt-4'>Los dos campos son obligatorios y tienen que coincidir!</p>`));
-			}
-		});
+		const validatePassword = (password) => {
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+if (! passwordRegex.test(password)) {
+return false;
+} else {
+return true;
+}
+};
+$("#btn-submit").click(() => {
+if ($("#pass").val() === $("#confirmar").val() && $("#pass").val().replace(/\s/g, '').length > 0) {
+	if (validatePassword($("#pass").val())) {
+		$("#form-login").submit();
+	} else {
+		$("#form-header").after($(`<p id='error' style='color: red; font-weight: bold' class='mt-4'>La contraseña debe tener como mínimo 8 carácteres además de una letra mayúscula!</p>`));
+	}
+} else {
+$("#error").remove();
+$("#form-header").after($(`<p id='error' style='color: red; font-weight: bold' class='mt-4'>Los dos campos son obligatorios y tienen que coincidir!</p>`));
+}
+});
 	</script>
 {% endblock %}
