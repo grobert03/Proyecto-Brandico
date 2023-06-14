@@ -266,3 +266,8 @@ $("#input_cif").on("keyup", () => {
   filtro_cif = $("#input_cif").val();
   devolverUsuarios();
 });
+
+
+$(".texto figure, .texto > div").click(() => {
+  window.location.href = ruta_inicio;
+})

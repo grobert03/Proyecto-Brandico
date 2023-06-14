@@ -57,6 +57,10 @@ form {
     color: var(--brandColor);
 }
 
+#form-header > * {
+    cursor: pointer;
+}
+
 img {
     height: auto;
     max-width: 15%;

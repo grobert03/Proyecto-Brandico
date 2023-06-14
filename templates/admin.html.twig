@@ -10,6 +10,7 @@ let ruta_crear_usuario = "{{ path('crear_usuario') }}";
 let ruta_borrar_usuario = "{{ path('borrar_usuario') }}";
 let ruta_modificar_usuario = "{{ path('modificar_usuario') }}";
 let ruta_perfil = "{{ path('getprofile')}}";
+let ruta_inicio = "{{ path('controlador_portal_inicio') }}";
 let usuarios = true;
 let empresas = true;
 let rol = false;
@@ -24,19 +25,13 @@ let array_usu = [];
 	<header class="hero is-primary is-small">
 		<div class="hero-body">
 			<div class="container">
-				<div class="is-flex is-align-items-center is-justify-content-flex-start">
+				<div class="is-flex is-align-items-center is-justify-content-flex-start texto">
 					<figure class="image is-64x64">
 						<img src="{{ asset('img/BrandicoLogo2White.png') }}" alt="icono BRANDICO">
 					</figure>
 					<div style="white-space: nowrap; align-self: center">
 						<h1 class="title">BRANDICO</h1>
 					</div>
-				</div>
-				<div class="is-flex is-align-items-center is-justify-content-flex-start">
-					<a href="{{ path('controlador_portal_inicio') }}" class="inicio">
-						<span class="inicio-label">Inicio</span>
-						<ion-icon name="log-out-outline"></ion-icon>
-					</a>
 				</div>
 			</div>
 		</div>

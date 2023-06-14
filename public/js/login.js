@@ -8,6 +8,10 @@ $("#pass").keypress((e) => {
     }
 })
 
+$("#form-header > *").click(() => {
+    window.location.href = ruta_promocion;
+});
+
 const enviarCorreo = () => {
     $('#respuesta').remove();
     $.ajax({

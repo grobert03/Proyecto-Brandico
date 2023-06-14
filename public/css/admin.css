@@ -188,3 +188,7 @@ ion-icon {
 .button:hover {
     transform: scale(1.15);
 }
+
+.texto figure, .texto > div {
+    cursor: pointer;
+}
