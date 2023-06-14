@@ -143,7 +143,7 @@ $(document).ready(() => {
                                                 <div class="media-content">
                                                   <div class="content">
                                                     <p x-data="{borrar_comment: false}">
-                                                      <strong>${e.autor}</strong>
+                                                      <strong><a href="${ruta_perfil}/${e.id_autor}">${e.autor}</a></strong>
                                                       <br>
                                                       <span>${e.contenido}</span>
                                                       <br>
@@ -283,7 +283,7 @@ $(document).ready(() => {
                                 <div class="media-content">
                                   <div class="content">
                                     <p x-data="{borrar_comment: false}">
-                                      <strong>${data.comentario.autor}</strong>
+                                      <strong><a href="${ruta_perfil}/${data.comentario.id_autor}">${data.comentario.autor}</a></strong>
                                       <br>
                                       <span>${data.comentario.contenido}</span>
                                       <br>

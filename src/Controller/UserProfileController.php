@@ -96,7 +96,7 @@ class UserProfileController extends AbstractController {
             $personas = $em->getRepository(Like::class)->findBy(['id_post' => $p->getId()]);
             foreach($personas as $pe) {
                 if ($pe->getId_usuario()->getId() != $this->getUser()->getId()) {
-                    array_push($array_personas, ['id' => $pe->getId_usuario()->getId(), 'nombre' => $pe->getId_usuario()->getNombre(), 'foto' =>  'img/perfiles/'.$pe->getId_usuario()->getFoto()]);
+                    array_push($array_personas, ['id' => $pe->getId_usuario()->getId(), 'nombre' => $pe->getId_usuario()->getNombre(), 'foto' =>  'perfiles/'.$pe->getId_usuario()->getFoto()]);
                 }
                 
             }
@@ -104,7 +104,7 @@ class UserProfileController extends AbstractController {
             foreach ($comentarios as $c) {
                 $likes_com = $em->getRepository(Like::class)->findBy(['id_comentario' => $c->getId()]);
                 $le_gusta_com = $em->getRepository(Like::class)->findOneBy(['id_usuario' => $this->getUser()->getId(), 'id_comentario' => $c->getId()]);
-                array_push($array_comentarios, ['id' => $c->getId(), 'correo' => $c->getAutor()->getCorreo(), 'autor' => $c->getAutor()->getNombre(), 'foto' => 'perfiles/'.$c->getAutor()->getFoto() , 'fecha' => $c->getFecha(), 'contenido' => $c->getContenido(), 'likes' => sizeof($likes_com), 'le_gusta' => $le_gusta_com ? 1 : 0]);
+                array_push($array_comentarios, ['id' => $c->getId(), 'correo' => $c->getAutor()->getCorreo(), 'autor' => $c->getAutor()->getNombre(), 'id_autor' => $c->getAutor()->getId(), 'foto' => 'perfiles/'.$c->getAutor()->getFoto() , 'fecha' => $c->getFecha(), 'contenido' => $c->getContenido(), 'likes' => sizeof($likes_com), 'le_gusta' => $le_gusta_com ? 1 : 0]);
             }
 
             if ($le_gusta) {
@@ -114,6 +114,7 @@ class UserProfileController extends AbstractController {
             }
             $json[] = [
                 'id' => $p->getId(),
+                'id_autor' => $p->getAutor()->getId(),
                 'autor' => $p->getAutor()->getNombre(),
                 'perfil' => 'perfiles/'.$p->getAutor()->getFoto(),
                 'correo' => $p->getAutor()->getCorreo(),
@@ -147,7 +148,8 @@ class UserProfileController extends AbstractController {
         $em->persist($comentario);
         $em->flush();
 
-        return new JsonResponse(['comentario' => ['id' => $comentario->getId(), 'autor' => $comentario->getAutor()->getNombre(), 'foto' => 'perfiles/'.$comentario->getAutor()->getFoto() , 'fecha' => $comentario->getFecha(), 'contenido' => $comentario->getContenido(), 'likes' => 0, 'le_gusta' => 0]]);
+        return new JsonResponse(['comentario' => ['id' => $comentario->getId(), 
+        'id_autor' => $comentario->getAutor()->getId(), 'autor' => $comentario->getAutor()->getNombre(), 'foto' => 'perfiles/'.$comentario->getAutor()->getFoto() , 'fecha' => $comentario->getFecha(), 'contenido' => $comentario->getContenido(), 'likes' => 0, 'le_gusta' => 0]]);
     }
 
 }

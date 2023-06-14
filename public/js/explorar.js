@@ -164,7 +164,7 @@ const devolverRecomendados = () => {
                                             <textarea id='textarea-${
                                               d.id
                                             }' class='textarea mb-3' maxlength="180" class='tu-comentario' placeholder='Escribe un comentario...'></textarea>
-                                            <button class='button is-info crear-comment' data-post="${
+                                            <button class='button is-info crear-comment mb-4' data-post="${
                                               d.id
                                             }">Enviar</button>
                                             <div>${d.comentarios
@@ -372,7 +372,7 @@ const devolverRecomendados = () => {
                             <div class="media-content">
                               <div class="content">
                                 <p x-data="{borrar_comment: false}">
-                                  <strong><a href="${ruta_pefil}/${data.comentario.id_autor}">${data.comentario.autor}</a></strong>
+                                  <strong><a href="${ruta_perfil}/${data.comentario.id_autor}">${data.comentario.autor}</a></strong>
                                   <br>
                                   <span>${data.comentario.contenido}</span>
                                   <br>
