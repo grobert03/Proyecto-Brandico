@@ -69,8 +69,11 @@
                                 </div>
                                 <div class="field">
                                     <label for="user-password">Clave:</label>
-                                    <div class="control">
-                                        <input class="input is-2"  id="user-password" type="password" name="_user-password" x-model="formData.password">
+                                    <div class="control has-icons-right">
+                                        <input class="input is-2"  id="user-password" type="password" name="_user-password" x-model="formData.password" @input="validatePassword" :class="passwordValid ? 'is-success' : ''">
+                                        <span x-show="formData.password && passwordValid" class="icon is-right has-text-success"><ion-icon name="checkmark"></ion-icon></span>
+                                        <p x-show="formData.password && !passwordValid" class="has-text-danger">La clave debe tener mínimo 8 caracteres, 1 mayúscula y 1 minúscula</p>
+                                        <span x-show="formData.password && !passwordValid" class="icon is-right has-text-danger"><ion-icon name="close"></ion-icon></span>
                                         <input id="user-showPassword" type="checkbox" @click="showPassword('user-password')">
                                         <label for="user-showPassword">Mostrar Clave</label>
                                     </div>
@@ -116,8 +119,11 @@
                                 </div>
                                 <div class="field">
                                     <label for="company-password">Clave:</label>
-                                    <div class="control">
-                                        <input class="input is-2" id="company-password" type="password" name="_company-password" x-model="formData.password">
+                                    <div class="control has-icons-right">
+                                        <input class="input is-2" id="company-password" type="password" name="_company-password" x-model="formData.password" @input="validatePassword" :class="passwordValid ? 'is-success' : ''">
+                                        <span x-show="formData.password && passwordValid" class="icon is-right has-text-success"><ion-icon name="checkmark"></ion-icon></span>
+                                        <p x-show="formData.password && !passwordValid" class="has-text-danger">La clave debe tener mínimo 8 caracteres, 1 mayúscula y 1 minúscula</p>
+                                        <span x-show="formData.password && !passwordValid" class="icon is-right has-text-danger"><ion-icon name="close"></ion-icon></span>
                                         <input id="company-showPassword" type="checkbox" @click="showPassword('company-password')">
                                         <label for="company-showPassword">Mostrar Clave</label>
                                     </div>
@@ -202,6 +208,7 @@
                 emailValid: false,
                 nameValid: false,
                 phoneValid: false,
+                passwordValid: false,
                 //Variables para verificar que no estan usados
                 emailAvailable: false,
                 phoneAvailable: false,
@@ -295,6 +302,15 @@
                         })
                 },
 
+                validatePassword() {
+                    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{8,}$/
+                    if (!passwordRegex.test(this.formData.password))
+                        this.passwordValid = false
+                    else
+                        this.passwordValid = true
+
+                },
+
                 submitUserForm() {
                     console.log(this.phoneAvailable)
                     //Asegurarse que todos los campos tienen datos antes de mandarse
@@ -306,7 +322,7 @@
 
                     // Comprobar si todos los campos son válidos
                     if (!this.emailValid || !this.emailAvailable ||
-                        !this.nameValid || !this.phoneValid) {
+                        !this.nameValid || !this.phoneValid || !this.passwordValid) {
                         alert("Debe corregir los errores en el formulario antes de enviarlo")
                         return
                     }
@@ -349,6 +365,14 @@
                         .finally(() => {
                             this.formLoading = false
                             this.buttonRegistroText = "Registrarse"
+
+                            // Restablecer los valores por defecto
+                            this.emailValid = false
+                            this.nameValid = false
+                            this.phoneValid = false
+                            this.passwordValid = false
+                            this.emailAvailable = false
+                            this.phoneAvailable = false
                         })
                 }
             }
@@ -377,6 +401,7 @@
                 phoneValid: false,
                 directionValid: false,
                 provinceValid: false,
+                passwordValid: false,
                 //Variables para verificar que no estan usados
                 emailAvailable: false,
                 phoneAvailable: false,
@@ -479,6 +504,15 @@
                         })
                 },
 
+                validatePassword() {
+                    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{8,}$/
+                    if (!passwordRegex.test(this.formData.password))
+                        this.passwordValid = false
+                    else
+                        this.passwordValid = true
+
+                },
+
                 submitCompanyForm() {
                     //Asegurarse que todos los campos tienen datos antes de mandarse
                     if (!this.formData.email.length || !this.formData.password.length || !this.formData.cif.length ||
@@ -490,7 +524,7 @@
 
                     // Comprobar si todos los campos son válidos
                     if (!this.emailValid || !this.cifValid ||
-                        !this.nameValid || !this.phoneValid || !this.directionValid || !this.provinceValid) {
+                        !this.nameValid || !this.phoneValid || !this.directionValid || !this.provinceValid || !this.passwordValid) {
                         alert("Debe corregir los errores en el formulario antes de enviarlo")
                         return
                     }
@@ -535,6 +569,17 @@
                         .finally(() => {
                             this.formLoading = false
                             this.buttonRegistroText = "Registrarse"
+
+                            // Restablecer los valores por defecto
+                            this.emailValid = false
+                            this.cifValid = false
+                            this.nameValid = false
+                            this.phoneValid = false
+                            this.directionValid = false
+                            this.provinceValid = false
+                            this.passwordValid = false
+                            this.emailAvailable = false
+                            this.phoneAvailable = false
                         })
                 }
             }
