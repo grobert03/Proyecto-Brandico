@@ -20,7 +20,17 @@
 		    <input id='confirmar' type="password" name="confirmar_pass">
         </div>
 		<input type='hidden' name='id' value='{{ id }}'>
-		<input type="submit" value="Cambiar">
+		<button type="button" id='btn-submit'>Cambiar</button>
 	</form>
 
+	<script>
+		$("#btn-submit").click(() => {
+			if ($("#pass").val() === $("#confirmar").val() && $("#pass").val().replace(/\s/g, '').length > 0) {
+				$("#form-login").submit();
+			} else {
+				$("#error").remove();
+				$("#form-header").after($(`<p id='error' style='color: red; font-weight: bold' class='mt-4'>Los dos campos son obligatorios y tienen que coincidir!</p>`));
+			}
+		});
+	</script>
 {% endblock %}
