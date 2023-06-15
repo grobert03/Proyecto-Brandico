@@ -436,14 +436,6 @@ p {
     border-radius: 50%;
 }
 
-.button {
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-}
 
 .info.columns {
     margin-left: 0;
